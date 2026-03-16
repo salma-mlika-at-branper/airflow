@@ -1,0 +1,45 @@
+[2026-02-12T12:15:55.590+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.load_data manual__2026-02-12T12:15:49.414446+00:00 [queued]>
+[2026-02-12T12:15:55.600+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.load_data manual__2026-02-12T12:15:49.414446+00:00 [queued]>
+[2026-02-12T12:15:55.600+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T12:15:55.642+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-12 12:15:49.414446+00:00
+[2026-02-12T12:15:55.662+0000] {standard_task_runner.py:60} INFO - Started process 444 to run task
+[2026-02-12T12:15:55.666+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'load_data', 'manual__2026-02-12T12:15:49.414446+00:00', '--job-id', '384', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpaani_9x5']
+[2026-02-12T12:15:55.669+0000] {standard_task_runner.py:88} INFO - Job 384: Subtask load_data
+[2026-02-12T12:15:55.740+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.load_data manual__2026-02-12T12:15:49.414446+00:00 [running]> on host 730e2bf48df4
+[2026-02-12T12:15:55.912+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T12:15:49.414446+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T12:15:49.414446+00:00'
+[2026-02-12T12:15:55.950+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/python_parser.py", line 800, in _next_iter_line
+    line = next(self.data)
+_csv.Error: '|' expected after '"'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/tunisia.py", line 12, in load_data
+    df = pd.read_csv(
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 617, in _read
+    return parser.read(nrows)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1748, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/python_parser.py", line 250, in read
+    content = self._get_lines(rows)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/python_parser.py", line 1135, in _get_lines
+    new_row = self._next_iter_line(row_num=self.pos + rows + 1)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/python_parser.py", line 829, in _next_iter_line
+    self._alert_malformed(msg, row_num)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/python_parser.py", line 779, in _alert_malformed
+    raise ParserError(msg)
+pandas.errors.ParserError: '|' expected after '"'
+[2026-02-12T12:15:55.966+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=tunisia, task_id=load_data, execution_date=20260212T121549, start_date=20260212T121555, end_date=20260212T121555
+[2026-02-12T12:15:56.187+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 384 for task load_data ('|' expected after '"'; 444)
+[2026-02-12T12:15:56.239+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-12T12:15:56.267+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,159 @@
+[2026-02-18T15:54:25.302+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one.run_predictions_2 manual__2026-02-18T15:53:48.661457+00:00 [queued]>
+[2026-02-18T15:54:25.314+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one.run_predictions_2 manual__2026-02-18T15:53:48.661457+00:00 [queued]>
+[2026-02-18T15:54:25.314+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T15:54:25.800+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions_2> on 2026-02-18 15:53:48.661457+00:00
+[2026-02-18T15:54:25.827+0000] {standard_task_runner.py:60} INFO - Started process 649 to run task
+[2026-02-18T15:54:25.831+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one', 'run_predictions_2', 'manual__2026-02-18T15:53:48.661457+00:00', '--job-id', '629', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmp98dm3a85']
+[2026-02-18T15:54:25.834+0000] {standard_task_runner.py:88} INFO - Job 629: Subtask run_predictions_2
+[2026-02-18T15:54:25.909+0000] {task_command.py:423} INFO - Running <TaskInstance: one.run_predictions_2 manual__2026-02-18T15:53:48.661457+00:00 [running]> on host b50ca3a15d65
+[2026-02-18T15:54:26.060+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one' AIRFLOW_CTX_TASK_ID='run_predictions_2' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T15:53:48.661457+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T15:53:48.661457+00:00'
+[2026-02-18T15:57:42.714+0000] {job.py:213} ERROR - Job heartbeat got an exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 691, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+psycopg2.OperationalError: could not translate host name "postgres" to address: Temporary failure in name resolution
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/jobs/job.py", line 187, in heartbeat
+    self._merge_from(Job._fetch_from_db(self, session))
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/api_internal/internal_api_call.py", line 114, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/utils/session.py", line 76, in wrapper
+    return func(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/jobs/job.py", line 308, in _fetch_from_db
+    session.merge(job)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3056, in merge
+    return self._merge(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 3136, in _merge
+    merged = self.get(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2853, in get
+    return self._get_impl(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 2975, in _get_impl
+    return db_load_fn(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/loading.py", line 530, in load_on_pk_identity
+    session.execute(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1716, in execute
+    conn = self._connection_for_bind(bind)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 1555, in _connection_for_bind
+    return self._transaction._connection_for_bind(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/orm/session.py", line 750, in _connection_for_bind
+    conn = bind.connect()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/future/engine.py", line 412, in connect
+    return super(Engine, self).connect()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 3325, in connect
+    return self._connection_cls(self, close_with_result=close_with_result)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 96, in __init__
+    else engine.raw_connection()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 3404, in raw_connection
+    return self._wrap_pool_connect(self.pool.connect, _connection)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 3374, in _wrap_pool_connect
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 2208, in _handle_dbapi_exception_noconnection
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/base.py", line 3371, in _wrap_pool_connect
+    return fn()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 327, in connect
+    return _ConnectionFairy._checkout(self)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 894, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 493, in checkout
+    rec = pool._do_get()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/impl.py", line 256, in _do_get
+    return self._create_connection()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 273, in _create_connection
+    return _ConnectionRecord(self)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 388, in __init__
+    self.__connect()
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 691, in __connect
+    pool.logger.debug("Error on connect(): %s", e)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/util/langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/pool/base.py", line 686, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/create.py", line 574, in connect
+    return dialect.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.9/site-packages/sqlalchemy/engine/default.py", line 598, in connect
+    return self.dbapi.connect(*cargs, **cparams)
+  File "/home/airflow/.local/lib/python3.9/site-packages/psycopg2/__init__.py", line 122, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, **kwasync)
+sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not translate host name "postgres" to address: Temporary failure in name resolution
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2026-02-18T16:00:34.261+0000] {job.py:221} ERROR - Job heartbeat failed with error. Scheduler is in unhealthy state
+[2026-02-18T16:01:17.732+0000] {job.py:221} ERROR - Job heartbeat failed with error. Scheduler is in unhealthy state
+[2026-02-18T16:04:15.202+0000] {job.py:221} ERROR - Job heartbeat failed with error. Scheduler is in unhealthy state
+[2026-02-18T16:04:17.222+0000] {local_task_job_runner.py:211} ERROR - Heartbeat time limit exceeded!
+[2026-02-18T16:04:17.223+0000] {process_utils.py:131} INFO - Sending 15 to group 649. PIDs of all processes in the group: [649]
+[2026-02-18T16:04:17.223+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 649
+[2026-02-18T16:04:24.128+0000] {taskinstance.py:2450} ERROR - Received SIGTERM. Terminating subprocesses.
+[2026-02-18T16:05:00.273+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/one.py", line 51, in run_predictions
+    model = pipeline("sentiment-analysis", model=model_name, device=-1)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/__init__.py", line 926, in pipeline
+    framework, model = infer_framework_load_model(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 289, in infer_framework_load_model
+    model = model_class.from_pretrained(model, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 4096, in from_pretrained
+    model = cls(config, *model_args, **model_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/bert/modeling_bert.py", line 1629, in __init__
+    self.bert = BertModel(config)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/bert/modeling_bert.py", line 976, in __init__
+    self.embeddings = BertEmbeddings(config)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/bert/modeling_bert.py", line 164, in __init__
+    self.word_embeddings = nn.Embedding(config.vocab_size, config.hidden_size, padding_idx=config.pad_token_id)
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/sparse.py", line 172, in __init__
+    self.reset_parameters()
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/sparse.py", line 184, in reset_parameters
+    self._fill_padding_idx_with_zero()
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/sparse.py", line 189, in _fill_padding_idx_with_zero
+    self.weight[self.padding_idx].fill_(0)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 2452, in signal_handler
+    raise AirflowException("Task received SIGTERM signal")
+airflow.exceptions.AirflowException: Task received SIGTERM signal
+[2026-02-18T16:05:02.537+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=one, task_id=run_predictions_2, execution_date=20260218T155348, start_date=20260218T155425, end_date=20260218T160502
+[2026-02-18T16:05:17.310+0000] {process_utils.py:149} WARNING - process psutil.Process(pid=649, name='airflow task ru', status='sleeping', started='15:54:25') did not respond to SIGTERM. Trying SIGKILL
+[2026-02-18T16:05:17.313+0000] {process_utils.py:86} INFO - Sending the signal 9 to group 649
+[2026-02-18T16:05:17.410+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=649, name='airflow task ru', status='terminated', exitcode=<Negsignal.SIGKILL: -9>, started='15:54:25') (649) terminated with exit code -9
+[2026-02-18T16:05:17.411+0000] {standard_task_runner.py:175} ERROR - Job 629 was killed before it finished (likely due to running out of memory)

@@ -1,0 +1,24 @@
+[2026-02-04T09:54:41.712+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: model2.evaluate_model manual__2026-02-04T09:48:02.228784+00:00 [queued]>
+[2026-02-04T09:54:41.720+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: model2.evaluate_model manual__2026-02-04T09:48:02.228784+00:00 [queued]>
+[2026-02-04T09:54:41.721+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-04T09:54:41.757+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): evaluate_model> on 2026-02-04 09:48:02.228784+00:00
+[2026-02-04T09:54:41.769+0000] {standard_task_runner.py:60} INFO - Started process 522 to run task
+[2026-02-04T09:54:41.773+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'model2', 'evaluate_model', 'manual__2026-02-04T09:48:02.228784+00:00', '--job-id', '40', '--raw', '--subdir', 'DAGS_FOLDER/model2_dag.py', '--cfg-path', '/tmp/tmp01g9brtn']
+[2026-02-04T09:54:41.776+0000] {standard_task_runner.py:88} INFO - Job 40: Subtask evaluate_model
+[2026-02-04T09:54:41.825+0000] {task_command.py:423} INFO - Running <TaskInstance: model2.evaluate_model manual__2026-02-04T09:48:02.228784+00:00 [running]> on host 8145bea1d027
+[2026-02-04T09:54:41.912+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='model2' AIRFLOW_CTX_TASK_ID='evaluate_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-04T09:48:02.228784+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-04T09:48:02.228784+00:00'
+[2026-02-04T09:54:41.973+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.5755517826825127
+[2026-02-04T09:54:42.005+0000] {logging_mixin.py:188} INFO - Classification Report:
+[2026-02-04T09:54:42.005+0000] {logging_mixin.py:188} INFO -                precision    recall  f1-score   support
+
+    positive       0.53      0.80      0.64      1103
+     neutral       0.64      0.38      0.48      1430
+    negative       0.59      0.60      0.60      1001
+
+    accuracy                           0.58      3534
+   macro avg       0.59      0.60      0.57      3534
+weighted avg       0.59      0.58      0.56      3534
+[2026-02-04T09:54:42.006+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-04T09:54:42.014+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=model2, task_id=evaluate_model, execution_date=20260204T094802, start_date=20260204T095441, end_date=20260204T095442
+[2026-02-04T09:54:42.066+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-04T09:54:42.081+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

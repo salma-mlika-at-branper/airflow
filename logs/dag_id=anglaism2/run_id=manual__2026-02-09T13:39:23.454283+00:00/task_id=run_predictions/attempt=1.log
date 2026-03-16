@@ -1,0 +1,13 @@
+[2026-02-09T13:39:37.454+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: anglaism2.run_predictions manual__2026-02-09T13:39:23.454283+00:00 [queued]>
+[2026-02-09T13:39:37.481+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: anglaism2.run_predictions manual__2026-02-09T13:39:23.454283+00:00 [queued]>
+[2026-02-09T13:39:37.481+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-09T13:39:37.531+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-09 13:39:23.454283+00:00
+[2026-02-09T13:39:37.573+0000] {standard_task_runner.py:60} INFO - Started process 1663 to run task
+[2026-02-09T13:39:37.579+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'anglaism2', 'run_predictions', 'manual__2026-02-09T13:39:23.454283+00:00', '--job-id', '151', '--raw', '--subdir', 'DAGS_FOLDER/anglaism2.py', '--cfg-path', '/tmp/tmpn__xeswk']
+[2026-02-09T13:39:37.585+0000] {standard_task_runner.py:88} INFO - Job 151: Subtask run_predictions
+[2026-02-09T13:39:37.665+0000] {task_command.py:423} INFO - Running <TaskInstance: anglaism2.run_predictions manual__2026-02-09T13:39:23.454283+00:00 [running]> on host e7982b41026e
+[2026-02-09T13:39:37.758+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='anglaism2' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-09T13:39:23.454283+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-09T13:39:23.454283+00:00'
+[2026-02-09T13:42:30.053+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-09T13:42:30.095+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=anglaism2, task_id=run_predictions, execution_date=20260209T133923, start_date=20260209T133937, end_date=20260209T134230
+[2026-02-09T13:42:30.187+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-09T13:42:30.202+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

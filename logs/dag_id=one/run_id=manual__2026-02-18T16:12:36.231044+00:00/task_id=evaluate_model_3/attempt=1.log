@@ -1,0 +1,17 @@
+[2026-02-18T16:13:07.137+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one.evaluate_model_3 manual__2026-02-18T16:12:36.231044+00:00 [queued]>
+[2026-02-18T16:13:07.148+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one.evaluate_model_3 manual__2026-02-18T16:12:36.231044+00:00 [queued]>
+[2026-02-18T16:13:07.148+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T16:13:07.205+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): evaluate_model_3> on 2026-02-18 16:12:36.231044+00:00
+[2026-02-18T16:13:07.223+0000] {standard_task_runner.py:60} INFO - Started process 656 to run task
+[2026-02-18T16:13:07.228+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one', 'evaluate_model_3', 'manual__2026-02-18T16:12:36.231044+00:00', '--job-id', '638', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmpi_pga_ma']
+[2026-02-18T16:13:07.231+0000] {standard_task_runner.py:88} INFO - Job 638: Subtask evaluate_model_3
+[2026-02-18T16:13:07.297+0000] {task_command.py:423} INFO - Running <TaskInstance: one.evaluate_model_3 manual__2026-02-18T16:12:36.231044+00:00 [running]> on host b50ca3a15d65
+[2026-02-18T16:13:07.423+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one' AIRFLOW_CTX_TASK_ID='evaluate_model_3' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T16:12:36.231044+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T16:12:36.231044+00:00'
+[2026-02-18T16:13:07.456+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 1.0000
+[2026-02-18T16:13:07.456+0000] {logging_mixin.py:188} INFO - Precision (weighted): 1.0000
+[2026-02-18T16:13:07.457+0000] {logging_mixin.py:188} INFO - Recall (weighted): 1.0000
+[2026-02-18T16:13:07.457+0000] {logging_mixin.py:188} INFO - F1-score (weighted): 1.0000
+[2026-02-18T16:13:07.457+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-18T16:13:07.467+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=one, task_id=evaluate_model_3, execution_date=20260218T161236, start_date=20260218T161307, end_date=20260218T161307
+[2026-02-18T16:13:07.566+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-18T16:13:07.588+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

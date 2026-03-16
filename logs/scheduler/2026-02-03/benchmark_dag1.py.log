@@ -1,0 +1,49 @@
+[2026-02-03T20:58:48.131+0000] {processor.py:161} INFO - Started process (PID=160) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T20:58:48.132+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T20:58:48.133+0000] {logging_mixin.py:188} INFO - [2026-02-03T20:58:48.132+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T20:58:56.494+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T20:58:57.329+0000] {logging_mixin.py:188} INFO - [2026-02-03T20:58:57.329+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T20:58:57.364+0000] {logging_mixin.py:188} INFO - [2026-02-03T20:58:57.363+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T20:58:57.416+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 9.286 seconds
+[2026-02-03T20:59:28.309+0000] {processor.py:161} INFO - Started process (PID=183) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T20:59:28.325+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T20:59:28.326+0000] {logging_mixin.py:188} INFO - [2026-02-03T20:59:28.326+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T20:59:31.034+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T20:59:31.051+0000] {logging_mixin.py:188} INFO - [2026-02-03T20:59:31.051+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T20:59:31.061+0000] {logging_mixin.py:188} INFO - [2026-02-03T20:59:31.061+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T20:59:31.107+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 2.800 seconds
+[2026-02-03T21:00:01.387+0000] {processor.py:161} INFO - Started process (PID=206) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:01.388+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T21:00:01.389+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:01.388+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:03.741+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:03.748+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:03.748+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T21:00:03.758+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:03.758+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T21:00:03.782+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 2.399 seconds
+[2026-02-03T21:00:34.236+0000] {processor.py:161} INFO - Started process (PID=229) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:34.266+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T21:00:34.267+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:34.267+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:38.792+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:38.911+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:38.909+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T21:00:38.926+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:38.926+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T21:00:38.958+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 4.726 seconds
+[2026-02-03T21:00:56.812+0000] {processor.py:161} INFO - Started process (PID=252) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:56.820+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T21:00:56.822+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:56.821+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:59.444+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:00:59.452+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:59.452+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T21:00:59.460+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:00:59.460+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T21:00:59.559+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 2.752 seconds
+[2026-02-03T21:01:29.876+0000] {processor.py:161} INFO - Started process (PID=275) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:01:29.890+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T21:01:29.892+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:01:29.891+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:01:32.524+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:01:32.534+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:01:32.533+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T21:01:32.542+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:01:32.542+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T21:01:32.646+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 2.774 seconds
+[2026-02-03T21:01:47.772+0000] {processor.py:161} INFO - Started process (PID=284) to work on /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:01:47.774+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/benchmark_dag1.py for tasks to queue
+[2026-02-03T21:01:47.775+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:01:47.775+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:01:50.649+0000] {processor.py:840} INFO - DAG(s) 'benchmark_model_dag' retrieved from /opt/airflow/dags/benchmark_dag1.py
+[2026-02-03T21:01:50.910+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:01:50.910+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-03T21:01:50.924+0000] {logging_mixin.py:188} INFO - [2026-02-03T21:01:50.924+0000] {dag.py:3823} INFO - Setting next_dagrun for benchmark_model_dag to None, run_after=None
+[2026-02-03T21:01:50.969+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/benchmark_dag1.py took 3.202 seconds

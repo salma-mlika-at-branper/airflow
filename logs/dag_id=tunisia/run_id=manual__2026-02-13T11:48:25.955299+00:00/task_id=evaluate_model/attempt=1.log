@@ -1,0 +1,43 @@
+[2026-02-13T11:51:26.394+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.evaluate_model manual__2026-02-13T11:48:25.955299+00:00 [queued]>
+[2026-02-13T11:51:26.402+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.evaluate_model manual__2026-02-13T11:48:25.955299+00:00 [queued]>
+[2026-02-13T11:51:26.403+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-13T11:51:26.435+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): evaluate_model> on 2026-02-13 11:48:25.955299+00:00
+[2026-02-13T11:51:26.445+0000] {standard_task_runner.py:60} INFO - Started process 939 to run task
+[2026-02-13T11:51:26.448+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'evaluate_model', 'manual__2026-02-13T11:48:25.955299+00:00', '--job-id', '425', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpi7raxebp']
+[2026-02-13T11:51:26.450+0000] {standard_task_runner.py:88} INFO - Job 425: Subtask evaluate_model
+[2026-02-13T11:51:26.497+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.evaluate_model manual__2026-02-13T11:48:25.955299+00:00 [running]> on host bfe1eb2b1a9c
+[2026-02-13T11:51:26.578+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='evaluate_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-13T11:48:25.955299+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-13T11:48:25.955299+00:00'
+[2026-02-13T11:51:26.636+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-13T11:51:26.636+0000] {logging_mixin.py:188} INFO -  FINAL EVALUATION RESULTS 
+[2026-02-13T11:51:26.636+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - Accuracy:  0.7120
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - Precision: 0.7116
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - Recall:    0.7120
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - F1-Score:  0.7115
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - 
+Detailed Classification Report:
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO -               precision    recall  f1-score   support
+
+    negative       0.74      0.74      0.74        73
+     neutral       0.70      0.73      0.72        64
+    positive       0.68      0.64      0.66        47
+
+    accuracy                           0.71       184
+   macro avg       0.71      0.70      0.71       184
+weighted avg       0.71      0.71      0.71       184
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - 
+Confusion Matrix:
+[2026-02-13T11:51:26.637+0000] {logging_mixin.py:188} INFO - Labels: ['negative', 'neutral', 'positive']
+[2026-02-13T11:51:26.638+0000] {logging_mixin.py:188} INFO - [[54 11  8]
+ [11 47  6]
+ [ 8  9 30]]
+[2026-02-13T11:51:26.638+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-13T11:51:26.694+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.7119565217391305
+[2026-02-13T11:51:26.701+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.7120
+[2026-02-13T11:51:26.701+0000] {logging_mixin.py:188} INFO - Precision (weighted): 0.7116
+[2026-02-13T11:51:26.702+0000] {logging_mixin.py:188} INFO - Recall (weighted): 0.7120
+[2026-02-13T11:51:26.702+0000] {logging_mixin.py:188} INFO - F1-score (weighted): 0.7115
+[2026-02-13T11:51:26.702+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-13T11:51:26.710+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tunisia, task_id=evaluate_model, execution_date=20260213T114825, start_date=20260213T115126, end_date=20260213T115126
+[2026-02-13T11:51:26.740+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-13T11:51:26.757+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

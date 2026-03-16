@@ -1,0 +1,19 @@
+[2026-02-05T12:07:34.324+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: francais.load_data manual__2026-02-05T12:07:28.637046+00:00 [queued]>
+[2026-02-05T12:07:34.359+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: francais.load_data manual__2026-02-05T12:07:28.637046+00:00 [queued]>
+[2026-02-05T12:07:34.360+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-05T12:07:34.413+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-05 12:07:28.637046+00:00
+[2026-02-05T12:07:34.429+0000] {standard_task_runner.py:60} INFO - Started process 283 to run task
+[2026-02-05T12:07:34.432+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'francais', 'load_data', 'manual__2026-02-05T12:07:28.637046+00:00', '--job-id', '66', '--raw', '--subdir', 'DAGS_FOLDER/fr.py', '--cfg-path', '/tmp/tmpjegvky8h']
+[2026-02-05T12:07:34.434+0000] {standard_task_runner.py:88} INFO - Job 66: Subtask load_data
+[2026-02-05T12:07:34.502+0000] {task_command.py:423} INFO - Running <TaskInstance: francais.load_data manual__2026-02-05T12:07:28.637046+00:00 [running]> on host e006cdd261d4
+[2026-02-05T12:07:34.926+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='francais' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-05T12:07:28.637046+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-05T12:07:28.637046+00:00'
+[2026-02-05T12:07:34.997+0000] {logging_mixin.py:188} INFO -    label                                             \ttext
+0      0  \t- Awww, c'est un bummer. Tu devrais avoir da...
+1      0  \tEst contrarié qu'il ne puisse pas mettre à j...
+2      0  \tJ'ai plongé plusieurs fois pour la balle. A ...
+3      0  \tTout mon corps a des démangeaisons et comme ...
+4      0  \tNon, il ne se comporte pas du tout. je suis ...
+[2026-02-05T12:07:35.670+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-05T12:07:35.687+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=francais, task_id=load_data, execution_date=20260205T120728, start_date=20260205T120734, end_date=20260205T120735
+[2026-02-05T12:07:35.808+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-05T12:07:35.845+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

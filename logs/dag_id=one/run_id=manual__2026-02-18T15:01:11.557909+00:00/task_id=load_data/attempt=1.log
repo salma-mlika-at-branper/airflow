@@ -1,0 +1,18 @@
+[2026-02-18T15:01:47.653+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one.load_data manual__2026-02-18T15:01:11.557909+00:00 [queued]>
+[2026-02-18T15:01:47.669+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one.load_data manual__2026-02-18T15:01:11.557909+00:00 [queued]>
+[2026-02-18T15:01:47.669+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T15:01:47.701+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-18 15:01:11.557909+00:00
+[2026-02-18T15:01:47.722+0000] {standard_task_runner.py:60} INFO - Started process 611 to run task
+[2026-02-18T15:01:47.730+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one', 'load_data', 'manual__2026-02-18T15:01:11.557909+00:00', '--job-id', '582', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmp8w5vo50o']
+[2026-02-18T15:01:47.732+0000] {standard_task_runner.py:88} INFO - Job 582: Subtask load_data
+[2026-02-18T15:01:47.827+0000] {task_command.py:423} INFO - Running <TaskInstance: one.load_data manual__2026-02-18T15:01:11.557909+00:00 [running]> on host 13e6883cc7c9
+[2026-02-18T15:01:48.153+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T15:01:11.557909+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T15:01:11.557909+00:00'
+[2026-02-18T15:01:48.781+0000] {logging_mixin.py:188} INFO -                                                 text     label
+0   تخيّل روحك تكون تصور في تحرك ضد الشركة الصهيو...  negative
+[2026-02-18T15:01:48.824+0000] {logging_mixin.py:188} INFO - label
+negative    1
+Name: count, dtype: int64
+[2026-02-18T15:01:48.892+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-18T15:01:48.902+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=one, task_id=load_data, execution_date=20260218T150111, start_date=20260218T150147, end_date=20260218T150148
+[2026-02-18T15:01:48.958+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-18T15:01:48.996+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

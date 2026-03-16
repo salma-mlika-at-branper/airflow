@@ -1,0 +1,22 @@
+[2026-02-12T12:21:35.659+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.load_data manual__2026-02-12T12:21:30.658803+00:00 [queued]>
+[2026-02-12T12:21:35.667+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.load_data manual__2026-02-12T12:21:30.658803+00:00 [queued]>
+[2026-02-12T12:21:35.667+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T12:21:35.734+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-12 12:21:30.658803+00:00
+[2026-02-12T12:21:35.749+0000] {standard_task_runner.py:60} INFO - Started process 517 to run task
+[2026-02-12T12:21:35.752+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'load_data', 'manual__2026-02-12T12:21:30.658803+00:00', '--job-id', '386', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpzyg9_rp_']
+[2026-02-12T12:21:35.754+0000] {standard_task_runner.py:88} INFO - Job 386: Subtask load_data
+[2026-02-12T12:21:35.797+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.load_data manual__2026-02-12T12:21:30.658803+00:00 [running]> on host 8b934bed39a8
+[2026-02-12T12:21:35.998+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T12:21:30.658803+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T12:21:30.658803+00:00'
+[2026-02-12T12:21:36.059+0000] {logging_mixin.py:188} INFO - Before cleaning:
+[2026-02-12T12:21:36.127+0000] {logging_mixin.py:188} INFO -                                                 text     label
+0   تخيّل روحك تكون تصور في تحرك ضد الشركة الصهيو...  negative
+1  فماش تهم أخرى مقنعة أكثر بالله ؟؟ شنو نعملوا ب...  negative
+2            هذا اللي صار لأختنا Esmahen Ghanmi  !!   positive
+3  متهمة بقضية   جمع معلومات شخصية على الأمنيين  ...  negative
+4  بالمناسبة نعاودوا نذكروا الي قضيتنا راهي عادلة...   neutral
+[2026-02-12T12:21:36.156+0000] {logging_mixin.py:188} INFO - Unique labels BEFORE filtering: ['negative' 'positive' 'neutral' 'تهنئة من القلب' 'none' 'negative ,']
+[2026-02-12T12:21:36.177+0000] {logging_mixin.py:188} INFO - Unique labels AFTER filtering: ['negative' 'positive' 'neutral']
+[2026-02-12T12:21:36.395+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-12T12:21:36.403+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tunisia, task_id=load_data, execution_date=20260212T122130, start_date=20260212T122135, end_date=20260212T122136
+[2026-02-12T12:21:36.447+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-12T12:21:36.472+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

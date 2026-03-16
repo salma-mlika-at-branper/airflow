@@ -1,0 +1,190 @@
+[2026-02-18T12:35:23.580+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one_parallel_100.run_predictions_90 manual__2026-02-18T12:30:41.862590+00:00 [queued]>
+[2026-02-18T12:35:23.598+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one_parallel_100.run_predictions_90 manual__2026-02-18T12:30:41.862590+00:00 [queued]>
+[2026-02-18T12:35:23.598+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T12:35:23.833+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions_90> on 2026-02-18 12:30:41.862590+00:00
+[2026-02-18T12:35:24.462+0000] {standard_task_runner.py:60} INFO - Started process 657 to run task
+[2026-02-18T12:35:25.575+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one_parallel_100', 'run_predictions_90', 'manual__2026-02-18T12:30:41.862590+00:00', '--job-id', '468', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmptt_u8s0j']
+[2026-02-18T12:35:25.584+0000] {standard_task_runner.py:88} INFO - Job 468: Subtask run_predictions_90
+[2026-02-18T12:35:25.967+0000] {task_command.py:423} INFO - Running <TaskInstance: one_parallel_100.run_predictions_90 manual__2026-02-18T12:30:41.862590+00:00 [running]> on host 5275323beb6b
+[2026-02-18T12:35:26.650+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one_parallel_100' AIRFLOW_CTX_TASK_ID='run_predictions_90' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T12:30:41.862590+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T12:30:41.862590+00:00'
+[2026-02-18T12:38:53.908+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/one.py", line 45, in run_predictions
+    model = pipeline("sentiment-analysis", model=model_name, device=-1)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/__init__.py", line 926, in pipeline
+    framework, model = infer_framework_load_model(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 302, in infer_framework_load_model
+    raise ValueError(
+ValueError: Could not load model CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment with any of the following classes: (<class 'transformers.models.auto.modeling_auto.AutoModelForSequenceClassification'>, <class 'transformers.models.bert.modeling_bert.BertForSequenceClassification'>). See the original errors:
+
+while loading with AutoModelForSequenceClassification, an error is thrown:
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 586, in load_state_dict
+    return torch.load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1546, in load
+    return _legacy_load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1812, in _legacy_load
+    result = unpickler.load()
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 335, in load
+    if full_path in _get_allowed_globals():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 220, in _get_allowed_globals
+    for f in _tensor_rebuild_functions():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 151, in _tensor_rebuild_functions
+    torch._utils._rebuild_parameter,
+  File "/home/***/.local/lib/python3.9/site-packages/torch/__init__.py", line 2745, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+AttributeError: module 'torch' has no attribute '_utils'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 595, in load_state_dict
+    if f.read(7) == "version":
+  File "/usr/local/lib/python3.9/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x80 in position 0: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 289, in infer_framework_load_model
+    model = model_class.from_pretrained(model, **kwargs)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 4019, in from_pretrained
+    state_dict = load_state_dict(resolved_archive_file, weights_only=weights_only)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 607, in load_state_dict
+    raise OSError(
+OSError: Unable to load weights from pytorch checkpoint file for '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin' at '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin'. If you tried to load a PyTorch model from a TF 2.0 checkpoint, please set from_tf=True.
+
+while loading with BertForSequenceClassification, an error is thrown:
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 586, in load_state_dict
+    return torch.load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1546, in load
+    return _legacy_load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1812, in _legacy_load
+    result = unpickler.load()
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 335, in load
+    if full_path in _get_allowed_globals():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 220, in _get_allowed_globals
+    for f in _tensor_rebuild_functions():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 151, in _tensor_rebuild_functions
+    torch._utils._rebuild_parameter,
+  File "/home/***/.local/lib/python3.9/site-packages/torch/__init__.py", line 2745, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+AttributeError: module 'torch' has no attribute '_utils'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 595, in load_state_dict
+    if f.read(7) == "version":
+  File "/usr/local/lib/python3.9/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x80 in position 0: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 289, in infer_framework_load_model
+    model = model_class.from_pretrained(model, **kwargs)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 4019, in from_pretrained
+    state_dict = load_state_dict(resolved_archive_file, weights_only=weights_only)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 607, in load_state_dict
+    raise OSError(
+OSError: Unable to load weights from pytorch checkpoint file for '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin' at '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin'. If you tried to load a PyTorch model from a TF 2.0 checkpoint, please set from_tf=True.
+
+
+
+[2026-02-18T12:38:56.177+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=one_parallel_100, task_id=run_predictions_90, execution_date=20260218T123041, start_date=20260218T123523, end_date=20260218T123856
+[2026-02-18T12:39:03.055+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 468 for task run_predictions_90 (Could not load model CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment with any of the following classes: (<class 'transformers.models.auto.modeling_auto.AutoModelForSequenceClassification'>, <class 'transformers.models.bert.modeling_bert.BertForSequenceClassification'>). See the original errors:
+
+while loading with AutoModelForSequenceClassification, an error is thrown:
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 586, in load_state_dict
+    return torch.load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1546, in load
+    return _legacy_load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1812, in _legacy_load
+    result = unpickler.load()
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 335, in load
+    if full_path in _get_allowed_globals():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 220, in _get_allowed_globals
+    for f in _tensor_rebuild_functions():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 151, in _tensor_rebuild_functions
+    torch._utils._rebuild_parameter,
+  File "/home/***/.local/lib/python3.9/site-packages/torch/__init__.py", line 2745, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+AttributeError: module 'torch' has no attribute '_utils'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 595, in load_state_dict
+    if f.read(7) == "version":
+  File "/usr/local/lib/python3.9/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x80 in position 0: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 289, in infer_framework_load_model
+    model = model_class.from_pretrained(model, **kwargs)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 4019, in from_pretrained
+    state_dict = load_state_dict(resolved_archive_file, weights_only=weights_only)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 607, in load_state_dict
+    raise OSError(
+OSError: Unable to load weights from pytorch checkpoint file for '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin' at '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin'. If you tried to load a PyTorch model from a TF 2.0 checkpoint, please set from_tf=True.
+
+while loading with BertForSequenceClassification, an error is thrown:
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 586, in load_state_dict
+    return torch.load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1546, in load
+    return _legacy_load(
+  File "/home/***/.local/lib/python3.9/site-packages/torch/serialization.py", line 1812, in _legacy_load
+    result = unpickler.load()
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 335, in load
+    if full_path in _get_allowed_globals():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 220, in _get_allowed_globals
+    for f in _tensor_rebuild_functions():
+  File "/home/***/.local/lib/python3.9/site-packages/torch/_weights_only_unpickler.py", line 151, in _tensor_rebuild_functions
+    torch._utils._rebuild_parameter,
+  File "/home/***/.local/lib/python3.9/site-packages/torch/__init__.py", line 2745, in __getattr__
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+AttributeError: module 'torch' has no attribute '_utils'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 595, in load_state_dict
+    if f.read(7) == "version":
+  File "/usr/local/lib/python3.9/codecs.py", line 322, in decode
+    (result, consumed) = self._buffer_decode(data, self.errors, final)
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x80 in position 0: invalid start byte
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 289, in infer_framework_load_model
+    model = model_class.from_pretrained(model, **kwargs)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 4019, in from_pretrained
+    state_dict = load_state_dict(resolved_archive_file, weights_only=weights_only)
+  File "/home/***/.local/lib/python3.9/site-packages/transformers/modeling_utils.py", line 607, in load_state_dict
+    raise OSError(
+OSError: Unable to load weights from pytorch checkpoint file for '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin' at '/home/***/.cache/huggingface/hub/models--CAMeL-Lab--bert-base-arabic-camelbert-mix-sentiment/snapshots/6ef16021f303c8a2bac02fd5af16601593e665d2/pytorch_model.bin'. If you tried to load a PyTorch model from a TF 2.0 checkpoint, please set from_tf=True.
+
+
+; 657)
+[2026-02-18T12:39:13.199+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-18T12:39:37.627+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

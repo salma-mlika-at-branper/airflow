@@ -1,0 +1,19 @@
+[2026-02-11T15:46:22.158+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: arabe_T.load_data manual__2026-02-11T15:46:17.075307+00:00 [queued]>
+[2026-02-11T15:46:22.168+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: arabe_T.load_data manual__2026-02-11T15:46:17.075307+00:00 [queued]>
+[2026-02-11T15:46:22.169+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-11T15:46:22.198+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-11 15:46:17.075307+00:00
+[2026-02-11T15:46:22.210+0000] {standard_task_runner.py:60} INFO - Started process 431 to run task
+[2026-02-11T15:46:22.213+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'arabe_T', 'load_data', 'manual__2026-02-11T15:46:17.075307+00:00', '--job-id', '247', '--raw', '--subdir', 'DAGS_FOLDER/arabet.py', '--cfg-path', '/tmp/tmp5ktwx80_']
+[2026-02-11T15:46:22.215+0000] {standard_task_runner.py:88} INFO - Job 247: Subtask load_data
+[2026-02-11T15:46:22.270+0000] {task_command.py:423} INFO - Running <TaskInstance: arabe_T.load_data manual__2026-02-11T15:46:17.075307+00:00 [running]> on host fb6e372ce96c
+[2026-02-11T15:46:22.391+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='arabe_T' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-11T15:46:17.075307+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-11T15:46:17.075307+00:00'
+[2026-02-11T15:46:22.500+0000] {logging_mixin.py:188} INFO -       label                                               text
+0  negative            \tحتى الايتونز خربتوه مو صاحين انتو؟؟ 😭
+1  negative  \tواحد تبع النظام السوري يقول أن المخابرات الس...
+2  negative  \tالى متى التعامل السئ للخادمات وعدم احترامهم ...
+3  negative                \tرايح جاي ي طحلبي 🐸 #الهلال_الاهلي
+4  negative                               \tتتمغط ومعها سداع 😫
+[2026-02-11T15:46:22.554+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-11T15:46:22.565+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=arabe_T, task_id=load_data, execution_date=20260211T154617, start_date=20260211T154622, end_date=20260211T154622
+[2026-02-11T15:46:22.626+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-11T15:46:22.656+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

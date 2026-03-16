@@ -1,0 +1,39 @@
+[2026-02-11T12:24:05.780+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: arabe_T.load_data manual__2026-02-11T12:24:01.046789+00:00 [queued]>
+[2026-02-11T12:24:05.799+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: arabe_T.load_data manual__2026-02-11T12:24:01.046789+00:00 [queued]>
+[2026-02-11T12:24:05.799+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-11T12:24:05.837+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-11 12:24:01.046789+00:00
+[2026-02-11T12:24:05.848+0000] {standard_task_runner.py:60} INFO - Started process 698 to run task
+[2026-02-11T12:24:05.851+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'arabe_T', 'load_data', 'manual__2026-02-11T12:24:01.046789+00:00', '--job-id', '199', '--raw', '--subdir', 'DAGS_FOLDER/arabet.py', '--cfg-path', '/tmp/tmptotwr782']
+[2026-02-11T12:24:05.853+0000] {standard_task_runner.py:88} INFO - Job 199: Subtask load_data
+[2026-02-11T12:24:05.911+0000] {task_command.py:423} INFO - Running <TaskInstance: arabe_T.load_data manual__2026-02-11T12:24:01.046789+00:00 [running]> on host 7ac41e35ff7d
+[2026-02-11T12:24:06.192+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='arabe_T' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-11T12:24:01.046789+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-11T12:24:01.046789+00:00'
+[2026-02-11T12:24:06.196+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/arabet.py", line 12, in load_data
+    df = pd.read_csv("/opt/airflow/data/arabet.csv", header=None)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 617, in _read
+    return parser.read(nrows)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1748, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+  File "parsers.pyx", line 843, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 904, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 879, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 890, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2058, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 81, saw 3
+
+[2026-02-11T12:24:06.203+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=arabe_T, task_id=load_data, execution_date=20260211T122401, start_date=20260211T122405, end_date=20260211T122406
+[2026-02-11T12:24:06.413+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 199 for task load_data (Error tokenizing data. C error: Expected 2 fields in line 81, saw 3
+; 698)
+[2026-02-11T12:24:06.465+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-11T12:24:06.485+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,48 @@
+[2026-02-12T14:04:55.731+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia_v2.evaluate_model manual__2026-02-12T13:58:32.310026+00:00 [queued]>
+[2026-02-12T14:04:55.742+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia_v2.evaluate_model manual__2026-02-12T13:58:32.310026+00:00 [queued]>
+[2026-02-12T14:04:55.742+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T14:04:55.784+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): evaluate_model> on 2026-02-12 13:58:32.310026+00:00
+[2026-02-12T14:04:55.796+0000] {standard_task_runner.py:60} INFO - Started process 1623 to run task
+[2026-02-12T14:04:55.799+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia_v2', 'evaluate_model', 'manual__2026-02-12T13:58:32.310026+00:00', '--job-id', '410', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpm6b3_026']
+[2026-02-12T14:04:55.800+0000] {standard_task_runner.py:88} INFO - Job 410: Subtask evaluate_model
+[2026-02-12T14:04:55.849+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia_v2.evaluate_model manual__2026-02-12T13:58:32.310026+00:00 [running]> on host eb08d26b54bb
+[2026-02-12T14:04:55.952+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia_v2' AIRFLOW_CTX_TASK_ID='evaluate_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T13:58:32.310026+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T13:58:32.310026+00:00'
+[2026-02-12T14:04:56.016+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1565 UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+[2026-02-12T14:04:56.019+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1565 UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+[2026-02-12T14:04:56.024+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1565 UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+[2026-02-12T14:04:56.027+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1565 UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+[2026-02-12T14:04:56.040+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-12T14:04:56.040+0000] {logging_mixin.py:188} INFO -  FINAL EVALUATION RESULTS 
+[2026-02-12T14:04:56.040+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-12T14:04:56.040+0000] {logging_mixin.py:188} INFO - Accuracy:  0.3636
+[2026-02-12T14:04:56.040+0000] {logging_mixin.py:188} INFO - Precision: 0.1322
+[2026-02-12T14:04:56.040+0000] {logging_mixin.py:188} INFO - Recall:    0.3636
+[2026-02-12T14:04:56.041+0000] {logging_mixin.py:188} INFO - F1-Score:  0.1939
+[2026-02-12T14:04:56.041+0000] {logging_mixin.py:188} INFO - 
+Detailed Classification Report:
+[2026-02-12T14:04:56.041+0000] {logging_mixin.py:188} INFO -               precision    recall  f1-score   support
+
+    negative       0.00      0.00      0.00        72
+     neutral       0.36      1.00      0.53        68
+    positive       0.00      0.00      0.00        47
+
+    accuracy                           0.36       187
+   macro avg       0.12      0.33      0.18       187
+weighted avg       0.13      0.36      0.19       187
+[2026-02-12T14:04:56.041+0000] {logging_mixin.py:188} INFO - 
+Confusion Matrix:
+[2026-02-12T14:04:56.041+0000] {logging_mixin.py:188} INFO - Labels: ['negative', 'neutral', 'positive']
+[2026-02-12T14:04:56.042+0000] {logging_mixin.py:188} INFO - [[ 0 72  0]
+ [ 0 68  0]
+ [ 0 47  0]]
+[2026-02-12T14:04:56.042+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-12T14:04:56.099+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.36363636363636365
+[2026-02-12T14:04:56.105+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.9/site-packages/sklearn/metrics/_classification.py:1565 UndefinedMetricWarning: Precision is ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+[2026-02-12T14:04:56.112+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.3636
+[2026-02-12T14:04:56.112+0000] {logging_mixin.py:188} INFO - Precision (weighted): 0.1322
+[2026-02-12T14:04:56.113+0000] {logging_mixin.py:188} INFO - Recall (weighted): 0.3636
+[2026-02-12T14:04:56.113+0000] {logging_mixin.py:188} INFO - F1-score (weighted): 0.1939
+[2026-02-12T14:04:56.113+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-12T14:04:56.121+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tunisia_v2, task_id=evaluate_model, execution_date=20260212T135832, start_date=20260212T140455, end_date=20260212T140456
+[2026-02-12T14:04:56.171+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-12T14:04:56.189+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

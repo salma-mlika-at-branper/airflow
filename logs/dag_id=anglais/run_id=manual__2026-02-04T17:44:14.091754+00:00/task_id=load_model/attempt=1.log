@@ -1,0 +1,61 @@
+[2026-02-04T17:44:21.944+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: anglais.load_model manual__2026-02-04T17:44:14.091754+00:00 [queued]>
+[2026-02-04T17:44:21.959+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: anglais.load_model manual__2026-02-04T17:44:14.091754+00:00 [queued]>
+[2026-02-04T17:44:21.961+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-04T17:44:21.983+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_model> on 2026-02-04 17:44:14.091754+00:00
+[2026-02-04T17:44:21.995+0000] {standard_task_runner.py:60} INFO - Started process 348 to run task
+[2026-02-04T17:44:21.999+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'anglais', 'load_model', 'manual__2026-02-04T17:44:14.091754+00:00', '--job-id', '31', '--raw', '--subdir', 'DAGS_FOLDER/anglais.py', '--cfg-path', '/tmp/tmpt_97zh93']
+[2026-02-04T17:44:22.001+0000] {standard_task_runner.py:88} INFO - Job 31: Subtask load_model
+[2026-02-04T17:44:22.056+0000] {task_command.py:423} INFO - Running <TaskInstance: anglais.load_model manual__2026-02-04T17:44:14.091754+00:00 [running]> on host 32dc8a1209d7
+[2026-02-04T17:44:22.194+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='anglais' AIRFLOW_CTX_TASK_ID='load_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-04T17:44:14.091754+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-04T17:44:14.091754+00:00'
+[2026-02-04T17:44:38.372+0000] {_http.py:320} WARNING - '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7295ac31aca0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))"), '(Request ID: abec1c55-60d5-40d0-a9b0-4f0a706790e0)')' thrown while requesting HEAD https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json
+[2026-02-04T17:44:38.372+0000] {_http.py:329} WARNING - Retrying in 1s [Retry 1/5].
+[2026-02-04T17:44:55.451+0000] {_http.py:320} WARNING - '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7295ac31a4f0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))"), '(Request ID: 938fdae4-b8f5-4107-8397-ebcf798673c4)')' thrown while requesting HEAD https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json
+[2026-02-04T17:44:55.452+0000] {_http.py:329} WARNING - Retrying in 2s [Retry 2/5].
+[2026-02-04T17:45:13.463+0000] {_http.py:320} WARNING - '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7295ac31aa60>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))"), '(Request ID: a49ed934-a1cb-4530-88bf-d56b92783305)')' thrown while requesting HEAD https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json
+[2026-02-04T17:45:13.463+0000] {_http.py:329} WARNING - Retrying in 4s [Retry 3/5].
+[2026-02-04T17:45:29.204+0000] {_http.py:320} WARNING - '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7295ac31a2e0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))"), '(Request ID: 1db043df-89e8-44be-8470-8bf6c062f06f)')' thrown while requesting HEAD https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment/resolve/main/tokenizer_config.json
+[2026-02-04T17:45:29.205+0000] {_http.py:329} WARNING - Retrying in 8s [Retry 4/5].
+[2026-02-04T17:45:47.967+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1633, in convert_slow_tokenizer
+    return TikTokenConverter(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1533, in converted
+    tokenizer = self.tokenizer()
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1526, in tokenizer
+    vocab_scores, merges = self.extract_vocab_merges_from_model(self.vocab_file)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1502, in extract_vocab_merges_from_model
+    bpe_ranks = load_tiktoken_bpe(tiktoken_url)
+  File "/home/airflow/.local/lib/python3.9/site-packages/tiktoken/load.py", line 162, in load_tiktoken_bpe
+    contents = read_file_cached(tiktoken_bpe_file, expected_hash)
+  File "/home/airflow/.local/lib/python3.9/site-packages/tiktoken/load.py", line 52, in read_file_cached
+    cache_key = hashlib.sha1(blobpath.encode()).hexdigest()
+AttributeError: 'NoneType' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/anglais.py", line 26, in load_model
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/auto/tokenization_auto.py", line 939, in from_pretrained
+    return tokenizer_class_fast.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2213, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2447, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/xlm_roberta/tokenization_xlm_roberta_fast.py", line 108, in __init__
+    super().__init__(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/tokenization_utils_fast.py", line 138, in __init__
+    fast_tokenizer = convert_slow_tokenizer(self, from_tiktoken=True)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1638, in convert_slow_tokenizer
+    raise ValueError(
+ValueError: Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast convertors: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']
+[2026-02-04T17:45:47.976+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=anglais, task_id=load_model, execution_date=20260204T174414, start_date=20260204T174421, end_date=20260204T174547
+[2026-02-04T17:45:47.999+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 31 for task load_model (Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast convertors: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']; 348)
+[2026-02-04T17:45:48.050+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-04T17:45:48.067+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

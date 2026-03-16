@@ -1,0 +1,1 @@
+[2026-02-18T12:32:46.175+0000] {scheduler_job_runner.py:781} ERROR - Executor reports task instance <TaskInstance: one_parallel_100.run_predictions_2 manual__2026-02-18T12:30:41.862590+00:00 [queued]> finished (failed) although the task says it's queued. (Info: None) Was the task killed externally?

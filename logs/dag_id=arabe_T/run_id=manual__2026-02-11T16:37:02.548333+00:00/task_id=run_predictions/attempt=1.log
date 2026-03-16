@@ -1,0 +1,13 @@
+[2026-02-11T16:37:17.303+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: arabe_T.run_predictions manual__2026-02-11T16:37:02.548333+00:00 [queued]>
+[2026-02-11T16:37:17.314+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: arabe_T.run_predictions manual__2026-02-11T16:37:02.548333+00:00 [queued]>
+[2026-02-11T16:37:17.314+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-11T16:37:17.384+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-11 16:37:02.548333+00:00
+[2026-02-11T16:37:17.394+0000] {standard_task_runner.py:60} INFO - Started process 339 to run task
+[2026-02-11T16:37:17.397+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'arabe_T', 'run_predictions', 'manual__2026-02-11T16:37:02.548333+00:00', '--job-id', '261', '--raw', '--subdir', 'DAGS_FOLDER/arabet.py', '--cfg-path', '/tmp/tmpmuk2gnyq']
+[2026-02-11T16:37:17.399+0000] {standard_task_runner.py:88} INFO - Job 261: Subtask run_predictions
+[2026-02-11T16:37:17.469+0000] {task_command.py:423} INFO - Running <TaskInstance: arabe_T.run_predictions manual__2026-02-11T16:37:02.548333+00:00 [running]> on host affa2b9e7f40
+[2026-02-11T16:37:17.557+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='arabe_T' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-11T16:37:02.548333+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-11T16:37:02.548333+00:00'
+[2026-02-11T16:40:55.112+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-11T16:40:55.121+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=arabe_T, task_id=run_predictions, execution_date=20260211T163702, start_date=20260211T163717, end_date=20260211T164055
+[2026-02-11T16:40:55.206+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-11T16:40:55.223+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

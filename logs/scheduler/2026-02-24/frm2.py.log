@@ -1,0 +1,77 @@
+[2026-02-24T13:06:04.718+0000] {processor.py:161} INFO - Started process (PID=202) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:06:04.719+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:06:04.721+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:04.720+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:06:08.253+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:06:08.282+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:08.281+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:06:08.300+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:08.299+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:06:08.337+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.623 seconds
+[2026-02-24T13:06:52.971+0000] {processor.py:161} INFO - Started process (PID=315) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:06:52.992+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:06:52.993+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:52.992+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:06:56.177+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:06:56.201+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:56.200+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:06:56.216+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:56.216+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:06:56.336+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.368 seconds
+[2026-02-24T13:07:36.611+0000] {processor.py:161} INFO - Started process (PID=428) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:07:36.657+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:07:36.658+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:36.657+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:07:40.108+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:07:40.127+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:40.126+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:07:40.140+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:40.139+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:07:40.278+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.669 seconds
+[2026-02-24T13:08:16.179+0000] {processor.py:161} INFO - Started process (PID=541) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:08:16.180+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:08:16.181+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:16.181+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:08:19.050+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:08:19.069+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:19.068+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:19.080+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:19.080+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:08:19.125+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 2.948 seconds
+[2026-02-24T13:08:55.968+0000] {processor.py:161} INFO - Started process (PID=654) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:08:55.969+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:08:55.970+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:55.969+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:08:59.271+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:08:59.294+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:59.293+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:59.307+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:59.307+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:08:59.341+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.378 seconds
+[2026-02-24T13:09:35.006+0000] {processor.py:161} INFO - Started process (PID=767) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:09:35.007+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:09:35.008+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:35.007+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:09:38.490+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:09:38.527+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:38.526+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:09:38.544+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:38.543+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:09:38.593+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.589 seconds
+[2026-02-24T13:10:18.431+0000] {processor.py:161} INFO - Started process (PID=880) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:10:18.442+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:10:18.443+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:18.442+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:10:21.705+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:10:21.731+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:21.730+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:10:21.747+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:21.747+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:10:21.803+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.375 seconds
+[2026-02-24T13:11:04.141+0000] {processor.py:161} INFO - Started process (PID=993) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:11:04.168+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:11:04.169+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:04.169+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:11:08.227+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:11:08.255+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:08.255+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:08.270+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:08.269+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:11:08.334+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 4.197 seconds
+[2026-02-24T13:11:53.182+0000] {processor.py:161} INFO - Started process (PID=1115) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:11:53.191+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:11:53.191+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:53.191+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:11:56.049+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:11:56.071+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:56.070+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:56.083+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:56.083+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:11:56.126+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 2.947 seconds
+[2026-02-24T13:12:33.290+0000] {processor.py:161} INFO - Started process (PID=1228) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:12:33.298+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:12:33.299+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:33.299+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:12:36.417+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:12:36.436+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:36.436+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:12:36.447+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:36.447+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:12:36.568+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.280 seconds
+[2026-02-24T13:13:14.130+0000] {processor.py:161} INFO - Started process (PID=1341) to work on /opt/airflow/dags/frm2.py
+[2026-02-24T13:13:14.317+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/frm2.py for tasks to queue
+[2026-02-24T13:13:14.319+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:14.319+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/frm2.py
+[2026-02-24T13:13:17.329+0000] {processor.py:840} INFO - DAG(s) 'frm2' retrieved from /opt/airflow/dags/frm2.py
+[2026-02-24T13:13:17.347+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:17.346+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:13:17.356+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:17.356+0000] {dag.py:3823} INFO - Setting next_dagrun for frm2 to None, run_after=None
+[2026-02-24T13:13:17.539+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/frm2.py took 3.412 seconds

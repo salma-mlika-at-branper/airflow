@@ -1,0 +1,14 @@
+[2026-02-18T16:26:19.774+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one.load_data manual__2026-02-18T16:25:58.480206+00:00 [queued]>
+[2026-02-18T16:26:19.784+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one.load_data manual__2026-02-18T16:25:58.480206+00:00 [queued]>
+[2026-02-18T16:26:19.784+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T16:26:19.864+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-18 16:25:58.480206+00:00
+[2026-02-18T16:26:19.877+0000] {standard_task_runner.py:60} INFO - Started process 381 to run task
+[2026-02-18T16:26:19.901+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one', 'load_data', 'manual__2026-02-18T16:25:58.480206+00:00', '--job-id', '640', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmp71z_2g_l']
+[2026-02-18T16:26:19.903+0000] {standard_task_runner.py:88} INFO - Job 640: Subtask load_data
+[2026-02-18T16:26:19.985+0000] {task_command.py:423} INFO - Running <TaskInstance: one.load_data manual__2026-02-18T16:25:58.480206+00:00 [running]> on host 7b29760038e2
+[2026-02-18T16:26:20.796+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T16:25:58.480206+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T16:25:58.480206+00:00'
+[2026-02-18T16:26:20.996+0000] {logging_mixin.py:188} INFO - Total valid rows loaded: 1
+[2026-02-18T16:26:21.321+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-18T16:26:21.334+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=one, task_id=load_data, execution_date=20260218T162558, start_date=20260218T162619, end_date=20260218T162621
+[2026-02-18T16:26:21.416+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-18T16:26:21.566+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

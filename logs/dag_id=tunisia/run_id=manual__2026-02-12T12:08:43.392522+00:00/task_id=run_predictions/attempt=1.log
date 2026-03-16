@@ -1,0 +1,12 @@
+[2026-02-12T12:09:04.035+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:43.392522+00:00 [queued]>
+[2026-02-12T12:09:04.048+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:43.392522+00:00 [queued]>
+[2026-02-12T12:09:04.049+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T12:09:04.075+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-12 12:08:43.392522+00:00
+[2026-02-12T12:09:04.092+0000] {standard_task_runner.py:60} INFO - Started process 466 to run task
+[2026-02-12T12:09:04.096+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'run_predictions', 'manual__2026-02-12T12:08:43.392522+00:00', '--job-id', '379', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpnpnlocza']
+[2026-02-12T12:09:04.098+0000] {standard_task_runner.py:88} INFO - Job 379: Subtask run_predictions
+[2026-02-12T12:09:04.163+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:43.392522+00:00 [running]> on host 275d7df23bf4
+[2026-02-12T12:09:04.280+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T12:08:43.392522+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T12:08:43.392522+00:00'
+[2026-02-12T12:12:58.726+0000] {local_task_job_runner.py:121} ERROR - Received SIGTERM. Terminating subprocesses
+[2026-02-12T12:12:58.956+0000] {process_utils.py:131} INFO - Sending 15 to group 466. PIDs of all processes in the group: [466]
+[2026-02-12T12:12:58.956+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 466

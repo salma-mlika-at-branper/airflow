@@ -1,0 +1,13 @@
+[2026-02-05T14:20:29.138+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: arabe.load_model manual__2026-02-05T14:20:14.644696+00:00 [queued]>
+[2026-02-05T14:20:29.146+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: arabe.load_model manual__2026-02-05T14:20:14.644696+00:00 [queued]>
+[2026-02-05T14:20:29.147+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-05T14:20:29.201+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_model> on 2026-02-05 14:20:14.644696+00:00
+[2026-02-05T14:20:29.213+0000] {standard_task_runner.py:60} INFO - Started process 562 to run task
+[2026-02-05T14:20:29.216+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'arabe', 'load_model', 'manual__2026-02-05T14:20:14.644696+00:00', '--job-id', '84', '--raw', '--subdir', 'DAGS_FOLDER/arabic.py', '--cfg-path', '/tmp/tmpsnkhsd6f']
+[2026-02-05T14:20:29.217+0000] {standard_task_runner.py:88} INFO - Job 84: Subtask load_model
+[2026-02-05T14:20:29.318+0000] {task_command.py:423} INFO - Running <TaskInstance: arabe.load_model manual__2026-02-05T14:20:14.644696+00:00 [running]> on host 0142f0bd09ed
+[2026-02-05T14:20:29.432+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='arabe' AIRFLOW_CTX_TASK_ID='load_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-05T14:20:14.644696+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-05T14:20:14.644696+00:00'
+[2026-02-05T14:20:29.457+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-05T14:20:29.465+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=arabe, task_id=load_model, execution_date=20260205T142014, start_date=20260205T142029, end_date=20260205T142029
+[2026-02-05T14:20:29.508+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-05T14:20:29.530+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

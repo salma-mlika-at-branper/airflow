@@ -1,0 +1,39 @@
+[2026-02-09T16:20:16.750+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: frm2.load_data manual__2026-02-09T16:20:12.975317+00:00 [queued]>
+[2026-02-09T16:20:16.758+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: frm2.load_data manual__2026-02-09T16:20:12.975317+00:00 [queued]>
+[2026-02-09T16:20:16.759+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-09T16:20:16.794+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-09 16:20:12.975317+00:00
+[2026-02-09T16:20:16.807+0000] {standard_task_runner.py:60} INFO - Started process 466 to run task
+[2026-02-09T16:20:16.810+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'frm2', 'load_data', 'manual__2026-02-09T16:20:12.975317+00:00', '--job-id', '174', '--raw', '--subdir', 'DAGS_FOLDER/frm2.py', '--cfg-path', '/tmp/tmpi3np6vqp']
+[2026-02-09T16:20:16.811+0000] {standard_task_runner.py:88} INFO - Job 174: Subtask load_data
+[2026-02-09T16:20:16.855+0000] {task_command.py:423} INFO - Running <TaskInstance: frm2.load_data manual__2026-02-09T16:20:12.975317+00:00 [running]> on host c9fd3968c3f9
+[2026-02-09T16:20:16.980+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='frm2' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-09T16:20:12.975317+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-09T16:20:12.975317+00:00'
+[2026-02-09T16:20:17.016+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/frm2.py", line 14, in load_data
+    df = pd.read_csv("/opt/airflow/data/fr.csv")
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 948, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 617, in _read
+    return parser.read(nrows)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1748, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+  File "parsers.pyx", line 843, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 904, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 879, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 890, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2058, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 9, saw 4
+
+[2026-02-09T16:20:17.029+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=frm2, task_id=load_data, execution_date=20260209T162012, start_date=20260209T162016, end_date=20260209T162017
+[2026-02-09T16:20:17.062+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 174 for task load_data (Error tokenizing data. C error: Expected 2 fields in line 9, saw 4
+; 466)
+[2026-02-09T16:20:17.102+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-09T16:20:17.136+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,77 @@
+[2026-02-24T13:06:00.000+0000] {processor.py:161} INFO - Started process (PID=193) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:06:00.001+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:06:00.001+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:00.001+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:06:04.522+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:06:04.564+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:04.563+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:06:04.579+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:04.579+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:06:04.643+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 4.645 seconds
+[2026-02-24T13:06:49.083+0000] {processor.py:161} INFO - Started process (PID=306) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:06:49.121+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:06:49.122+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:49.121+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:06:52.744+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:06:52.764+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:52.763+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:06:52.774+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:52.774+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:06:52.909+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.829 seconds
+[2026-02-24T13:07:33.328+0000] {processor.py:161} INFO - Started process (PID=419) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:07:33.333+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:07:33.334+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:33.333+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:07:36.463+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:07:36.481+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:36.480+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:07:36.492+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:36.492+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:07:36.562+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.236 seconds
+[2026-02-24T13:08:13.226+0000] {processor.py:161} INFO - Started process (PID=532) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:08:13.227+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:08:13.228+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:13.228+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:08:16.064+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:08:16.083+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:16.083+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:16.093+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:16.093+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:08:16.133+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 2.909 seconds
+[2026-02-24T13:08:52.229+0000] {processor.py:161} INFO - Started process (PID=645) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:08:52.231+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:08:52.232+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:52.232+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:08:55.793+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:08:55.824+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:55.824+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:55.838+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:55.838+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:08:55.915+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.689 seconds
+[2026-02-24T13:09:32.012+0000] {processor.py:161} INFO - Started process (PID=758) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:09:32.013+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:09:32.014+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:32.013+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:09:34.869+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:09:34.888+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:34.888+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:09:34.898+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:34.898+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:09:34.957+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 2.948 seconds
+[2026-02-24T13:10:15.018+0000] {processor.py:161} INFO - Started process (PID=871) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:10:15.031+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:10:15.031+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:15.031+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:10:18.284+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:10:18.309+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:18.309+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:10:18.319+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:18.319+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:10:18.379+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.365 seconds
+[2026-02-24T13:10:59.870+0000] {processor.py:161} INFO - Started process (PID=984) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:10:59.872+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:10:59.873+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:59.872+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:11:03.914+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:11:03.942+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:03.942+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:03.952+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:03.951+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:11:04.083+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 4.215 seconds
+[2026-02-24T13:11:49.840+0000] {processor.py:161} INFO - Started process (PID=1106) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:11:49.849+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:11:49.850+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:49.849+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:11:52.984+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:11:53.005+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:53.004+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:53.015+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:53.015+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:11:53.129+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.291 seconds
+[2026-02-24T13:12:29.868+0000] {processor.py:161} INFO - Started process (PID=1219) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:12:29.876+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:12:29.876+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:29.876+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:12:33.064+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:12:33.095+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:33.094+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:12:33.108+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:33.108+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:12:33.229+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.363 seconds
+[2026-02-24T13:13:10.932+0000] {processor.py:161} INFO - Started process (PID=1332) to work on /opt/airflow/dags/arabe2.py
+[2026-02-24T13:13:11.023+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/arabe2.py for tasks to queue
+[2026-02-24T13:13:11.025+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:11.024+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:13:13.910+0000] {processor.py:840} INFO - DAG(s) 'arabem2' retrieved from /opt/airflow/dags/arabe2.py
+[2026-02-24T13:13:13.931+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:13.930+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:13:13.942+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:13.941+0000] {dag.py:3823} INFO - Setting next_dagrun for arabem2 to None, run_after=None
+[2026-02-24T13:13:14.074+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/arabe2.py took 3.144 seconds

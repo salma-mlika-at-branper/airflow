@@ -1,0 +1,119 @@
+[2026-02-12T12:08:48.693+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.load_data manual__2026-02-12T12:08:43.392522+00:00 [queued]>
+[2026-02-12T12:08:48.707+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.load_data manual__2026-02-12T12:08:43.392522+00:00 [queued]>
+[2026-02-12T12:08:48.707+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T12:08:48.734+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-12 12:08:43.392522+00:00
+[2026-02-12T12:08:48.756+0000] {standard_task_runner.py:60} INFO - Started process 413 to run task
+[2026-02-12T12:08:48.763+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'load_data', 'manual__2026-02-12T12:08:43.392522+00:00', '--job-id', '375', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmp51u4szed']
+[2026-02-12T12:08:48.766+0000] {standard_task_runner.py:88} INFO - Job 375: Subtask load_data
+[2026-02-12T12:08:48.844+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.load_data manual__2026-02-12T12:08:43.392522+00:00 [running]> on host 275d7df23bf4
+[2026-02-12T12:08:49.473+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T12:08:43.392522+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T12:08:43.392522+00:00'
+[2026-02-12T12:08:49.479+0000] {logging_mixin.py:188} INFO - Before cleaning:
+[2026-02-12T12:08:49.533+0000] {logging_mixin.py:188} INFO -       label                                             \ttext
+0  negative  \t- Awww, c'est un bummer. Tu devrais avoir da...
+1  negative  \tEst contrarié qu'il ne puisse pas mettre à j...
+2  negative  \tJ'ai plongé plusieurs fois pour la balle. A ...
+3  negative  \tTout mon corps a des démangeaisons et comme ...
+4  negative  \tNon, il ne se comporte pas du tout. je suis ...
+[2026-02-12T12:08:49.536+0000] {logging_mixin.py:188} INFO - Unique labels BEFORE filtering: ["- awww, c'est un bummer. tu devrais avoir david carr du troisième jour pour le faire. ;ré"
+ "est contrarié qu'il ne puisse pas mettre à jour son facebook en le télémaignant ... et peut-être pleurer en conséquence, l'école aujourd'hui aussi. blabla!"
+ "j'ai plongé plusieurs fois pour la balle. a réussi à économiser 5negative% le reste sort de limites"
+ "tout mon corps a des démangeaisons et comme si c'était en feu"
+ 'non, il ne se comporte pas du tout. je suis en colère. pourquoi suis-je ici? parce que je ne peux pas vous voir partout.'
+ "pas l'équipage complet" "besoin d'un câlin"
+ 'bonjour pas de vue! oui ... pleut un peu, juste un peu lol, je vais bien merci, comment ça va?'
+ "non, ils ne l'avaient pas" 'je meurs?'
+ 'vacances de printemps en ville ordinaire ... il neige'
+ 'je viens de perdre mes oreilles'
+ "je ne pouvais pas supporter de le regarder. et je pensais que la perte de l'ua était embarrassante. . . . ."
+ "ça compte, idk pourquoi je l'ai fait non plus. tu ne me parles plus"
+ "j'aurais été le premier, mais je n'avais pas d'arme à feu. pas vraiment, zac snyder est juste une doucheclown."
+ "j'aimerais que je le regarde avec vous !! tu me manques et comment était la première?"
+ 'la scène de la mort de hollis va humer sévèrement de regarder le film en train de se débrouiller.'
+ 'sur le point de déposer des taxes'
+ 'ahh ive toujours voulu voir le loyer adorer la bande originale !!'
+ 'oh cher. est-ce que vous buviez des boissons de table oubliées?'
+ "j'étais dehors la plupart du temps donc je n'ai pas beaucoup fait"
+ "un de mes amis m'a appelé et a demandé de la rencontrer à la mi-vallée aujourd'hui ... mais je n'ai pas le temps * soupir *"
+ "je vous ai cuisiné un gâteau, mais je l'ai appris"
+ "cette semaine ne va pas comme je l'avais espéré"
+ 'classe blagh demain à 8'
+ 'je déteste quand je dois appeler et réveiller les gens'
+ 'je vais me crier après avoir regardé marley et moi.'
+ 'je suis triste maintenant miss.lilly'
+ 'ooooh .... lol que leslie .... et ok je ne le refuserai pas, donc leslie ne va pas se fâcher de nouveau'
+ "meh ... presque l'amant est l'exception ... cette piste me déprime à chaque fois."
+ 'somepositive piraté mon compte sur le but maintenant je dois en créer un nouveau'
+ "je veux aller pour promouvoir l'engrenage et le sillon, mais malheureusement, je ne vais pas là-bas. je pourrais aller à celui d'anaheim en mai"
+ "pensé dormir dans était une option demain mais en réalisant que ce n'est pas le cas maintenant. les évaluations le matin et le travail dans l'après-midi!"
+ 'crainte que je vous aime aussi !!!! je suis ici, je vous manque'
+ 'je pleure mes yeux asiatiques pour dormir la nuit'
+ "ok, je suis malade et j'ai passé une heure assise dans la douche parce que j'étais trop malade pour supporter et retenir le puke comme un champion. au lit maintenant"
+ "je vous raconte l'histoire plus tard pas une bonne journée et je travaillerai comme trois heures de plus ..."
+ 'pardon! le temps de coucher est venu ici (gmt + positive)'
+ "je ne le fais pas non plus. c'est déprimant. je ne pense pas que je voulais même savoir sur les enfants dans les valises."
+ 'lit. classe 8-positive2. travail positive2-3. gymnase 3-5 ou 6. puis classe 6-positivenegative. un autre jour qui va passer. ma petite amie me manque'
+ "je n'ai vraiment pas envie de me lever aujourd'hui ... mais je dois étudier pour un examen pratique de demain ..."
+ 'il est la raison de la larme sur ma guitare, le seul qui a assez de moi pour me casser'
+ 'triste triste triste. je ne sais pas pourquoi, mais je déteste ce sentiment, je veux dormir et je ne peux toujours pas!'
+ "awww, je souhaite que j'étais là pour vous voir enfin à l'aise! je suis triste que je l'ai manqué"
+ "s'endormir. vient d'entendre parler du corps de cette fille de tracy. quelle est la tristeté de mes familles pour cette famille."
+ 'yay! je suis heureux pour vous avec votre travail! mais cela signifie aussi moins de temps pour moi et vous ...'
+ "j'ai juste vérifié mon chronologie de l'utilisateur sur mon blackberry, il semble que le twanking est toujours en train de se produire. ppl a-t-il encore des problèmes avec wgs / wgs?"
+ "oh mec ... était le top préféré de repasser à porter à une réunion. l'a brûlé"
+ 'est étrangement triste de voir lilo et samro se séparer.'
+ 'je vous aime, les gars sont les meilleurs!'
+ 'je me retrouve avec un de mes besties ce soir! je ne peux pas attendre! - conversation de filles!!'
+ "merci pour l'ajout de twitter, sunisa! je dois vous rencontrer une fois dans un show hin ici dans la région de dc et vous étiez un monstre."
+ 'être malade peut être vraiment bon marché quand il fait trop mal pour manger de la vraie nourriture, vos amis vous font soupe'
+ 'il a cet effet sur tout le monde'
+ "vous pouvez lui dire que je viens d'éclater de rire vraiment fort en raison de cela, merci de me faire sortir de ma boude!"
+ "merci pour votre réponse. j'avais déjà trouvé cette réponse"
+ "je suis tellement jaloux, j'espère que vous avez passé un bon moment à vegas! comment avez-vous aimé les acm ?! aime ton spectacle !!"
+ 'ah, félicite mr fletcher pour finalement rejoindre twitter'
+ "j'ai répondu que le chat stupide m'aidé à taper. pardonner des erreurs"
+ "jour de l'école folle. il y a une durée de 10 heures. sur le point de regarder les collines. m'a dit aussi! ha. joyeux anniversaire jb!"
+ "comment ai-je oublié deux hommes et demi?!?!? j'adore ce spectacle !!!"
+ "haha, ne t'inquiète pas! vous en ferrez tout!"
+ "au moins, je ne serai pas le seul à se sentir perdu! cela peut me causer beaucoup de nuits plus tard que d'habitude, déjà addictives"
+ "assurez-vous que vous me dm si vous publiez un lien vers cette vidéo! & lt\t lol & gt\t donc je ne te manque pas mieux d'obtenir la permission et la bénédiction d'abord?"
+ "vient d'ajouter tweetie à mon nouvel iphone"
+ 'je ne sais vraiment pas. je pense que le monde! ouais! je revins je sais aussi que si je pouvais! )'
+ ': votre photo est très douce'
+ 'rattrapage sur les courriels, rss et retour aléatoire. alors je coupe tôt ce soir (positivepositiveh3negative) pour diner avec'
+ 'danser autour de la pièce en pjs, se brouiller sur mon ipod. se marrant. bien, twitter, vous avez demandé!'
+ "n'a pas participé au concours peeps mais merci d'avoir voté de toute façon."
+ 'aller au lit, bonne nuit à tous et doux rêves'
+ 'marcher pour déposer le dépôt demain'
+ 'suit maintenant, vous devriez faire la même chose'
+ "est-ce que vous êtes censé ajouter au fond de ce twitter d'une cabine de toilette quelque part & quot ;?"
+ "je tiens mon nouveau chiot. eh bien, il n'est pas le mien, mais c'est un gars."
+ "kitteh est en train de dormir sur mon entrejambe qui prouve qu'elle m'aime plus"
+ 'atteindre amritsar dans une heure et (si je trouve un bus) devrait être à la frontière de wagah à 4 heures -'
+ '. je pensais juste à toi ce soir! vous devez me laisser être le premier à interviewer que vous êtes une super star célèbre'
+ 'heureux de passer du temps avec la famille.'
+ 'enfin aller au lit! tellement fatigué. allait regarder les collines mais pas'
+ "tellement fatigué de ma gorge me fait mal ... ooooohh ... j'ai juste eu une folle envie d'un pina colada / banana slushie !!!!"
+ 'télécharger indowebster dong banggggg'
+ 'vous êtes les bienvenus. je vous en remerciais.'
+ 'hahaha!! omg! nous étions les deux rires au loin! cuz das on roule ... ryt sheldawg?'
+ "awww pookie se sent mieux. je prierai pour vous ... et sachez l'infirmière"
+ 'yay! a trouvé un nouveau copain câlin'
+ "je pense que j'ai rencontré mon premier snob & quot; sur twitter ce soir. dommage. la vie continue!"
+ "à travers l'univers. dormir. répétez demain."
+ 'la patate douce sèche, hein?'
+ "salut jon! ravi de te l'entendre dire! à la croisière, je ne peux pas attendre! j'espère que tout va bien sur le chevalier! tu es aimé!"
+ 'avoir une longue conversation avec maman sur le téléphone'
+ "yayyy! lol. je l'ai simplement demandé. qu'a-t-elle dit?"
+ "pratiquer des lignes / manières / voix pour la prochaine prise de vue. probablement conduire mal à l'épreuve."
+ 'allons lire la nouvelle lune pour la 3ème fois, je ne peux pas avoir assez de série crépusculaire'
+ "aujourd'hui, c'est notre anniversaire de deux mois! je t'aime trop diana. omg, vous ne savez même pas que les talons de goudron ont gagné le ncaa woot !!!!!"
+ "je m'ennuie"
+ "c'est un fond d'écran avec le carré rouge que je demandais"
+ "merci pour votre réponse. je n'ai déjà trouvé cette réponse"
+ "ben ouais! j'ai seulement remarqué que je suis bb aussi."
+ "juste tryna s'inspire de tout"]
+[2026-02-12T12:08:49.538+0000] {logging_mixin.py:188} INFO - Unique labels AFTER filtering: []
+[2026-02-12T12:08:49.711+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-12T12:08:49.736+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tunisia, task_id=load_data, execution_date=20260212T120843, start_date=20260212T120848, end_date=20260212T120849
+[2026-02-12T12:08:49.905+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-12T12:08:49.960+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

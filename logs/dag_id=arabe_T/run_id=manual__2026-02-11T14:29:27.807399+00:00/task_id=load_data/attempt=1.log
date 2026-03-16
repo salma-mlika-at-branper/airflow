@@ -1,0 +1,19 @@
+[2026-02-11T14:29:33.240+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: arabe_T.load_data manual__2026-02-11T14:29:27.807399+00:00 [queued]>
+[2026-02-11T14:29:33.251+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: arabe_T.load_data manual__2026-02-11T14:29:27.807399+00:00 [queued]>
+[2026-02-11T14:29:33.252+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-11T14:29:33.291+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-11 14:29:27.807399+00:00
+[2026-02-11T14:29:33.306+0000] {standard_task_runner.py:60} INFO - Started process 490 to run task
+[2026-02-11T14:29:33.309+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'arabe_T', 'load_data', 'manual__2026-02-11T14:29:27.807399+00:00', '--job-id', '228', '--raw', '--subdir', 'DAGS_FOLDER/arabet.py', '--cfg-path', '/tmp/tmpt62_foyg']
+[2026-02-11T14:29:33.311+0000] {standard_task_runner.py:88} INFO - Job 228: Subtask load_data
+[2026-02-11T14:29:33.375+0000] {task_command.py:423} INFO - Running <TaskInstance: arabe_T.load_data manual__2026-02-11T14:29:27.807399+00:00 [running]> on host 22017b374832
+[2026-02-11T14:29:33.558+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='arabe_T' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-11T14:29:27.807399+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-11T14:29:27.807399+00:00'
+[2026-02-11T14:29:33.628+0000] {logging_mixin.py:188} INFO -                                                label      text sentiment
+0  "تخيّل روحك تكون تصور في تحرك ضد الشركة الصهيو...  negative       NaN
+1  فماش تهم أخرى مقنعة أكثر بالله ؟؟ شنو نعملوا ب...  negative       NaN
+2            هذا اللي صار لأختنا Esmahen Ghanmi  !!   positive       NaN
+3  متهمة بقضية ""جمع معلومات شخصية على الأمنيين""...  negative       NaN
+4  بالمناسبة نعاودوا نذكروا الي قضيتنا راهي عادلة...   neutral       NaN
+[2026-02-11T14:29:33.837+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-11T14:29:33.844+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=arabe_T, task_id=load_data, execution_date=20260211T142927, start_date=20260211T142933, end_date=20260211T142933
+[2026-02-11T14:29:33.883+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-11T14:29:33.909+0000] {taskinstance.py:3280} INFO - 1 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,40 @@
+[2026-02-12T11:12:34.460+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.evaluate_model manual__2026-02-12T11:06:46.877359+00:00 [queued]>
+[2026-02-12T11:12:34.467+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.evaluate_model manual__2026-02-12T11:06:46.877359+00:00 [queued]>
+[2026-02-12T11:12:34.468+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T11:12:34.496+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): evaluate_model> on 2026-02-12 11:06:46.877359+00:00
+[2026-02-12T11:12:34.508+0000] {standard_task_runner.py:60} INFO - Started process 2955 to run task
+[2026-02-12T11:12:34.511+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'evaluate_model', 'manual__2026-02-12T11:06:46.877359+00:00', '--job-id', '355', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmprl99hd9k']
+[2026-02-12T11:12:34.513+0000] {standard_task_runner.py:88} INFO - Job 355: Subtask evaluate_model
+[2026-02-12T11:12:34.562+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.evaluate_model manual__2026-02-12T11:06:46.877359+00:00 [running]> on host a38ab41c63b5
+[2026-02-12T11:12:34.678+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='evaluate_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T11:06:46.877359+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T11:06:46.877359+00:00'
+[2026-02-12T11:12:34.782+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.9/site-packages/sklearn/metrics/_classification.py:407 UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+[2026-02-12T11:12:34.782+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-12T11:12:34.782+0000] {logging_mixin.py:188} INFO -  FINAL EVALUATION RESULTS 
+[2026-02-12T11:12:34.783+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-12T11:12:34.783+0000] {logging_mixin.py:188} INFO - Accuracy:  1.0000
+[2026-02-12T11:12:34.783+0000] {logging_mixin.py:188} INFO - Precision: 1.0000
+[2026-02-12T11:12:34.783+0000] {logging_mixin.py:188} INFO - Recall:    1.0000
+[2026-02-12T11:12:34.783+0000] {logging_mixin.py:188} INFO - F1-Score:  1.0000
+[2026-02-12T11:12:34.784+0000] {logging_mixin.py:188} INFO - 
+Detailed Classification Report:
+[2026-02-12T11:12:34.784+0000] {logging_mixin.py:188} INFO -               precision    recall  f1-score   support
+
+    positive       1.00      1.00      1.00         1
+
+    accuracy                           1.00         1
+   macro avg       1.00      1.00      1.00         1
+weighted avg       1.00      1.00      1.00         1
+[2026-02-12T11:12:34.784+0000] {logging_mixin.py:188} INFO - 
+Confusion Matrix:
+[2026-02-12T11:12:34.784+0000] {logging_mixin.py:188} INFO - Labels: ['positive']
+[2026-02-12T11:12:34.785+0000] {logging_mixin.py:188} INFO - [[1]]
+[2026-02-12T11:12:34.785+0000] {logging_mixin.py:188} INFO - ==============================
+[2026-02-12T11:12:34.879+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 1.0
+[2026-02-12T11:12:34.908+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 1.0000
+[2026-02-12T11:12:34.908+0000] {logging_mixin.py:188} INFO - Precision (weighted): 1.0000
+[2026-02-12T11:12:34.908+0000] {logging_mixin.py:188} INFO - Recall (weighted): 1.0000
+[2026-02-12T11:12:34.908+0000] {logging_mixin.py:188} INFO - F1-score (weighted): 1.0000
+[2026-02-12T11:12:34.909+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-12T11:12:34.917+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=tunisia, task_id=evaluate_model, execution_date=20260212T110646, start_date=20260212T111234, end_date=20260212T111234
+[2026-02-12T11:12:35.047+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-12T11:12:35.081+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,48 @@
+[2026-02-05T22:36:21.651+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: multi.run_predictions manual__2026-02-05T22:36:03.489440+00:00 [queued]>
+[2026-02-05T22:36:21.662+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: multi.run_predictions manual__2026-02-05T22:36:03.489440+00:00 [queued]>
+[2026-02-05T22:36:21.662+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-05T22:36:21.704+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-05 22:36:03.489440+00:00
+[2026-02-05T22:36:21.722+0000] {standard_task_runner.py:60} INFO - Started process 375 to run task
+[2026-02-05T22:36:21.726+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'multi', 'run_predictions', 'manual__2026-02-05T22:36:03.489440+00:00', '--job-id', '99', '--raw', '--subdir', 'DAGS_FOLDER/multi.py', '--cfg-path', '/tmp/tmp53o_1mm1']
+[2026-02-05T22:36:21.728+0000] {standard_task_runner.py:88} INFO - Job 99: Subtask run_predictions
+[2026-02-05T22:36:21.793+0000] {task_command.py:423} INFO - Running <TaskInstance: multi.run_predictions manual__2026-02-05T22:36:03.489440+00:00 [running]> on host cec86ccbfd3a
+[2026-02-05T22:36:21.906+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='multi' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-05T22:36:03.489440+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-05T22:36:03.489440+00:00'
+[2026-02-05T22:42:07.183+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/multi.py", line 33, in run_predictions
+    preds = model(texts)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/text_classification.py", line 159, in __call__
+    result = super().__call__(*inputs, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 1283, in __call__
+    outputs = list(final_iterator)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/pt_utils.py", line 124, in __next__
+    item = next(self.iterator)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/pt_utils.py", line 125, in __next__
+    processed = self.infer(item, **self.params)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/base.py", line 1209, in forward
+    model_outputs = self._forward(model_inputs, **forward_params)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/text_classification.py", line 190, in _forward
+    return self.model(**model_inputs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 1327, in forward
+    outputs = self.roberta(
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1773, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1784, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/xlm_roberta/modeling_xlm_roberta.py", line 908, in forward
+    buffered_token_type_ids_expanded = buffered_token_type_ids.expand(batch_size, seq_length)
+RuntimeError: The expanded size of the tensor (3674) must match the existing size (514) at non-singleton dimension 1.  Target sizes: [1, 3674].  Tensor sizes: [1, 514]
+[2026-02-05T22:42:07.397+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=multi, task_id=run_predictions, execution_date=20260205T223603, start_date=20260205T223621, end_date=20260205T224207
+[2026-02-05T22:42:07.967+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 99 for task run_predictions (The expanded size of the tensor (3674) must match the existing size (514) at non-singleton dimension 1.  Target sizes: [1, 3674].  Tensor sizes: [1, 514]; 375)
+[2026-02-05T22:42:08.056+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-05T22:42:08.074+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

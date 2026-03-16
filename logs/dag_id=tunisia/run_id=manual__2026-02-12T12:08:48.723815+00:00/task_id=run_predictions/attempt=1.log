@@ -1,0 +1,13 @@
+[2026-02-12T12:09:06.266+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:48.723815+00:00 [queued]>
+[2026-02-12T12:09:06.276+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:48.723815+00:00 [queued]>
+[2026-02-12T12:09:06.276+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-12T12:09:06.312+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-12 12:08:48.723815+00:00
+[2026-02-12T12:09:06.324+0000] {standard_task_runner.py:60} INFO - Started process 488 to run task
+[2026-02-12T12:09:06.327+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'run_predictions', 'manual__2026-02-12T12:08:48.723815+00:00', '--job-id', '380', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpinqxe7kl']
+[2026-02-12T12:09:06.329+0000] {standard_task_runner.py:88} INFO - Job 380: Subtask run_predictions
+[2026-02-12T12:09:06.385+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:48.723815+00:00 [running]> on host 275d7df23bf4
+[2026-02-12T12:09:06.505+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T12:08:48.723815+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T12:08:48.723815+00:00'
+[2026-02-12T12:12:58.726+0000] {local_task_job_runner.py:121} ERROR - Received SIGTERM. Terminating subprocesses
+[2026-02-12T12:12:58.902+0000] {process_utils.py:131} INFO - Sending 15 to group 488. PIDs of all processes in the group: [488]
+[2026-02-12T12:12:58.902+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 488
+[2026-02-12T12:12:58.902+0000] {taskinstance.py:2450} ERROR - Received SIGTERM. Terminating subprocesses.

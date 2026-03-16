@@ -1,0 +1,26 @@
+[2026-02-11T15:38:04.492+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: arabe_T.run_predictions manual__2026-02-11T15:37:50.432265+00:00 [queued]>
+[2026-02-11T15:38:04.500+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: arabe_T.run_predictions manual__2026-02-11T15:37:50.432265+00:00 [queued]>
+[2026-02-11T15:38:04.500+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-11T15:38:04.536+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-11 15:37:50.432265+00:00
+[2026-02-11T15:38:04.547+0000] {standard_task_runner.py:60} INFO - Started process 511 to run task
+[2026-02-11T15:38:04.551+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'arabe_T', 'run_predictions', 'manual__2026-02-11T15:37:50.432265+00:00', '--job-id', '245', '--raw', '--subdir', 'DAGS_FOLDER/arabet.py', '--cfg-path', '/tmp/tmpvg3hwbu6']
+[2026-02-11T15:38:04.553+0000] {standard_task_runner.py:88} INFO - Job 245: Subtask run_predictions
+[2026-02-11T15:38:04.599+0000] {task_command.py:423} INFO - Running <TaskInstance: arabe_T.run_predictions manual__2026-02-11T15:37:50.432265+00:00 [running]> on host bed9d973932a
+[2026-02-11T15:38:04.738+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='arabe_T' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-11T15:37:50.432265+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-11T15:37:50.432265+00:00'
+[2026-02-11T15:41:19.609+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/arabet.py", line 51, in run_predictions
+    predictions = [roberta_map[p["label"]] for p in preds]
+  File "/opt/airflow/dags/arabet.py", line 51, in <listcomp>
+    predictions = [roberta_map[p["label"]] for p in preds]
+KeyError: '1 star'
+[2026-02-11T15:41:19.620+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=arabe_T, task_id=run_predictions, execution_date=20260211T153750, start_date=20260211T153804, end_date=20260211T154119
+[2026-02-11T15:41:19.722+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 245 for task run_predictions ('1 star'; 511)
+[2026-02-11T15:41:19.773+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-11T15:41:19.790+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,13 @@
+[2026-02-18T14:51:39.288+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one.run_predictions_7 manual__2026-02-18T14:50:27.318117+00:00 [queued]>
+[2026-02-18T14:51:39.470+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one.run_predictions_7 manual__2026-02-18T14:50:27.318117+00:00 [queued]>
+[2026-02-18T14:51:39.471+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T14:51:40.491+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions_7> on 2026-02-18 14:50:27.318117+00:00
+[2026-02-18T14:51:40.514+0000] {standard_task_runner.py:60} INFO - Started process 511 to run task
+[2026-02-18T14:51:40.519+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one', 'run_predictions_7', 'manual__2026-02-18T14:50:27.318117+00:00', '--job-id', '571', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmp1v9wsstw']
+[2026-02-18T14:51:40.523+0000] {standard_task_runner.py:88} INFO - Job 571: Subtask run_predictions_7
+[2026-02-18T14:51:40.910+0000] {task_command.py:423} INFO - Running <TaskInstance: one.run_predictions_7 manual__2026-02-18T14:50:27.318117+00:00 [running]> on host eb03b0760f41
+[2026-02-18T14:51:41.377+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one' AIRFLOW_CTX_TASK_ID='run_predictions_7' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T14:50:27.318117+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T14:50:27.318117+00:00'
+[2026-02-18T14:53:57.732+0000] {local_task_job_runner.py:121} ERROR - Received SIGTERM. Terminating subprocesses
+[2026-02-18T14:53:57.734+0000] {process_utils.py:131} INFO - Sending 15 to group 511. PIDs of all processes in the group: [511]
+[2026-02-18T14:53:57.734+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 511
+[2026-02-18T14:53:57.744+0000] {taskinstance.py:2450} ERROR - Received SIGTERM. Terminating subprocesses.

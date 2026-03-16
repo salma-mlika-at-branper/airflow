@@ -1,0 +1,55 @@
+[2026-02-04T17:13:54.465+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: anglais.run_predictions manual__2026-02-04T17:13:41.918966+00:00 [queued]>
+[2026-02-04T17:13:54.473+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: anglais.run_predictions manual__2026-02-04T17:13:41.918966+00:00 [queued]>
+[2026-02-04T17:13:54.474+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-04T17:13:54.508+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-04 17:13:41.918966+00:00
+[2026-02-04T17:13:54.522+0000] {standard_task_runner.py:60} INFO - Started process 2588 to run task
+[2026-02-04T17:13:54.524+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'anglais', 'run_predictions', 'manual__2026-02-04T17:13:41.918966+00:00', '--job-id', '20', '--raw', '--subdir', 'DAGS_FOLDER/anglais.py', '--cfg-path', '/tmp/tmpbr33r2vb']
+[2026-02-04T17:13:54.526+0000] {standard_task_runner.py:88} INFO - Job 20: Subtask run_predictions
+[2026-02-04T17:13:54.568+0000] {task_command.py:423} INFO - Running <TaskInstance: anglais.run_predictions manual__2026-02-04T17:13:41.918966+00:00 [running]> on host 5b0d6749ca95
+[2026-02-04T17:13:54.653+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='anglais' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-04T17:13:41.918966+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-04T17:13:41.918966+00:00'
+[2026-02-04T17:13:55.347+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1633, in convert_slow_tokenizer
+    return TikTokenConverter(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1533, in converted
+    tokenizer = self.tokenizer()
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1526, in tokenizer
+    vocab_scores, merges = self.extract_vocab_merges_from_model(self.vocab_file)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1502, in extract_vocab_merges_from_model
+    bpe_ranks = load_tiktoken_bpe(tiktoken_url)
+  File "/home/airflow/.local/lib/python3.9/site-packages/tiktoken/load.py", line 162, in load_tiktoken_bpe
+    contents = read_file_cached(tiktoken_bpe_file, expected_hash)
+  File "/home/airflow/.local/lib/python3.9/site-packages/tiktoken/load.py", line 52, in read_file_cached
+    cache_key = hashlib.sha1(blobpath.encode()).hexdigest()
+AttributeError: 'NoneType' object has no attribute 'encode'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/anglais.py", line 32, in run_predictions
+    model = pipeline("sentiment-analysis", model=model_name)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/pipelines/__init__.py", line 1033, in pipeline
+    tokenizer = AutoTokenizer.from_pretrained(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/auto/tokenization_auto.py", line 939, in from_pretrained
+    return tokenizer_class_fast.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2213, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/tokenization_utils_base.py", line 2447, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/models/xlm_roberta/tokenization_xlm_roberta_fast.py", line 108, in __init__
+    super().__init__(
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/tokenization_utils_fast.py", line 138, in __init__
+    fast_tokenizer = convert_slow_tokenizer(self, from_tiktoken=True)
+  File "/home/airflow/.local/lib/python3.9/site-packages/transformers/convert_slow_tokenizer.py", line 1638, in convert_slow_tokenizer
+    raise ValueError(
+ValueError: Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast convertors: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']
+[2026-02-04T17:13:55.355+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=anglais, task_id=run_predictions, execution_date=20260204T171341, start_date=20260204T171354, end_date=20260204T171355
+[2026-02-04T17:13:55.487+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 20 for task run_predictions (Converting from Tiktoken failed, if a converter for SentencePiece is available, provide a model path with a SentencePiece tokenizer.model file.Currently available slow->fast convertors: ['AlbertTokenizer', 'BartTokenizer', 'BarthezTokenizer', 'BertTokenizer', 'BigBirdTokenizer', 'BlenderbotTokenizer', 'CamembertTokenizer', 'CLIPTokenizer', 'CodeGenTokenizer', 'ConvBertTokenizer', 'DebertaTokenizer', 'DebertaV2Tokenizer', 'DistilBertTokenizer', 'DPRReaderTokenizer', 'DPRQuestionEncoderTokenizer', 'DPRContextEncoderTokenizer', 'ElectraTokenizer', 'FNetTokenizer', 'FunnelTokenizer', 'GPT2Tokenizer', 'HerbertTokenizer', 'LayoutLMTokenizer', 'LayoutLMv2Tokenizer', 'LayoutLMv3Tokenizer', 'LayoutXLMTokenizer', 'LongformerTokenizer', 'LEDTokenizer', 'LxmertTokenizer', 'MarkupLMTokenizer', 'MBartTokenizer', 'MBart50Tokenizer', 'MPNetTokenizer', 'MobileBertTokenizer', 'MvpTokenizer', 'NllbTokenizer', 'OpenAIGPTTokenizer', 'PegasusTokenizer', 'Qwen2Tokenizer', 'RealmTokenizer', 'ReformerTokenizer', 'RemBertTokenizer', 'RetriBertTokenizer', 'RobertaTokenizer', 'RoFormerTokenizer', 'SeamlessM4TTokenizer', 'SqueezeBertTokenizer', 'T5Tokenizer', 'UdopTokenizer', 'WhisperTokenizer', 'XLMRobertaTokenizer', 'XLNetTokenizer', 'SplinterTokenizer', 'XGLMTokenizer', 'LlamaTokenizer', 'CodeLlamaTokenizer', 'GemmaTokenizer', 'Phi3Tokenizer']; 2588)
+[2026-02-04T17:13:55.541+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-04T17:13:55.569+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

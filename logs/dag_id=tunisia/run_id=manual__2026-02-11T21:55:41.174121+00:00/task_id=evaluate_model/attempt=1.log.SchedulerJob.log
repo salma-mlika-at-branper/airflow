@@ -1,0 +1,1 @@
+[2026-02-11T22:02:32.252+0000] {scheduler_job_runner.py:781} ERROR - Executor reports task instance <TaskInstance: tunisia.evaluate_model manual__2026-02-11T21:55:41.174121+00:00 [queued]> finished (failed) although the task says it's queued. (Info: None) Was the task killed externally?

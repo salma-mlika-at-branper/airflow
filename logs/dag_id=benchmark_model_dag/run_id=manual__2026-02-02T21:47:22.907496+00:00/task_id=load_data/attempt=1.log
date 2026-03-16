@@ -1,0 +1,45 @@
+[2026-02-02T21:47:26.639+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: benchmark_model_dag.load_data manual__2026-02-02T21:47:22.907496+00:00 [queued]>
+[2026-02-02T21:47:26.646+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: benchmark_model_dag.load_data manual__2026-02-02T21:47:22.907496+00:00 [queued]>
+[2026-02-02T21:47:26.646+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-02T21:47:26.680+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): load_data> on 2026-02-02 21:47:22.907496+00:00
+[2026-02-02T21:47:26.694+0000] {standard_task_runner.py:60} INFO - Started process 179 to run task
+[2026-02-02T21:47:26.696+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'benchmark_model_dag', 'load_data', 'manual__2026-02-02T21:47:22.907496+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/benchmark_dag.py', '--cfg-path', '/tmp/tmpwc0rne6t']
+[2026-02-02T21:47:26.697+0000] {standard_task_runner.py:88} INFO - Job 6: Subtask load_data
+[2026-02-02T21:47:26.743+0000] {task_command.py:423} INFO - Running <TaskInstance: benchmark_model_dag.load_data manual__2026-02-02T21:47:22.907496+00:00 [running]> on host 4f79b0c85feb
+[2026-02-02T21:47:26.910+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='benchmark_model_dag' AIRFLOW_CTX_TASK_ID='load_data' AIRFLOW_CTX_EXECUTION_DATE='2026-02-02T21:47:22.907496+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-02T21:47:22.907496+00:00'
+[2026-02-02T21:47:27.232+0000] {logging_mixin.py:188} INFO -        textID                                               text sentiment
+0  f87dea47db  Last session of the day  http://twitpic.com/67ezh   neutral
+1  96d74cb729   Shanghai is also really exciting (precisely -...  positive
+2  eee518ae67  Recession hit Veronique Branquinho, she has to...  negative
+3  01082688c6                                        happy bday!  positive
+4  33987a8ee5             http://twitpic.com/4w75p - I like it!!  positive
+[2026-02-02T21:47:27.305+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3791, in get_loc
+    return self._engine.get_loc(casted_key)
+  File "index.pyx", line 152, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 181, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7080, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'label'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/benchmark_dag.py", line 15, in load_data
+    kwargs["ti"].xcom_push(key="labels", value=df["label"].tolist())
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/core/frame.py", line 3893, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/home/airflow/.local/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3798, in get_loc
+    raise KeyError(key) from err
+KeyError: 'label'
+[2026-02-02T21:47:27.346+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=benchmark_model_dag, task_id=load_data, execution_date=20260202T214722, start_date=20260202T214726, end_date=20260202T214727
+[2026-02-02T21:47:27.482+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 6 for task load_data ('label'; 179)
+[2026-02-02T21:47:27.510+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-02T21:47:27.532+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,26 @@
+[2026-02-09T12:29:45.084+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: anglaism2.run_predictions manual__2026-02-09T12:29:29.206324+00:00 [queued]>
+[2026-02-09T12:29:45.092+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: anglaism2.run_predictions manual__2026-02-09T12:29:29.206324+00:00 [queued]>
+[2026-02-09T12:29:45.093+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-09T12:29:45.124+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-09 12:29:29.206324+00:00
+[2026-02-09T12:29:45.136+0000] {standard_task_runner.py:60} INFO - Started process 323 to run task
+[2026-02-09T12:29:45.140+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'anglaism2', 'run_predictions', 'manual__2026-02-09T12:29:29.206324+00:00', '--job-id', '130', '--raw', '--subdir', 'DAGS_FOLDER/anglaism2.py', '--cfg-path', '/tmp/tmplcig866r']
+[2026-02-09T12:29:45.141+0000] {standard_task_runner.py:88} INFO - Job 130: Subtask run_predictions
+[2026-02-09T12:29:45.203+0000] {task_command.py:423} INFO - Running <TaskInstance: anglaism2.run_predictions manual__2026-02-09T12:29:29.206324+00:00 [running]> on host 0d38161c83a1
+[2026-02-09T12:29:45.322+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='anglaism2' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-09T12:29:29.206324+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-09T12:29:29.206324+00:00'
+[2026-02-09T12:32:40.908+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.9/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/anglaism2.py", line 58, in run_predictions
+    predictions = [id2label[p] for p in preds]
+  File "/opt/airflow/dags/anglaism2.py", line 58, in <listcomp>
+    predictions = [id2label[p] for p in preds]
+KeyError: 3
+[2026-02-09T12:32:41.171+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=anglaism2, task_id=run_predictions, execution_date=20260209T122929, start_date=20260209T122945, end_date=20260209T123241
+[2026-02-09T12:32:41.418+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 130 for task run_predictions (3; 323)
+[2026-02-09T12:32:41.470+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2026-02-09T12:32:41.495+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

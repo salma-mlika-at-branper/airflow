@@ -1,0 +1,77 @@
+[2026-02-24T13:06:08.404+0000] {processor.py:161} INFO - Started process (PID=211) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:06:08.406+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:06:08.407+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:08.407+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:06:12.472+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:06:12.508+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:12.506+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:06:12.525+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:12.525+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:06:12.608+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 4.207 seconds
+[2026-02-24T13:06:56.416+0000] {processor.py:161} INFO - Started process (PID=324) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:06:56.427+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:06:56.428+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:56.428+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:07:00.215+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:07:00.237+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:00.236+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:07:00.246+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:00.246+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:07:00.377+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.965 seconds
+[2026-02-24T13:07:40.325+0000] {processor.py:161} INFO - Started process (PID=437) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:07:40.342+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:07:40.343+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:40.343+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:07:43.600+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:07:43.618+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:43.618+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:07:43.630+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:43.630+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:07:43.756+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.434 seconds
+[2026-02-24T13:08:19.184+0000] {processor.py:161} INFO - Started process (PID=550) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:08:19.185+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:08:19.185+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:19.185+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:08:22.204+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:08:22.233+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:22.233+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:22.245+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:22.245+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:08:22.375+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.193 seconds
+[2026-02-24T13:08:59.398+0000] {processor.py:161} INFO - Started process (PID=663) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:08:59.399+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:08:59.401+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:59.400+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:09:02.724+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:09:02.748+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:02.747+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:09:02.760+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:02.759+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:09:02.836+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.441 seconds
+[2026-02-24T13:09:38.653+0000] {processor.py:161} INFO - Started process (PID=776) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:09:38.654+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:09:38.655+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:38.655+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:09:42.035+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:09:42.060+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:42.059+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:09:42.069+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:42.069+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:09:42.105+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.454 seconds
+[2026-02-24T13:10:21.874+0000] {processor.py:161} INFO - Started process (PID=889) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:10:21.887+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:10:21.889+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:21.888+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:10:25.221+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:10:25.244+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:25.243+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:10:25.258+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:25.257+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:10:25.329+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.459 seconds
+[2026-02-24T13:11:12.220+0000] {processor.py:161} INFO - Started process (PID=1011) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:11:12.240+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:11:12.241+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:12.240+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:11:15.904+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:11:15.928+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:15.928+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:15.942+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:15.941+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:11:16.002+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.786 seconds
+[2026-02-24T13:11:56.176+0000] {processor.py:161} INFO - Started process (PID=1124) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:11:56.186+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:11:56.186+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:56.186+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:11:59.033+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:11:59.051+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:59.051+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:59.062+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:59.062+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:11:59.108+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 2.935 seconds
+[2026-02-24T13:12:36.622+0000] {processor.py:161} INFO - Started process (PID=1237) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:12:36.648+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:12:36.649+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:36.649+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:12:39.687+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:12:39.708+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:39.707+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:12:39.724+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:39.724+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:12:39.869+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.250 seconds
+[2026-02-24T13:13:17.593+0000] {processor.py:161} INFO - Started process (PID=1350) to work on /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:13:17.629+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/anglaism2.py for tasks to queue
+[2026-02-24T13:13:17.630+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:17.629+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:13:20.620+0000] {processor.py:840} INFO - DAG(s) 'anglaism2' retrieved from /opt/airflow/dags/anglaism2.py
+[2026-02-24T13:13:20.637+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:20.637+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:13:20.649+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:13:20.648+0000] {dag.py:3823} INFO - Setting next_dagrun for anglaism2 to None, run_after=None
+[2026-02-24T13:13:20.741+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/anglaism2.py took 3.150 seconds

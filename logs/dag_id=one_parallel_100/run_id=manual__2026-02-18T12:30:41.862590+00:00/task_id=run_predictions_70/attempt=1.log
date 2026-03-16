@@ -1,0 +1,9 @@
+[2026-02-18T12:45:49.969+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: one_parallel_100.run_predictions_70 manual__2026-02-18T12:30:41.862590+00:00 [queued]>
+[2026-02-18T12:45:51.182+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: one_parallel_100.run_predictions_70 manual__2026-02-18T12:30:41.862590+00:00 [queued]>
+[2026-02-18T12:45:51.182+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-18T12:45:52.831+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions_70> on 2026-02-18 12:30:41.862590+00:00
+[2026-02-18T12:45:55.719+0000] {standard_task_runner.py:60} INFO - Started process 927 to run task
+[2026-02-18T12:45:56.983+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'one_parallel_100', 'run_predictions_70', 'manual__2026-02-18T12:30:41.862590+00:00', '--job-id', '479', '--raw', '--subdir', 'DAGS_FOLDER/one.py', '--cfg-path', '/tmp/tmpe_w7398m']
+[2026-02-18T12:45:57.157+0000] {standard_task_runner.py:88} INFO - Job 479: Subtask run_predictions_70
+[2026-02-18T12:45:58.113+0000] {task_command.py:423} INFO - Running <TaskInstance: one_parallel_100.run_predictions_70 manual__2026-02-18T12:30:41.862590+00:00 [running]> on host 5275323beb6b
+[2026-02-18T12:45:59.582+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='one_parallel_100' AIRFLOW_CTX_TASK_ID='run_predictions_70' AIRFLOW_CTX_EXECUTION_DATE='2026-02-18T12:30:41.862590+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-18T12:30:41.862590+00:00'

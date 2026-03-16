@@ -1,0 +1,18 @@
+[2026-02-04T10:18:57.811+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: benchmark_model_dag.evaluate_model manual__2026-02-04T10:12:01.776886+00:00 [queued]>
+[2026-02-04T10:18:57.820+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: benchmark_model_dag.evaluate_model manual__2026-02-04T10:12:01.776886+00:00 [queued]>
+[2026-02-04T10:18:57.820+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-02-04T10:18:57.854+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): evaluate_model> on 2026-02-04 10:12:01.776886+00:00
+[2026-02-04T10:18:57.872+0000] {standard_task_runner.py:60} INFO - Started process 569 to run task
+[2026-02-04T10:18:57.875+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'benchmark_model_dag', 'evaluate_model', 'manual__2026-02-04T10:12:01.776886+00:00', '--job-id', '45', '--raw', '--subdir', 'DAGS_FOLDER/benchmark_dag.py', '--cfg-path', '/tmp/tmp75baeu4e']
+[2026-02-04T10:18:57.877+0000] {standard_task_runner.py:88} INFO - Job 45: Subtask evaluate_model
+[2026-02-04T10:18:57.932+0000] {task_command.py:423} INFO - Running <TaskInstance: benchmark_model_dag.evaluate_model manual__2026-02-04T10:12:01.776886+00:00 [running]> on host 1424a4779fb3
+[2026-02-04T10:18:58.065+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='benchmark_model_dag' AIRFLOW_CTX_TASK_ID='evaluate_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-04T10:12:01.776886+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-04T10:12:01.776886+00:00'
+[2026-02-04T10:18:58.128+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.7178834182229767
+[2026-02-04T10:18:58.182+0000] {logging_mixin.py:188} INFO - Benchmark Accuracy: 0.7179
+[2026-02-04T10:18:58.183+0000] {logging_mixin.py:188} INFO - Precision (weighted): 0.7210
+[2026-02-04T10:18:58.183+0000] {logging_mixin.py:188} INFO - Recall (weighted): 0.7179
+[2026-02-04T10:18:58.183+0000] {logging_mixin.py:188} INFO - F1-score (weighted): 0.7112
+[2026-02-04T10:18:58.184+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-02-04T10:18:58.191+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=benchmark_model_dag, task_id=evaluate_model, execution_date=20260204T101201, start_date=20260204T101857, end_date=20260204T101858
+[2026-02-04T10:18:58.247+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-02-04T10:18:58.264+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check

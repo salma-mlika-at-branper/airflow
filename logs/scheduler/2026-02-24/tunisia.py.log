@@ -1,0 +1,77 @@
+[2026-02-24T13:05:33.345+0000] {processor.py:161} INFO - Started process (PID=166) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:05:33.345+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:05:33.346+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:05:33.346+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:05:51.754+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:05:51.798+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:05:51.798+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:05:51.827+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:05:51.826+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:05:51.893+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 18.551 seconds
+[2026-02-24T13:06:37.621+0000] {processor.py:161} INFO - Started process (PID=279) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:06:37.639+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:06:37.641+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:37.640+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:06:41.549+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:06:41.572+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:41.571+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:06:41.581+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:06:41.581+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:06:41.679+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 4.061 seconds
+[2026-02-24T13:07:22.448+0000] {processor.py:161} INFO - Started process (PID=392) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:07:22.451+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:07:22.453+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:22.452+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:07:26.118+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:07:26.139+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:26.138+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:07:26.152+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:07:26.152+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:07:26.232+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.788 seconds
+[2026-02-24T13:08:03.708+0000] {processor.py:161} INFO - Started process (PID=505) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:08:03.721+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:08:03.722+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:03.722+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:08:07.077+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:08:07.097+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:07.097+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:07.107+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:07.107+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:08:07.153+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.448 seconds
+[2026-02-24T13:08:43.174+0000] {processor.py:161} INFO - Started process (PID=618) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:08:43.175+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:08:43.176+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:43.175+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:08:45.978+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:08:45.997+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:45.996+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:08:46.007+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:08:46.007+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:08:46.031+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 2.860 seconds
+[2026-02-24T13:09:22.281+0000] {processor.py:161} INFO - Started process (PID=731) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:09:22.282+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:09:22.283+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:22.282+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:09:25.188+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:09:25.208+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:25.208+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:09:25.220+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:09:25.219+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:09:25.274+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 2.996 seconds
+[2026-02-24T13:10:04.736+0000] {processor.py:161} INFO - Started process (PID=844) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:10:04.755+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:10:04.758+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:04.757+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:10:07.979+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:10:08.006+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:08.005+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:10:08.022+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:08.022+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:10:08.050+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.319 seconds
+[2026-02-24T13:10:44.672+0000] {processor.py:161} INFO - Started process (PID=943) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:10:44.681+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:10:44.681+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:44.681+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:10:48.123+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:10:48.146+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:48.146+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:10:48.156+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:10:48.156+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:10:48.193+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.523 seconds
+[2026-02-24T13:11:31.853+0000] {processor.py:161} INFO - Started process (PID=1056) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:11:31.864+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:11:31.864+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:31.864+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:11:35.551+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:11:35.581+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:35.580+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:11:35.591+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:11:35.591+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:11:35.657+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.808 seconds
+[2026-02-24T13:12:13.016+0000] {processor.py:161} INFO - Started process (PID=1169) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:12:13.030+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:12:13.031+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:13.031+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:12:16.382+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:12:16.406+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:16.405+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:12:16.418+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:16.418+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:12:16.461+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.448 seconds
+[2026-02-24T13:12:50.265+0000] {processor.py:161} INFO - Started process (PID=1273) to work on /opt/airflow/dags/tunisia.py
+[2026-02-24T13:12:50.305+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/tunisia.py for tasks to queue
+[2026-02-24T13:12:50.306+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:50.305+0000] {dagbag.py:538} INFO - Filling up the DagBag from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:12:53.258+0000] {processor.py:840} INFO - DAG(s) 'tunisia' retrieved from /opt/airflow/dags/tunisia.py
+[2026-02-24T13:12:53.283+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:53.282+0000] {dag.py:3036} INFO - Sync 1 DAGs
+[2026-02-24T13:12:53.292+0000] {logging_mixin.py:188} INFO - [2026-02-24T13:12:53.291+0000] {dag.py:3823} INFO - Setting next_dagrun for tunisia to None, run_after=None
+[2026-02-24T13:12:53.347+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/tunisia.py took 3.086 seconds

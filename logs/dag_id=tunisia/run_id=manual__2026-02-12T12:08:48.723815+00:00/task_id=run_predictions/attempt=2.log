@@ -1,0 +1,16 @@
+[2026-02-12T12:14:31.151+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:48.723815+00:00 [queued]>
+[2026-02-12T12:14:31.165+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:48.723815+00:00 [queued]>
+[2026-02-12T12:14:31.165+0000] {taskinstance.py:2170} INFO - Starting attempt 2 of 1
+[2026-02-12T12:14:31.191+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): run_predictions> on 2026-02-12 12:08:48.723815+00:00
+[2026-02-12T12:14:31.205+0000] {standard_task_runner.py:60} INFO - Started process 184 to run task
+[2026-02-12T12:14:31.210+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'tunisia', 'run_predictions', 'manual__2026-02-12T12:08:48.723815+00:00', '--job-id', '383', '--raw', '--subdir', 'DAGS_FOLDER/tunisia.py', '--cfg-path', '/tmp/tmpnkl6nd9w']
+[2026-02-12T12:14:31.213+0000] {standard_task_runner.py:88} INFO - Job 383: Subtask run_predictions
+[2026-02-12T12:14:31.286+0000] {task_command.py:423} INFO - Running <TaskInstance: tunisia.run_predictions manual__2026-02-12T12:08:48.723815+00:00 [running]> on host 730e2bf48df4
+[2026-02-12T12:14:31.592+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='tunisia' AIRFLOW_CTX_TASK_ID='run_predictions' AIRFLOW_CTX_EXECUTION_DATE='2026-02-12T12:08:48.723815+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-12T12:08:48.723815+00:00'
+[2026-02-12T12:15:47.548+0000] {local_task_job_runner.py:302} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2026-02-12T12:15:47.552+0000] {process_utils.py:131} INFO - Sending 15 to group 184. PIDs of all processes in the group: [184]
+[2026-02-12T12:15:47.553+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 184
+[2026-02-12T12:16:47.566+0000] {process_utils.py:149} WARNING - process psutil.Process(pid=184, name='airflow task ru', status='sleeping', started='12:14:30') did not respond to SIGTERM. Trying SIGKILL
+[2026-02-12T12:16:47.569+0000] {process_utils.py:86} INFO - Sending the signal 9 to group 184
+[2026-02-12T12:16:47.748+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=184, name='airflow task ru', status='terminated', exitcode=<Negsignal.SIGKILL: -9>, started='12:14:30') (184) terminated with exit code -9
+[2026-02-12T12:16:47.749+0000] {standard_task_runner.py:175} ERROR - Job 383 was killed before it finished (likely due to running out of memory)
