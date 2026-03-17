@@ -1,12 +1,15 @@
 FROM apache/airflow:2.10.5
 
-
 ARG CACHEBUST=1
 
-USER airflow
-RUN pip install --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir \
+USER root
+RUN apt-get update && apt-get install -y curl build-essential \
+    && curl https://sh.rustup.rs -sSf | sh -s -- -y \
+    && . "$HOME/.cargo/env"
 
+USER airflow
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir \
     transformers==4.30.2 \
     torch \
     scikit-learn \
