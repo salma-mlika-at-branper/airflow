@@ -4,8 +4,8 @@ FROM apache/airflow:2.10.5
 ARG CACHEBUST=1
 
 USER airflow
-RUN pip install --no-cache-dir \
-RUN pip install --upgrade pip setuptools wheel
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir \
 
     transformers==4.30.2 \
     torch \
