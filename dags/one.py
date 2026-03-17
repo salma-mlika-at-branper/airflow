@@ -107,7 +107,7 @@ with DAG(
         python_callable=load_model,
     )
 
-    for i in range(1,4):
+    for i in range(1,101):
         t_pred = PythonOperator(
             task_id=f"run_predictions_{i}",
             python_callable=run_predictions,
