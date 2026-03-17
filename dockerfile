@@ -1,4 +1,4 @@
-FROM apache/airflow:2.10.5
+FROM apache/airflow:2.10.5-python3.11
 
 ARG CACHEBUST=1
 
