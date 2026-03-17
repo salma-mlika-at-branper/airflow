@@ -5,6 +5,8 @@ ARG CACHEBUST=1
 
 USER airflow
 RUN pip install --no-cache-dir \
+RUN pip install --upgrade pip setuptools wheel
+
     transformers==4.30.2 \
     torch \
     scikit-learn \
