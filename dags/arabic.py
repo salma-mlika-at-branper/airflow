@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # STEP 1: Load real data
 # ----------------------------
 def load_data(**kwargs):
-    df = pd.read_csv("/opt/airflow/data/arab.csv", header=None)
+    df = pd.read_csv("/opt/airflow/data/arabe.csv", header=None)
     df.columns = ["label", "text"]
 
     # Map labels to sentiment strings
