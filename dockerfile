@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y curl build-essential \
     && . "$HOME/.cargo/env"
 
 USER airflow
+RUN pip install --no-cache-dir "protobuf==3.20.3" 
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir \
     transformers==4.30.2 \
