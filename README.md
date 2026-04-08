@@ -27,3 +27,33 @@ sudo docker build ./. --tag airflow-project:latest --file ./dockerfile
 
 sudo docker compose -f docker-compose.yaml up -d
 ```
+
+```bash
+eval `ssh-agent -s`
+ssh-add /root/.ssh/id_ed25519
+
+ssh ubuntu@10.132.0.2 -i /root/.ssh/id_ed25519
+
+# after connecting to ssh
+sudo -s
+
+cd /media/sentinel-nvidia-t4/ubuntu/airflow
+```
+
+```bash
+docker compose up -d
+docker compose down
+docker build -t my-airflow:latest .
+
+# create a databese:
+docker compose run --rm airflow-scheduler \
+    airflow users create \
+    --username admin \
+    --firstname Salma \
+    --lastname Admin \
+    --role Admin \
+    --email admin@example.com \
+    --password admin
+initialize the database:
+    docker compose run --rm airflow-scheduler airflow db init'''
+```

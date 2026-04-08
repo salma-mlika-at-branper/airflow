@@ -189,5 +189,4 @@ with DAG(
         task_id="evaluate_model",
         python_callable=evaluate_model,
     )
-
     t1 >> t2 >> t3 >> t4
