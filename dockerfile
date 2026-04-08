@@ -22,8 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # 3. Switch back to airflow user for the python packages
 USER airflow
 
-ENV TMPDIR=/opt/tmp
-RUN mkdir -p /opt/tmp
+
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir "protobuf==3.20.3" 
 RUN pip install --no-cache-dir \
