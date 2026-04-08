@@ -4,16 +4,20 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-from datasets import Dataset
+from datasets import Dataset, load_from_disk
 from transformers import (
     AutoTokenizer, 
     AutoModelForSequenceClassification, 
     TrainingArguments, 
-    Trainer
+    Trainer,
+    DataCollatorWithPadding
 )
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 import torch
+
+# Global DEV mode flag for faster pipeline iterations
+DEV_MODE = True
 
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
@@ -48,10 +52,13 @@ def load_and_preprocess_data(**kwargs):
     df['label'] = df['sentiment_label'].map(label_map)
     df = df[['tweet_text', 'label']]
     
+    if DEV_MODE:
+        print("DEV_MODE is True: Subsampling dataset to max 3000 rows for fast testing.")
+        df = df.sample(n=min(3000, len(df)), random_state=42)
+    
     # Train / Val Split (80/20)
     train_df, val_df = train_test_split(df, test_size=0.2, random_state=42)
     
-    # Airflow best practice: pass paths instead of raw dataframes in XCom for potentially large data
     train_path = "/opt/airflow/data/processed_train.csv"
     val_path = "/opt/airflow/data/processed_val.csv"
     
@@ -65,10 +72,10 @@ def load_and_preprocess_data(**kwargs):
 # STEP 2: Configure model parameters
 # ----------------------------
 def load_model_config(**kwargs):
-    model_name = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
+    # distilbert-base-uncased is much faster / lighter than roberta
+    model_name = "distilbert-base-uncased"
     output_dir = "/opt/airflow/models/sentiment_model"
     
-    # Creates the output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
@@ -83,38 +90,55 @@ def run_training(**kwargs):
     model_name = kwargs["ti"].xcom_pull(key="model_name", task_ids="load_model_config")
     output_dir = kwargs["ti"].xcom_pull(key="output_dir", task_ids="load_model_config")
 
-    # Load preprocessed data
-    train_df = pd.read_csv(train_path)
-    val_df = pd.read_csv(val_path)
-    
-    # Convert to Hugging Face Dataset format
-    train_dataset = Dataset.from_pandas(train_df)
-    val_dataset = Dataset.from_pandas(val_df)
-    
     print(f"Loading tokenizer {model_name}...")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
-    def tokenize_function(examples):
-        # We enforce string cast since Pandas might load empty strings as NaNs
-        texts = [str(x) if x is not None and not pd.isna(x) else "" for x in examples['tweet_text']]
-        return tokenizer(texts, padding="max_length", truncation=True, max_length=128)
+    # Define cache directories conditionally based on DEV_MODE
+    dev_suffix = "_dev" if DEV_MODE else ""
+    cache_dir_train = f"/opt/airflow/data/tokenized_train_cache{dev_suffix}"
+    cache_dir_val = f"/opt/airflow/data/tokenized_val_cache{dev_suffix}"
 
-    train_dataset = train_dataset.map(tokenize_function, batched=True)
-    val_dataset = val_dataset.map(tokenize_function, batched=True)
-    
+    # Verify if caching mechanism hit
+    if os.path.exists(cache_dir_train) and os.path.exists(cache_dir_val):
+        print("Caching HIT! Loading tokenized datasets directly from disk...")
+        train_dataset = load_from_disk(cache_dir_train)
+        val_dataset = load_from_disk(cache_dir_val)
+    else:
+        print("Caching MISS! Reading CSV files and tokenizing datasets...")
+        train_df = pd.read_csv(train_path)
+        val_df = pd.read_csv(val_path)
+        
+        train_dataset = Dataset.from_pandas(train_df)
+        val_dataset = Dataset.from_pandas(val_df)
+        
+        def tokenize_function(examples):
+            texts = [str(x) if x is not None and not pd.isna(x) else "" for x in examples['tweet_text']]
+            # Only truncation applied, no max_length padding. Let the DataCollator handle padded variations
+            return tokenizer(texts, truncation=True, max_length=128)
+
+        train_dataset = train_dataset.map(tokenize_function, batched=True)
+        val_dataset = val_dataset.map(tokenize_function, batched=True)
+        
+        # Save pre-tokenized states immediately to disk buffer
+        train_dataset.save_to_disk(cache_dir_train)
+        val_dataset.save_to_disk(cache_dir_val)
+
+    # Create dynamic padding batch collator
+    data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
+
     print(f"Loading model {model_name} (num_labels=4)...")
-    # ignore_mismatched_sizes=True since the original model's labels might have a different dimension
     model = AutoModelForSequenceClassification.from_pretrained(
         model_name, 
         num_labels=4, 
         ignore_mismatched_sizes=True
     )
     
+    # strictly optimized CPU constraints
     training_args = TrainingArguments(
         output_dir=output_dir,
-        num_train_epochs=3.0,
-        per_device_train_batch_size=16,
-        per_device_eval_batch_size=16,
+        num_train_epochs=1.0,           # Lower epoch for DEV
+        per_device_train_batch_size=32, # Optimize inference throughput
+        per_device_eval_batch_size=32,
         evaluation_strategy="epoch",
         save_strategy="epoch",
         learning_rate=2e-5,
@@ -122,6 +146,8 @@ def run_training(**kwargs):
         metric_for_best_model="f1_weighted",
         logging_dir=f"{output_dir}/logs",
         logging_steps=50,
+        no_cuda=True,                 # Explicit manual override to remove all CUDA searches
+        fp16=False,                   # Do not attempt Mixed Precision conversions natively mapping Nvidia Tensor cores
     )
     
     trainer = Trainer(
@@ -130,6 +156,7 @@ def run_training(**kwargs):
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
         compute_metrics=compute_metrics,
+        data_collator=data_collator,  # Use dynamic padding instance 
     )
     
     print("Starting Model Training...")
