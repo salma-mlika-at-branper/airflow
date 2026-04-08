@@ -31,4 +31,6 @@ RUN pip install --no-cache-dir \
     torch \
     scikit-learn \
     pandas \
-    sentencepiece
+    sentencepiece \
+    datasets \        
+    accelerate 
