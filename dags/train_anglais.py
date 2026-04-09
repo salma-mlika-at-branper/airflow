@@ -4,6 +4,8 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
+import multiprocessing
+import torch
 from datasets import Dataset, load_from_disk
 from transformers import (
     AutoTokenizer, 
@@ -14,7 +16,6 @@ from transformers import (
 )
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
-import torch
 
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
@@ -27,6 +28,10 @@ def compute_metrics(eval_pred):
 # STEP 1: Load and preprocess data
 # ----------------------------
 def load_data(**kwargs):
+    # Set seed for reproducible/deterministic results
+    np.random.seed(42)
+    torch.manual_seed(42)
+
     data_path = "/opt/airflow/data/train-anglais.csv"
     
     print(f"Loading data from {data_path}...")
@@ -48,10 +53,9 @@ def load_data(**kwargs):
     df['label'] = df['sentiment_label'].map(label_map)
     df = df[['tweet_text', 'label']]
     
-    # Train / Val Split (80/20)
+    # Train / Val Split (80/20) - Deterministic
     train_df, val_df = train_test_split(df, test_size=0.2, random_state=42)
     
-    # Push paths to XCom instead of raw DataFrames
     train_path = "/opt/airflow/data/processed_train.csv"
     val_path = "/opt/airflow/data/processed_val.csv"
     
@@ -65,7 +69,6 @@ def load_data(**kwargs):
 # STEP 2: Configure model parameters
 # ----------------------------
 def load_model_config(**kwargs):
-    # Base XLM-Roberta model per requirement
     model_name = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
     output_dir = "/opt/airflow/models/sentiment_model"
     
@@ -83,19 +86,27 @@ def run_training(**kwargs):
     model_name = kwargs["ti"].xcom_pull(key="model_name", task_ids="load_model_config")
     output_dir = kwargs["ti"].xcom_pull(key="output_dir", task_ids="load_model_config")
 
+    # ----- CPU OPTIMIZATIONS -----
+    # Allocate PyTorch to use all available CPU cores for computation
+    num_cores = multiprocessing.cpu_count()
+    torch.set_num_threads(num_cores)
+    print(f"Configured PyTorch num_threads to {num_cores}")
+    
+    # Deterministic operations
+    torch.manual_seed(42)
+
     print(f"Loading tokenizer {model_name}...")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
-    # Disk caching for tokenized variables to avoid repeating the tokenization loop
-    cache_dir_train = "/opt/airflow/data/tokenized_train_cache_roberta"
-    cache_dir_val = "/opt/airflow/data/tokenized_val_cache_roberta"
+    cache_dir_train = "/opt/airflow/data/tokenized_train_cache_roberta_optimized"
+    cache_dir_val = "/opt/airflow/data/tokenized_val_cache_roberta_optimized"
 
     if os.path.exists(cache_dir_train) and os.path.exists(cache_dir_val):
         print("Caching HIT! Loading tokenized datasets directly from disk...")
         train_dataset = load_from_disk(cache_dir_train)
         val_dataset = load_from_disk(cache_dir_val)
     else:
-        print("Caching MISS! Reading CSV files and tokenizing datasets...")
+        print("Caching MISS! Reading CSV files and tokenizing datasets in parallel...")
         train_df = pd.read_csv(train_path)
         val_df = pd.read_csv(val_path)
         
@@ -103,17 +114,18 @@ def run_training(**kwargs):
         val_dataset = Dataset.from_pandas(val_df)
         
         def tokenize_function(examples):
-            # Dynamic padding via collator relies on tokenization producing varied lengths up to standard max_lengths
             texts = [str(x) if x is not None and not pd.isna(x) else "" for x in examples['tweet_text']]
+            # Only truncate; padding handled dynamically
             return tokenizer(texts, truncation=True, max_length=128)
 
-        train_dataset = train_dataset.map(tokenize_function, batched=True)
-        val_dataset = val_dataset.map(tokenize_function, batched=True)
+        # Tokenize in parallel matching available CPUs
+        train_dataset = train_dataset.map(tokenize_function, batched=True, num_proc=num_cores)
+        val_dataset = val_dataset.map(tokenize_function, batched=True, num_proc=num_cores)
         
         train_dataset.save_to_disk(cache_dir_train)
         val_dataset.save_to_disk(cache_dir_val)
 
-    # Implement dynamic batch padding
+    # Implement dynamic batch padding for tokenized sequences
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     print(f"Loading model {model_name} (num_labels=3)...")
@@ -123,7 +135,6 @@ def run_training(**kwargs):
         ignore_mismatched_sizes=True
     )
     
-    # 3 epochs, batch 16, lr 1e-5 to avoid pre-trained weight destruction. Output strictly CPU.
     training_args = TrainingArguments(
         output_dir=output_dir,
         num_train_epochs=3.0,             
@@ -133,11 +144,13 @@ def run_training(**kwargs):
         save_strategy="epoch",
         learning_rate=1e-5,               
         load_best_model_at_end=True,      
+        save_total_limit=1,               # Only save the best checkpoint to conserve disk space
         metric_for_best_model="f1_weighted",
         logging_dir=f"{output_dir}/logs",
         logging_steps=50,
-        no_cuda=True,                     # Strictly limit runtime to CPU allocation bounds natively
-        fp16=False,                       # Ensure Mixed-precision floating point logic is stripped for standalone CPU iteration
+        no_cuda=True,                     
+        fp16=False,                       
+        dataloader_num_workers=num_cores, # Use multi-processing CPUs to build DataLoaders
     )
     
     trainer = Trainer(
@@ -146,7 +159,7 @@ def run_training(**kwargs):
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
         compute_metrics=compute_metrics,
-        data_collator=data_collator,     # Map the padding logic
+        data_collator=data_collator,     
     )
     
     print("Starting Model Training...")
@@ -180,7 +193,7 @@ def evaluate_model(**kwargs):
 # DAG definition
 # ----------------------------
 with DAG(
-    dag_id="train_anglais",
+    dag_id="train_sentiment_model",
     start_date=datetime(2024, 1, 1),
     schedule_interval=None,
     catchup=False,
