@@ -16,9 +16,6 @@ from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 import torch
 
-# Global DEV mode flag for faster pipeline iterations
-DEV_MODE = True
-
 def compute_metrics(eval_pred):
     logits, labels = eval_pred
     predictions = np.argmax(logits, axis=-1)
@@ -29,36 +26,32 @@ def compute_metrics(eval_pred):
 # ----------------------------
 # STEP 1: Load and preprocess data
 # ----------------------------
-def load_and_preprocess_data(**kwargs):
-    # Adjust this path based on your Airflow Docker mount
+def load_data(**kwargs):
     data_path = "/opt/airflow/data/train-anglais.csv"
     
     print(f"Loading data from {data_path}...")
     col_names = ["id", "game_title", "sentiment_label", "tweet_text"]
     df = pd.read_csv(data_path, header=None, names=col_names)
     
-    # Drop rows where 'tweet_text' or 'sentiment_label' is null
+    # Handle missing/empty texts safely by dropping NaNs
     df = df.dropna(subset=['tweet_text', 'sentiment_label'])
     df['sentiment_label'] = df['sentiment_label'].astype(str).str.strip()
     
+    # Keep only Positive, Negative, Neutral. Drop Irrelevant.
     label_map = {
         "Positive": 0,
         "Negative": 1,
-        "Neutral": 2,
-        "Irrelevant": 3
+        "Neutral": 2
     }
     
     df = df[df['sentiment_label'].isin(label_map.keys())]
     df['label'] = df['sentiment_label'].map(label_map)
     df = df[['tweet_text', 'label']]
     
-    if DEV_MODE:
-        print("DEV_MODE is True: Subsampling dataset to max 3000 rows for fast testing.")
-        df = df.sample(n=min(3000, len(df)), random_state=42)
-    
     # Train / Val Split (80/20)
     train_df, val_df = train_test_split(df, test_size=0.2, random_state=42)
     
+    # Push paths to XCom instead of raw DataFrames
     train_path = "/opt/airflow/data/processed_train.csv"
     val_path = "/opt/airflow/data/processed_val.csv"
     
@@ -72,8 +65,8 @@ def load_and_preprocess_data(**kwargs):
 # STEP 2: Configure model parameters
 # ----------------------------
 def load_model_config(**kwargs):
-    # distilbert-base-uncased is much faster / lighter than roberta
-    model_name = "distilbert-base-uncased"
+    # Base XLM-Roberta model per requirement
+    model_name = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
     output_dir = "/opt/airflow/models/sentiment_model"
     
     os.makedirs(output_dir, exist_ok=True)
@@ -93,12 +86,10 @@ def run_training(**kwargs):
     print(f"Loading tokenizer {model_name}...")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
-    # Define cache directories conditionally based on DEV_MODE
-    dev_suffix = "_dev" if DEV_MODE else ""
-    cache_dir_train = f"/opt/airflow/data/tokenized_train_cache{dev_suffix}"
-    cache_dir_val = f"/opt/airflow/data/tokenized_val_cache{dev_suffix}"
+    # Disk caching for tokenized variables to avoid repeating the tokenization loop
+    cache_dir_train = "/opt/airflow/data/tokenized_train_cache_roberta"
+    cache_dir_val = "/opt/airflow/data/tokenized_val_cache_roberta"
 
-    # Verify if caching mechanism hit
     if os.path.exists(cache_dir_train) and os.path.exists(cache_dir_val):
         print("Caching HIT! Loading tokenized datasets directly from disk...")
         train_dataset = load_from_disk(cache_dir_train)
@@ -112,42 +103,41 @@ def run_training(**kwargs):
         val_dataset = Dataset.from_pandas(val_df)
         
         def tokenize_function(examples):
+            # Dynamic padding via collator relies on tokenization producing varied lengths up to standard max_lengths
             texts = [str(x) if x is not None and not pd.isna(x) else "" for x in examples['tweet_text']]
-            # Only truncation applied, no max_length padding. Let the DataCollator handle padded variations
             return tokenizer(texts, truncation=True, max_length=128)
 
         train_dataset = train_dataset.map(tokenize_function, batched=True)
         val_dataset = val_dataset.map(tokenize_function, batched=True)
         
-        # Save pre-tokenized states immediately to disk buffer
         train_dataset.save_to_disk(cache_dir_train)
         val_dataset.save_to_disk(cache_dir_val)
 
-    # Create dynamic padding batch collator
+    # Implement dynamic batch padding
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
-    print(f"Loading model {model_name} (num_labels=4)...")
+    print(f"Loading model {model_name} (num_labels=3)...")
     model = AutoModelForSequenceClassification.from_pretrained(
         model_name, 
-        num_labels=4, 
+        num_labels=3, 
         ignore_mismatched_sizes=True
     )
     
-    # strictly optimized CPU constraints
+    # 3 epochs, batch 16, lr 1e-5 to avoid pre-trained weight destruction. Output strictly CPU.
     training_args = TrainingArguments(
         output_dir=output_dir,
-        num_train_epochs=1.0,           # Lower epoch for DEV
-        per_device_train_batch_size=32, # Optimize inference throughput
-        per_device_eval_batch_size=32,
+        num_train_epochs=3.0,             
+        per_device_train_batch_size=16,   
+        per_device_eval_batch_size=16,
         evaluation_strategy="epoch",
         save_strategy="epoch",
-        learning_rate=2e-5,
-        load_best_model_at_end=True,
+        learning_rate=1e-5,               
+        load_best_model_at_end=True,      
         metric_for_best_model="f1_weighted",
         logging_dir=f"{output_dir}/logs",
         logging_steps=50,
-        no_cuda=True,                 # Explicit manual override to remove all CUDA searches
-        fp16=False,                   # Do not attempt Mixed Precision conversions natively mapping Nvidia Tensor cores
+        no_cuda=True,                     # Strictly limit runtime to CPU allocation bounds natively
+        fp16=False,                       # Ensure Mixed-precision floating point logic is stripped for standalone CPU iteration
     )
     
     trainer = Trainer(
@@ -156,7 +146,7 @@ def run_training(**kwargs):
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
         compute_metrics=compute_metrics,
-        data_collator=data_collator,  # Use dynamic padding instance 
+        data_collator=data_collator,     # Map the padding logic
     )
     
     print("Starting Model Training...")
@@ -169,7 +159,6 @@ def run_training(**kwargs):
     model.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
     
-    # Store metrics for the next task
     kwargs["ti"].xcom_push(key="eval_metrics", value=eval_metrics)
 
 # ----------------------------
@@ -191,7 +180,7 @@ def evaluate_model(**kwargs):
 # DAG definition
 # ----------------------------
 with DAG(
-    dag_id="train_anglais",
+    dag_id="train_sentiment_model",
     start_date=datetime(2024, 1, 1),
     schedule_interval=None,
     catchup=False,
@@ -199,7 +188,7 @@ with DAG(
 
     t1 = PythonOperator(
         task_id="load_data",
-        python_callable=load_and_preprocess_data,
+        python_callable=load_data,
     )
 
     t2 = PythonOperator(
