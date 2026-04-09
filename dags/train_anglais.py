@@ -193,7 +193,7 @@ def evaluate_model(**kwargs):
 # DAG definition
 # ----------------------------
 with DAG(
-    dag_id="train_sentiment_model",
+    dag_id="train_anglais",
     start_date=datetime(2024, 1, 1),
     schedule_interval=None,
     catchup=False,
