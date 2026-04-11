@@ -65,20 +65,34 @@ def run_predictions(**kwargs):
     base_pipeline = pipeline("sentiment-analysis", model=base_model_name, device=-1)
     base_preds_raw = base_pipeline(safe_texts, truncation=True, max_length=512)
 
-    # Align base predictions with labels (filter both together)
-    label_map = {
-    "LABEL_0": "negative",
-    "LABEL_1": "neutral",
-    "LABEL_2": "positive",
-    "negative": "negative",
-    "neutral": "neutral",
-    "positive": "positive"
-}
+    # --- BASE MODEL ---
+print(f"Deploying BASE MODEL ({base_model_name})...")
+base_pipeline = pipeline("sentiment-analysis", model=base_model_name, device=-1)
+base_preds_raw = base_pipeline(safe_texts, truncation=True, max_length=512)
+
+base_filtered = [
+    (p["label"].lower(), l)
+    for p, l in zip(base_preds_raw, labels)
+    if p["label"].lower() in valid_labels
+]
+
+base_predictions = [x[0] for x in base_filtered]
+base_true_labels = [x[1] for x in base_filtered]
+
+
+# --- FINE-TUNED MODEL ---
+print(f"Deploying FINE-TUNED MODEL ({ft_model_name})...")
+ft_pipeline = pipeline("sentiment-analysis", model=ft_model_name, tokenizer=ft_model_name, device=-1)
+ft_preds_raw = ft_pipeline(safe_texts, truncation=True, max_length=512)
 
 ft_filtered = [
-    (label_map.get(p["label"], p["label"]).lower(), l)
+    (p["label"].lower(), l)
     for p, l in zip(ft_preds_raw, labels)
+    if p["label"].lower() in valid_labels
 ]
+
+    ft_predictions = [x[0] for x in ft_filtered]
+    ft_true_labels = [x[1] for x in ft_filtered]
     base_predictions  = [x[0] for x in base_filtered]
     base_true_labels  = [x[1] for x in base_filtered]
 
