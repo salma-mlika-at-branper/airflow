@@ -26,11 +26,12 @@ USER airflow
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir "protobuf==3.20.3" 
 RUN pip install --no-cache-dir \
-    transformers>=4.41.0 \
+    transformers==5.0.0 \
+    tokenizers==0.22.2 \
     torch \
     scikit-learn \
     pandas \
     sentencepiece \
     datasets \
-    accelerate \
-    "tokenizers>=0.19.0"
+    accelerate 
+   
