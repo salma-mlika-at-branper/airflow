@@ -44,11 +44,10 @@ def load_model(**kwargs):
     # Store both the baseline and our new fine-tuned model path
     base_model = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
     ft_model = "/opt/airflow/models/sentiment_model_finetuned"
-    
     kwargs["ti"].xcom_push(key="base_model", value=base_model)
     kwargs["ti"].xcom_push(key="ft_model", value=ft_model)
     print("Model identities populated inside XCom cache...")
-
+ 
 # ----------------------------
 # STEP 3: Run predictions
 # ----------------------------
