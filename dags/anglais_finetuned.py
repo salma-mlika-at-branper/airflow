@@ -63,7 +63,6 @@ def run_predictions(**kwargs):
     print(f"Deploying BASE MODEL ({base_model_name}) pipeline...")
     base_pipeline = pipeline("sentiment-analysis", model=base_model_name, device=-1)
     
-    # CardiffNLP natively maps to ["positive", "neutral", "negative"] labels automatically, occasionally capitalized
     base_preds = base_pipeline(safe_texts, truncation=True, max_length=512)
     base_predictions = [p["label"].lower() for p in base_preds]
 
@@ -73,19 +72,25 @@ def run_predictions(**kwargs):
     
     ft_preds = ft_pipeline(safe_texts, truncation=True, max_length=512)
 
-    # Re-Map the pipeline integer classification IDs back to the evaluated strings.
-    # Irrelevant mapping exists securely, and acts as an intended mismatch on sklearn's Y_TRUE matrix if triggered.
-    id2label = {
-        "LABEL_0": "positive",
-        "LABEL_1": "negative",
-        "LABEL_2": "neutral",
-        "LABEL_3": "irrelevant"
-    }
-    ft_predictions = [id2label[p["label"]] for p in ft_preds]
+    # Model already returns "positive", "negative", "neutral" directly
+    # Filter out any "irrelevant" predictions along with their corresponding texts
+    valid_labels = {"positive", "negative", "neutral"}
+    
+    filtered = [
+        (p["label"].lower(), label)
+        for p, label in zip(ft_preds, kwargs["ti"].xcom_pull(key="labels", task_ids="load_data"))
+        if p["label"].lower() in valid_labels
+    ]
+    
+    ft_predictions = [item[0] for item in filtered]
+    filtered_labels = [item[1] for item in filtered]
 
-    # Pushing two different prediction lists for concurrent evaluation
     kwargs["ti"].xcom_push(key="base_predictions", value=base_predictions)
     kwargs["ti"].xcom_push(key="ft_predictions", value=ft_predictions)
+    kwargs["ti"].xcom_push(key="filtered_labels", value=filtered_labels)
+    
+    dropped = len(safe_texts) - len(ft_predictions)
+    print(f"Dropped {dropped} 'irrelevant' predictions.")
     print("Inference completed for both candidate models.")
 
 # ----------------------------
@@ -94,32 +99,22 @@ def run_predictions(**kwargs):
 def evaluate(**kwargs):
     y_true = kwargs["ti"].xcom_pull(key="labels", task_ids="load_data")
     base_pred = kwargs["ti"].xcom_pull(key="base_predictions", task_ids="run_predictions")
+    
     ft_pred = kwargs["ti"].xcom_pull(key="ft_predictions", task_ids="run_predictions")
+    ft_true = kwargs["ti"].xcom_pull(key="filtered_labels", task_ids="run_predictions")  # use filtered labels
 
-    # Evaluate the Baseline Pipeline
+    # Base model uses original y_true
     b_acc = accuracy_score(y_true, base_pred)
     b_prec = precision_score(y_true, base_pred, average="weighted", zero_division=0)
     b_rec = recall_score(y_true, base_pred, average="weighted", zero_division=0)
     b_f1 = f1_score(y_true, base_pred, average="weighted", zero_division=0)
 
-    # Evaluate the Fine-Tuned Local Pipeline
-    ft_acc = accuracy_score(y_true, ft_pred)
-    ft_prec = precision_score(y_true, ft_pred, average="weighted", zero_division=0)
-    ft_rec = recall_score(y_true, ft_pred, average="weighted", zero_division=0)
-    ft_f1 = f1_score(y_true, ft_pred, average="weighted", zero_division=0)
-
-    # Structured CLI Output
-    print("\n" + "="*5 + " BASE MODEL " + "="*5)
-    print(f"Accuracy: {b_acc:.4f}")
-    print(f"Precision (weighted): {b_prec:.4f}")
-    print(f"Recall (weighted): {b_rec:.4f}")
-    print(f"F1-score (weighted): {b_f1:.4f}")
-
-    print("\n" + "="*5 + " FINE-TUNED MODEL " + "="*5)
-    print(f"Accuracy: {ft_acc:.4f}")
-    print(f"Precision (weighted): {ft_prec:.4f}")
-    print(f"Recall (weighted): {ft_rec:.4f}")
-    print(f"F1-score (weighted): {ft_f1:.4f}")
+    # Fine-tuned model uses filtered labels
+    ft_acc = accuracy_score(ft_true, ft_pred)
+    ft_prec = precision_score(ft_true, ft_pred, average="weighted", zero_division=0)
+    ft_rec = recall_score(ft_true, ft_pred, average="weighted", zero_division=0)
+    ft_f1 = f1_score(ft_true, ft_pred, average="weighted", zero_division=0)
+    ...
 
 # ----------------------------
 # DAG definition
