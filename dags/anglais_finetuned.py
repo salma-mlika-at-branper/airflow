@@ -116,6 +116,19 @@ def evaluate(**kwargs):
     ft_f1 = f1_score(ft_true, ft_pred, average="weighted", zero_division=0)
     ...
 
+    # Structured CLI Output
+    print("\n" + "="*5 + " BASE MODEL " + "="*5)
+    print(f"Accuracy: {b_acc:.4f}")
+    print(f"Precision (weighted): {b_prec:.4f}")
+    print(f"Recall (weighted): {b_rec:.4f}")
+    print(f"F1-score (weighted): {b_f1:.4f}")
+
+    print("\n" + "="*5 + " FINE-TUNED MODEL " + "="*5)
+    print(f"Accuracy: {ft_acc:.4f}")
+    print(f"Precision (weighted): {ft_prec:.4f}")
+    print(f"Recall (weighted): {ft_rec:.4f}")
+    print(f"F1-score (weighted): {ft_f1:.4f}")
+
 # ----------------------------
 # DAG definition
 # ----------------------------
