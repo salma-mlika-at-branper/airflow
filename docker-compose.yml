@@ -12,6 +12,7 @@ x-airflow-common: &airflow-common
     AIRFLOW_UID: ${AIRFLOW_UID}
     AIRFLOW__WEBSERVER__WORKERS: 1          # Reduced workers to fix timeout
     AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1 # Optional: reduce scheduler load
+    AIRFLOW__WEBSERVER__BASE_URL: http://localhost:8080  
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
