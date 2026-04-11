@@ -43,7 +43,7 @@ def load_data(**kwargs):
 def load_model(**kwargs):
     # Store both the baseline and our new fine-tuned model path
     base_model = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
-    ft_model = "/opt/airflow/models/sentiment_model_finetuned"
+    ft_model = "/opt/airflow/models"
     kwargs["ti"].xcom_push(key="base_model", value=base_model)
     kwargs["ti"].xcom_push(key="ft_model", value=ft_model)
     print("Model identities populated inside XCom cache...")
@@ -53,81 +53,79 @@ def load_model(**kwargs):
 # ----------------------------
 def run_predictions(**kwargs):
     texts = kwargs["ti"].xcom_pull(key="texts", task_ids="load_data")
+    labels = kwargs["ti"].xcom_pull(key="labels", task_ids="load_data")
     base_model_name = kwargs["ti"].xcom_pull(key="base_model", task_ids="load_model")
     ft_model_name = kwargs["ti"].xcom_pull(key="ft_model", task_ids="load_model")
-    
-    # Ensure text is cast to string
+
     safe_texts = [str(t) for t in texts]
-
-    # --- A) BASE MODEL INFERENCE ---
-    print(f"Deploying BASE MODEL ({base_model_name}) pipeline...")
-    base_pipeline = pipeline("sentiment-analysis", model=base_model_name, device=-1)
-    
-    base_preds = base_pipeline(safe_texts, truncation=True, max_length=512)
-    base_predictions = [p["label"].lower() for p in base_preds]
-
-    # --- B) FINE-TUNED MODEL INFERENCE ---
-    print(f"Deploying FINE-TUNED MODEL ({ft_model_name}) pipeline...")
-    ft_pipeline = pipeline("sentiment-analysis", model=ft_model_name, tokenizer=ft_model_name, device=-1)
-    
-    ft_preds = ft_pipeline(safe_texts, truncation=True, max_length=512)
-
-    # Model already returns "positive", "negative", "neutral" directly
-    # Filter out any "irrelevant" predictions along with their corresponding texts
     valid_labels = {"positive", "negative", "neutral"}
-    
-    filtered = [
-        (p["label"].lower(), label)
-        for p, label in zip(ft_preds, kwargs["ti"].xcom_pull(key="labels", task_ids="load_data"))
+
+    # --- BASE MODEL ---
+    print(f"Deploying BASE MODEL ({base_model_name})...")
+    base_pipeline = pipeline("sentiment-analysis", model=base_model_name, device=-1)
+    base_preds_raw = base_pipeline(safe_texts, truncation=True, max_length=512)
+
+    # Align base predictions with labels (filter both together)
+    base_filtered = [
+        (p["label"].lower(), l)
+        for p, l in zip(base_preds_raw, labels)
         if p["label"].lower() in valid_labels
     ]
-    
-    ft_predictions = [item[0] for item in filtered]
-    filtered_labels = [item[1] for item in filtered]
+    base_predictions  = [x[0] for x in base_filtered]
+    base_true_labels  = [x[1] for x in base_filtered]
 
-    kwargs["ti"].xcom_push(key="base_predictions", value=base_predictions)
-    kwargs["ti"].xcom_push(key="ft_predictions", value=ft_predictions)
-    kwargs["ti"].xcom_push(key="filtered_labels", value=filtered_labels)
-    
-    dropped = len(safe_texts) - len(ft_predictions)
-    print(f"Dropped {dropped} 'irrelevant' predictions.")
-    print("Inference completed for both candidate models.")
+    # --- FINE-TUNED MODEL ---
+    print(f"Deploying FINE-TUNED MODEL ({ft_model_name})...")
+    ft_pipeline = pipeline("sentiment-analysis", model=ft_model_name,
+                           tokenizer=ft_model_name, device=-1)
+    ft_preds_raw = ft_pipeline(safe_texts, truncation=True, max_length=512)
 
+    # Align ft predictions with labels (filter both together)
+    ft_filtered = [
+        (p["label"].lower(), l)
+        for p, l in zip(ft_preds_raw, labels)
+        if p["label"].lower() in valid_labels
+    ]
+    ft_predictions  = [x[0] for x in ft_filtered]
+    ft_true_labels  = [x[1] for x in ft_filtered]
+
+    kwargs["ti"].xcom_push(key="base_predictions",  value=base_predictions)
+    kwargs["ti"].xcom_push(key="base_true_labels",  value=base_true_labels)
+    kwargs["ti"].xcom_push(key="ft_predictions",    value=ft_predictions)
+    kwargs["ti"].xcom_push(key="filtered_labels",   value=ft_true_labels)
+
+    print(f"Base dropped: {len(safe_texts) - len(base_predictions)}")
+    print(f"FT dropped:   {len(safe_texts) - len(ft_predictions)}")
 # ----------------------------
 # STEP 4: Evaluate benchmark
 # ----------------------------
 def evaluate(**kwargs):
-    y_true = kwargs["ti"].xcom_pull(key="labels", task_ids="load_data")
     base_pred = kwargs["ti"].xcom_pull(key="base_predictions", task_ids="run_predictions")
-    
-    ft_pred = kwargs["ti"].xcom_pull(key="ft_predictions", task_ids="run_predictions")
-    ft_true = kwargs["ti"].xcom_pull(key="filtered_labels", task_ids="run_predictions")  # use filtered labels
+    base_true = kwargs["ti"].xcom_pull(key="base_true_labels",  task_ids="run_predictions")
+    ft_pred   = kwargs["ti"].xcom_pull(key="ft_predictions",    task_ids="run_predictions")
+    ft_true   = kwargs["ti"].xcom_pull(key="filtered_labels",   task_ids="run_predictions")
 
-    # Base model uses original y_true
-    b_acc = accuracy_score(y_true, base_pred)
-    b_prec = precision_score(y_true, base_pred, average="weighted", zero_division=0)
-    b_rec = recall_score(y_true, base_pred, average="weighted", zero_division=0)
-    b_f1 = f1_score(y_true, base_pred, average="weighted", zero_division=0)
+    b_acc  = accuracy_score(base_true, base_pred)
+    b_prec = precision_score(base_true, base_pred, average="weighted", zero_division=0)
+    b_rec  = recall_score(base_true, base_pred, average="weighted", zero_division=0)
+    b_f1   = f1_score(base_true, base_pred, average="weighted", zero_division=0)
 
-    # Fine-tuned model uses filtered labels
-    ft_acc = accuracy_score(ft_true, ft_pred)
+    ft_acc  = accuracy_score(ft_true, ft_pred)
     ft_prec = precision_score(ft_true, ft_pred, average="weighted", zero_division=0)
-    ft_rec = recall_score(ft_true, ft_pred, average="weighted", zero_division=0)
-    ft_f1 = f1_score(ft_true, ft_pred, average="weighted", zero_division=0)
-    ...
+    ft_rec  = recall_score(ft_true, ft_pred, average="weighted", zero_division=0)
+    ft_f1   = f1_score(ft_true, ft_pred, average="weighted", zero_division=0)
 
-    # Structured CLI Output
-    print("\n" + "="*5 + " BASE MODEL " + "="*5)
-    print(f"Accuracy: {b_acc:.4f}")
+    print("\n===== BASE MODEL =====")
+    print(f"Accuracy:             {b_acc:.4f}")
     print(f"Precision (weighted): {b_prec:.4f}")
-    print(f"Recall (weighted): {b_rec:.4f}")
-    print(f"F1-score (weighted): {b_f1:.4f}")
+    print(f"Recall (weighted):    {b_rec:.4f}")
+    print(f"F1-score (weighted):  {b_f1:.4f}")
 
-    print("\n" + "="*5 + " FINE-TUNED MODEL " + "="*5)
-    print(f"Accuracy: {ft_acc:.4f}")
+    print("\n===== FINE-TUNED MODEL =====")
+    print(f"Accuracy:             {ft_acc:.4f}")
     print(f"Precision (weighted): {ft_prec:.4f}")
-    print(f"Recall (weighted): {ft_rec:.4f}")
-    print(f"F1-score (weighted): {ft_f1:.4f}")
+    print(f"Recall (weighted):    {ft_rec:.4f}")
+    print(f"F1-score (weighted):  {ft_f1:.4f}")
 
 # ----------------------------
 # DAG definition
