@@ -9,3 +9,4 @@ data/processed_*/
 airflow/
 projects/
 models/sentiment_model/
+logs/
