@@ -1,28 +1,38 @@
-
-
 x-airflow-common: &airflow-common
-  build: . 
+  build: .
   image: my-airflow:latest
+
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__LOGGING__REMOTE_LOGGING: "False"
+
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+
     AIRFLOW_UID: ${AIRFLOW_UID}
-    AIRFLOW__WEBSERVER__WORKERS: 1          # Reduced workers to fix timeout
-    AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1 # Optional: reduce scheduler load
-    AIRFLOW__WEBSERVER__BASE_URL: http://localhost:8080  
+
+    # UI access (IMPORTANT for SSH tunnel)
+    AIRFLOW__WEBSERVER__BASE_URL: http://localhost:8080
+
+    # FIX LOG ISSUE (this is the key fix)
+    AIRFLOW__LOGGING__REMOTE_LOGGING: "False"
+
+    # performance tweaks
+    AIRFLOW__WEBSERVER__WORKERS: 1
+    AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1
+
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
-    - ./data:/opt/airflow/data 
+    - ./data:/opt/airflow/data
     - ./requirements.txt:/requirements.txt
     - ./models:/opt/airflow/models
+
   depends_on:
     - postgres
+
 
 services:
   postgres:
@@ -46,4 +56,3 @@ services:
 
 volumes:
   postgres_db:
-
