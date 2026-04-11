@@ -18,7 +18,7 @@ def load_data(**kwargs):
 
     # Drop missing values to prevent sklearn metric errors
     df = df.dropna(subset=['text', 'sentiment'])
-    
+    df["sentiment"] = df["sentiment"].str.lower().strip()
     # Map string labels to standardized lowercase sentiment strings
     label_map = {
         "negative": "negative",
