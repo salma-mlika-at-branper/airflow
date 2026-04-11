@@ -3,24 +3,28 @@ x-airflow-common: &airflow-common
   image: my-airflow:latest
 
   environment:
-    AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    environment:
+  AIRFLOW__CORE__EXECUTOR: LocalExecutor
+  AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
 
-    AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+  AIRFLOW__CORE__FERNET_KEY: ''
+  AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+  AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
 
-    AIRFLOW_UID: ${AIRFLOW_UID}
+  AIRFLOW_UID: ${AIRFLOW_UID}
 
-    # UI access (IMPORTANT for SSH tunnel)
-    AIRFLOW__WEBSERVER__BASE_URL: http://localhost:8080
+  # UI (SSH tunnel safe)
+  AIRFLOW__WEBSERVER__BASE_URL: http://localhost:8080
 
-    # FIX LOG ISSUE (this is the key fix)
-    AIRFLOW__LOGGING__REMOTE_LOGGING: "False"
+  # ✅ FIX LOGGING COMPLETELY (THIS IS THE KEY)
+  AIRFLOW__LOGGING__REMOTE_LOGGING: "False"
+  AIRFLOW__LOGGING__WORKER_LOG_SERVER_HOST: ""
+  AIRFLOW__LOGGING__WORKER_LOG_SERVER_PORT: 8793
+  AIRFLOW__LOGGING__LOGGING_LEVEL: INFO
 
-    # performance tweaks
-    AIRFLOW__WEBSERVER__WORKERS: 1
-    AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1
+  # performance
+  AIRFLOW__WEBSERVER__WORKERS: 1
+  AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1
 
   volumes:
     - ./dags:/opt/airflow/dags
