@@ -96,7 +96,7 @@ ft_filtered = [
     base_predictions  = [x[0] for x in base_filtered]
     base_true_labels  = [x[1] for x in base_filtered]
 
-    # --- FINE-TUNED MODEL ---
+    # - FINE-TUNED MODEL ---
     print(f"Deploying FINE-TUNED MODEL ({ft_model_name})...")
     ft_pipeline = pipeline("sentiment-analysis", model=ft_model_name,
                            tokenizer=ft_model_name, device=-1)
