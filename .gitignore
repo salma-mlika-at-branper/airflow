@@ -2,3 +2,10 @@ dags/__pycache__/
 logs/*.* 
 logs
 .logs
+logs/
+data/processed_*.csv
+data/tokenized_*/
+data/processed_*/
+airflow/
+projects/
+models/sentiment_model/
