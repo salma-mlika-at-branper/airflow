@@ -27,7 +27,7 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir "protobuf==3.20.3" 
 RUN pip install --no-cache-dir \
     transformers==4.47.0 \
-    tokenizers==0.22.2 \
+
     scikit-learn \
     pandas \
     sentencepiece \
