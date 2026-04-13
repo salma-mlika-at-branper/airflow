@@ -28,10 +28,9 @@ RUN pip install --no-cache-dir "protobuf==3.20.3"
 RUN pip install --no-cache-dir \
     transformers==5.0.0 \
     tokenizers==0.22.2 \
-    torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124 \
     scikit-learn \
     pandas \
     sentencepiece \
     datasets \
     accelerate 
-   
+RUN pip install --no-cache-dir torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124  
