@@ -115,7 +115,7 @@ def train_model(**kwargs):
         num_train_epochs=num_train_epochs,             
         per_device_train_batch_size=per_device_train_batch_size,   
         per_device_eval_batch_size=per_device_eval_batch_size,
-        evaluation_strategy=evaluation_strategy,
+        eval_strategy=eval_strategy,
         save_strategy=save_strategy,
         learning_rate=learning_rate,               
         load_best_model_at_end=True,      
