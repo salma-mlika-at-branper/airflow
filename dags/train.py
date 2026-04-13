@@ -165,7 +165,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id="train_anglais",
+    dag_id="train",
     default_args=default_args,
     schedule_interval=None,
     catchup=False,
