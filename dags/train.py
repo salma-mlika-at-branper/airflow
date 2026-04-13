@@ -40,7 +40,7 @@ def train_model(**kwargs):
     per_device_train_batch_size = kwargs.get("per_device_train_batch_size", 16)
     per_device_eval_batch_size = kwargs.get("per_device_eval_batch_size", 16)
     learning_rate = kwargs.get("learning_rate", 2e-5)
-    eval_strategy = kwargs.get("eval_strategy", "epoch")
+    evaluation_strategy = kwargs.get("evaluation_strategy", "epoch")
     save_strategy = kwargs.get("save_strategy", "epoch")
     
     os.makedirs(output_dir, exist_ok=True)
@@ -115,7 +115,7 @@ def train_model(**kwargs):
         num_train_epochs=num_train_epochs,             
         per_device_train_batch_size=per_device_train_batch_size,   
         per_device_eval_batch_size=per_device_eval_batch_size,
-        eval_strategy=eval_strategy,
+        evaluation_strategy=evaluation_strategy,
         save_strategy=save_strategy,
         learning_rate=learning_rate,               
         load_best_model_at_end=True,      
