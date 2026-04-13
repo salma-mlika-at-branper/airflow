@@ -33,7 +33,7 @@ def train_model(**kwargs):
     Parameters are passable as arguments, making it Airflow-compatible.
     """
     # 1. Retrieve config parameters from kwargs (passed via PythonOperator)
-    data_path = kwargs.get("data_path", "/opt/airflow/data/twitter_training.csv")
+    data_path = kwargs.get("data_path", "/opt/airflow/data/train-anglais.csv")
     model_name = kwargs.get("model_name", "cardiffnlp/twitter-xlm-roberta-base-sentiment")
     output_dir = kwargs.get("output_dir", "/opt/airflow/models/sentiment_model")
     num_train_epochs = kwargs.get("num_train_epochs", 3.0)
