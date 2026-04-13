@@ -3,6 +3,7 @@ version: "3"
 x-airflow-common: &airflow-common
   build: . 
   image: my-airflow:latest
+  runtime: nvidia
   environment:
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
@@ -12,6 +13,8 @@ x-airflow-common: &airflow-common
     AIRFLOW_UID: ${AIRFLOW_UID}
     AIRFLOW__WEBSERVER__WORKERS: 1          
     AIRFLOW__SCHEDULER__PARSING_PROCESSES: 1 
+    NVIDIA_VISIBLE_DEVICES: all
+    NVIDIA_DRIVER_CAPABILITIES: compute,utility
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
