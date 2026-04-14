@@ -10,7 +10,7 @@ import re
 import html
 import torch
 from transformers import pipeline
-from tqdm.auto import tqdm
+
 
 # Airflow specific imports
 from airflow import DAG
