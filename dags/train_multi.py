@@ -203,7 +203,7 @@ with DAG(
 
     # Define training config to be passed to the training function
     training_kwargs = {
-        "data_path": "/opt/airflow/data/twitter_training.csv", 
+        "data_path": "/opt/airflow/data/multilingual_dataset.csv", 
         "model_name": "cardiffnlp/twitter-xlm-roberta-base-sentiment",
         "output_dir": "/opt/airflow/models/twitter_sentiment_finetuned",
         "num_train_epochs": 3.0,
