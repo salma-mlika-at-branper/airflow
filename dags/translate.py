@@ -129,20 +129,7 @@ def translate_texts(df: pd.DataFrame, target_lang_model: str, batch_size: int = 
     texts = df['text'].tolist()
     translations = []
     
-    # Use tqdm to view progression status dynamically 
-    print(f"Translating {len(texts)} entries...")
-    for i in tqdm(range(0, len(texts), batch_size), desc="Batch Process"):
-        batch_text = texts[i:i+batch_size]
-        try:
-            # Truncation applies safely to drop tokens beyond the model's acceptable input boundary bounds 
-            results = translator(batch_text, truncation=True)
-            batch_translations = [res['translation_text'] for res in results]
-            translations.extend(batch_translations)
-        except Exception as e:
-            # Graceful Fallback Design Architecture
-            # If translation errors (Memory/Out Of Bounds/etc.), we append original English sequences
-            print(f"Error in batch starting at {i}: {e}. Falling back to original english text strings.")
-            translations.extend(batch_text)
+    
             
     # Apply cleanup sequence
     print("5. CLEANING TRANSLATED TEXT (HTML entities formatting, space stripping)...")
