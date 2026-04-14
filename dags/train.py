@@ -1,3 +1,7 @@
+"""
+DAG for fine-tuning the twitter-xlm-roberta-base-sentiment model.
+"""
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime
@@ -33,15 +37,17 @@ def train_model(**kwargs):
     Parameters are passable as arguments, making it Airflow-compatible.
     """
     # 1. Retrieve config parameters from kwargs (passed via PythonOperator)
-    data_path = kwargs.get("data_path", "/opt/airflow/data/train-anglais.csv")
+    data_path = kwargs.get("data_path", "/opt/airflow/data/twitter_training.csv")
     model_name = kwargs.get("model_name", "cardiffnlp/twitter-xlm-roberta-base-sentiment")
     output_dir = kwargs.get("output_dir", "/opt/airflow/models/sentiment_model")
     num_train_epochs = kwargs.get("num_train_epochs", 3.0)
     per_device_train_batch_size = kwargs.get("per_device_train_batch_size", 16)
     per_device_eval_batch_size = kwargs.get("per_device_eval_batch_size", 16)
-    learning_rate = kwargs.get("learning_rate", 2e-5)
+    learning_rate = kwargs.get("learning_rate", 5e-6)
     evaluation_strategy = kwargs.get("evaluation_strategy", "epoch")
     save_strategy = kwargs.get("save_strategy", "epoch")
+    warmup_ratio = kwargs.get("warmup_ratio", 0.1)
+    weight_decay = kwargs.get("weight_decay", 0.01)
     
     os.makedirs(output_dir, exist_ok=True)
     
@@ -60,12 +66,11 @@ def train_model(**kwargs):
     df['sentiment_label'] = df['sentiment_label'].astype(str).str.strip().str.capitalize()
     
     # 4. Label Encoding
-    # Map the 4 string labels to integers
+    # Map the 3 string labels to integers (ignoring Irrelevant)
     label_map = {
         "Positive": 0,
         "Negative": 1,
-        "Neutral": 2,
-        "Irrelevant": 3
+        "Neutral": 2
     }
     
     # Filter to ensure only valid labels are present
@@ -97,13 +102,13 @@ def train_model(**kwargs):
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
     
     # 7. Model Setup
-    print(f"Loading AutoModelForSequenceClassification for {model_name} with num_labels=4...")
+    print(f"Loading AutoModelForSequenceClassification for {model_name} with num_labels=3...")
     id2label = {v: k for k, v in label_map.items()}
     
     # Transformers will use CUDA automatically if available
     model = AutoModelForSequenceClassification.from_pretrained(
         model_name, 
-        num_labels=4,
+        num_labels=3,
         id2label=id2label,
         label2id=label_map,
         ignore_mismatched_sizes=True
@@ -122,6 +127,8 @@ def train_model(**kwargs):
         metric_for_best_model="f1_weighted",
         logging_dir=os.path.join(output_dir, "logs"),
         logging_steps=50,
+        warmup_ratio=warmup_ratio,
+        weight_decay=weight_decay,
         # Default environment will automatically use CUDA if available via torch backend
     )
     
@@ -180,9 +187,11 @@ with DAG(
         "num_train_epochs": 3.0,
         "per_device_train_batch_size": 16,
         "per_device_eval_batch_size": 16,
-        "learning_rate": 2e-5,
+        "learning_rate": 5e-6,
         "evaluation_strategy": "epoch",
-        "save_strategy": "epoch"
+        "save_strategy": "epoch",
+        "warmup_ratio": 0.1,
+        "weight_decay": 0.01
     }
 
     train_task = PythonOperator(
