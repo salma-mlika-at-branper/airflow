@@ -217,7 +217,7 @@ with DAG(
     }
 
     train_task = PythonOperator(
-        task_id="train_sentiment_model_task",
+        task_id="train_multi,
         python_callable=train_model,
         op_kwargs=training_kwargs
     )
