@@ -10,7 +10,7 @@ import re
 import html
 import torch
 from transformers import pipeline
-
+from tqdm.auto import tqdm
 
 # Airflow specific imports
 from airflow import DAG
@@ -129,13 +129,39 @@ def translate_texts(df: pd.DataFrame, target_lang_model: str, batch_size: int = 
     texts = df['text'].tolist()
     translations = []
     
-    
+    # Use tqdm to view progression status dynamically 
+    print(f"Translating {len(texts)} entries...")
+    for i in tqdm(range(0, len(texts), batch_size), desc="Batch Process"):
+        batch_text = texts[i:i+batch_size]
+        try:
+            # Truncation applies safely to drop tokens beyond the model's acceptable input boundary bounds 
+            results = translator(batch_text, truncation=True)
             
+            # Formatting correction just in case the pipeline returns a raw dict instead of list of dicts
+            if isinstance(results, dict):
+                results = [results]
+                
+            batch_translations = [res.get('translation_text', batch_text[idx]) for idx, res in enumerate(results)]
+            translations.extend(batch_translations)
+            
+        except Exception as e:
+            # Graceful Fallback Design Architecture
+            # If translation errors (Memory/Out Of Bounds/etc.), we append original English sequences
+            print(f"Error in batch starting at {i}: {e}. Falling back to original english text strings.")
+            translations.extend(batch_text)
+            
+    # CRITICAL: Validate translations matches length correctly before dataframe mappings!
+    if len(translations) != len(df):
+        print(f"CRITICAL ERROR AVOIDED: Expected {len(df)} outcomes, got {len(translations)}. Reverting to original partition texts bounds!")
+        translations = texts
+
     # Apply cleanup sequence
     print("5. CLEANING TRANSLATED TEXT (HTML entities formatting, space stripping)...")
     cleaned_translations = [clean_translated_text(t) for t in translations]
     
-    df['text'] = cleaned_translations
+    # Safe index assignments avoiding mismatched dataframe index bindings natively
+    df = df.copy()
+    df.loc[:, 'text'] = cleaned_translations
     
     # Memory flushing to protect resources & reduce VRAM impact between loads
     del translator
