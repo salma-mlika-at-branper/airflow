@@ -55,6 +55,16 @@ def train_model(**kwargs):
     # 2. Data Loading
     print(f"Loading data from {data_path}...")
     df = pd.read_csv(data_path)
+    
+    # Strip whitespace from column names just in case they have trailing/leading spaces
+    if not df.empty:
+        df.columns = df.columns.str.strip()
+        
+    # Fallback: if 'sentiment' still isn't a column, it means the CSV probably lacked a header row
+    # and pd.read_csv consumed the first row as the header.
+    if 'sentiment' not in df.columns:
+        df = pd.read_csv(data_path, header=None, names=['textID', 'text', 'selected_text', 'sentiment'])
+    
     # Expected columns: textID, text, selected_text, sentiment
     
     # 3. Data Cleaning
