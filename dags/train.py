@@ -16,7 +16,7 @@ from transformers import (
     TrainingArguments, 
     Trainer,
     DataCollatorWithPadding
-
+    
 )
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
@@ -54,42 +54,44 @@ def train_model(**kwargs):
     
     # 2. Data Loading
     print(f"Loading data from {data_path}...")
-    col_names = ["id", "game_title", "sentiment_label", "tweet_text"]
-    df = pd.read_csv(data_path, header=None, names=col_names)
+    df = pd.read_csv(data_path)
+    # Expected columns: textID, text, selected_text, sentiment
     
     # 3. Data Cleaning
     initial_len = len(df)
-    # Drop nulls in the tweet text column
-    df = df.dropna(subset=['tweet_text'])
-    # Drop rows where sentiment_label is null
-    df = df.dropna(subset=['sentiment_label'])
     
-    # Strip whitespace from labels and standardize case
-    df['sentiment_label'] = df['sentiment_label'].astype(str).str.strip().str.capitalize()
+    # Remove rows with missing values
+    df = df.dropna(subset=['text', 'sentiment'])
     
-    # Remove duplicates
-    df = df.drop_duplicates(subset=['tweet_text', 'sentiment_label'])
-    print(f"Removed {initial_len - len(df)} duplicate/null rows.")
+    # Convert sentiment labels to lowercase and strip whitespace
+    df['sentiment'] = df['sentiment'].astype(str).str.strip().str.lower()
+    
+    # Remove rows where text length < 5
+    df['text'] = df['text'].astype(str)
+    df = df[df['text'].str.len() >= 5]
+    
+    # Remove duplicates based on "text"
+    df = df.drop_duplicates(subset=['text'])
+    print(f"Removed {initial_len - len(df)} duplicate, null, or short rows.")
     
     # 4. Label Encoding
-    # Map the 3 string labels to integers (ignoring Irrelevant)
+    # Map the 3 string labels to integers
     label_map = {
-        "Positive": 0,
-        "Negative": 1,
-        "Neutral": 2
+        "positive": 0,
+        "negative": 1,
+        "neutral": 2
     }
     
-    # Detect & remove wrong/irrelevant labels
+
     initial_len_labels = len(df)
     # Filter to ensure only valid labels are present
-    df = df[df['sentiment_label'].isin(label_map.keys())]
+    df = df[df['sentiment'].isin(label_map.keys())]
     print(f"Removed {initial_len_labels - len(df)} rows with incorrect/irrelevant labels.")
     
-    df['label'] = df['sentiment_label'].map(label_map)
+    df['label'] = df['sentiment'].map(label_map)
     
-    # Keep necessary columns
-    df = df[['tweet_text', 'label']]
-    df['tweet_text'] = df['tweet_text'].astype(str)
+    # Keep necessary columns (ignoring "selected_text" and "textID")
+    df = df[['text', 'label']]
     
     # 5. Train/Validation Split (80/20)
     print("Splitting data into train and validation sets (80/20)...")
@@ -103,7 +105,7 @@ def train_model(**kwargs):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
     def tokenize_function(examples):
-        return tokenizer(examples['tweet_text'], truncation=True, max_length=128)
+        return tokenizer(examples['text'], truncation=True, max_length=128)
         
     print("Tokenizing datasets...")
     train_dataset = train_dataset.map(tokenize_function, batched=True)
