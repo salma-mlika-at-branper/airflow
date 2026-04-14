@@ -54,16 +54,7 @@ def run_predictions(**kwargs):
     )
 
     preds = sentiment_pipeline(texts, batch_size=16)
-
-    # The fine-tuned model outputs capitalized labels (from id2label): "Positive", etc.
-    # Filter out "Irrelevant" predictions since anglais.csv has no such ground truth
-    predictions = []
-    for p in preds:
-        label = p["label"]  # Already capitalized from id2label
-        if label == "Irrelevant":
-            label = "Neutral"  # Fallback: remap Irrelevant → Neutral for 3-class eval
-        predictions.append(label)
-
+    predictions = [p["label"] for p in preds]
     kwargs["ti"].xcom_push(key="predictions", value=predictions)
 
 
