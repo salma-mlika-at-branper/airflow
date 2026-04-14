@@ -51,13 +51,7 @@ def run_predictions(**kwargs):
     )
 
     preds = sentiment_pipeline(texts, batch_size=16)
-    label_map = {
-    "LABEL_0": "negative",
-    "LABEL_1": "neutral",
-    "LABEL_2": "positive"
-}
-
-    predictions = [label_map[p["label"]] for p in preds]
+    predictions = [p["label"].lower() for p in preds]
     kwargs["ti"].xcom_push(key="predictions", value=predictions)
 
 
