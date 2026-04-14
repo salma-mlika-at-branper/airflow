@@ -60,10 +60,13 @@ def train_model(**kwargs):
     if not df.empty:
         df.columns = df.columns.str.strip()
         
-    # Fallback: if 'sentiment' still isn't a column, it means the CSV probably lacked a header row
-    # and pd.read_csv consumed the first row as the header.
-    if 'sentiment' not in df.columns:
-        df = pd.read_csv(data_path, header=None, names=['textID', 'text', 'selected_text', 'sentiment'])
+    # Standardize our predicting target column securely 
+    if 'sentiment' in df.columns:
+        df = df.rename(columns={'sentiment': 'label'})
+        
+    # Fallback: if 'label' still isn't a column, it means the CSV probably lacked a header row
+    if 'label' not in df.columns:
+        df = pd.read_csv(data_path, header=None, names=['textID', 'text', 'selected_text', 'label'])
     
     # Expected columns: textID, text, selected_text, sentiment
     
@@ -71,10 +74,10 @@ def train_model(**kwargs):
     initial_len = len(df)
     
     # Remove rows with missing values
-    df = df.dropna(subset=['text', 'sentiment'])
+    df = df.dropna(subset=['text', 'label'])
     
     # Convert sentiment labels to lowercase and strip whitespace
-    df['sentiment'] = df['sentiment'].astype(str).str.strip().str.lower()
+    df['label'] = df['label'].astype(str).str.strip().str.lower()
     
     # Remove rows where text length < 5
     df['text'] = df['text'].astype(str)
@@ -95,10 +98,10 @@ def train_model(**kwargs):
 
     initial_len_labels = len(df)
     # Filter to ensure only valid labels are present
-    df = df[df['sentiment'].isin(label_map.keys())]
+    df = df[df['label'].isin(label_map.keys())]
     print(f"Removed {initial_len_labels - len(df)} rows with incorrect/irrelevant labels.")
     
-    df['label'] = df['sentiment'].map(label_map)
+    df['label'] = df['label'].map(label_map)
     
     # Keep necessary columns (ignoring "selected_text" and "textID")
     df = df[['text', 'label']]
