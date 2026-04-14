@@ -14,12 +14,9 @@ def load_data(**kwargs):
     df.columns = ["textID", "text", "sentiment"]
     print(df.head())
 
-    # Normalize labels to title-case to match the fine-tuned model's id2label output
-    # The fine-tuned model outputs: "Positive", "Negative", "Neutral", "Irrelevant"
-    df["sentiment"] = df["sentiment"].str.strip().str.capitalize()
-
+    df["sentiment"] = df["sentiment"].str.strip().str.lower()
     # Keep only the 3 labels present in anglais.csv
-    valid_labels = {"Positive", "Negative", "Neutral"}
+    valid_labels = {"positive", "negative", "neutral"}
     df = df[df["sentiment"].isin(valid_labels)]
 
     print(f"Label distribution:\n{df['sentiment'].value_counts()}")
@@ -54,7 +51,13 @@ def run_predictions(**kwargs):
     )
 
     preds = sentiment_pipeline(texts, batch_size=16)
-    predictions = [p["label"] for p in preds]
+    label_map = {
+    "LABEL_0": "negative",
+    "LABEL_1": "neutral",
+    "LABEL_2": "positive"
+}
+
+    predictions = [label_map[p["label"]] for p in preds]
     kwargs["ti"].xcom_push(key="predictions", value=predictions)
 
 
@@ -65,12 +68,12 @@ def evaluate(**kwargs):
     y_true = kwargs["ti"].xcom_pull(key="labels", task_ids="load_data")
     y_pred = kwargs["ti"].xcom_pull(key="predictions", task_ids="run_predictions")
 
-    labels = ["Positive", "Negative", "Neutral"]
+    labels = ["positive", "negative", "neutral"]
 
     acc  = accuracy_score(y_true, y_pred)
-    prec = precision_score(y_true, y_pred, average="weighted", labels=labels)
-    rec  = recall_score(y_true, y_pred, average="weighted", labels=labels)
-    f1   = f1_score(y_true, y_pred, average="weighted", labels=labels)
+    prec = precision_score(y_true, y_pred, average="weighted")
+    rec  = recall_score(y_true, y_pred, average="weighted")
+    f1   = f1_score(y_true, y_pred, average="weighted")
 
     print("=== Fine-tuned Model Evaluation on anglais.csv ===")
     print(f"Accuracy:             {acc:.4f}")
