@@ -16,6 +16,7 @@ from transformers import (
     TrainingArguments, 
     Trainer,
     DataCollatorWithPadding
+
 )
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
@@ -57,6 +58,7 @@ def train_model(**kwargs):
     df = pd.read_csv(data_path, header=None, names=col_names)
     
     # 3. Data Cleaning
+    initial_len = len(df)
     # Drop nulls in the tweet text column
     df = df.dropna(subset=['tweet_text'])
     # Drop rows where sentiment_label is null
@@ -64,6 +66,10 @@ def train_model(**kwargs):
     
     # Strip whitespace from labels and standardize case
     df['sentiment_label'] = df['sentiment_label'].astype(str).str.strip().str.capitalize()
+    
+    # Remove duplicates
+    df = df.drop_duplicates(subset=['tweet_text', 'sentiment_label'])
+    print(f"Removed {initial_len - len(df)} duplicate/null rows.")
     
     # 4. Label Encoding
     # Map the 3 string labels to integers (ignoring Irrelevant)
@@ -73,8 +79,12 @@ def train_model(**kwargs):
         "Neutral": 2
     }
     
+    # Detect & remove wrong/irrelevant labels
+    initial_len_labels = len(df)
     # Filter to ensure only valid labels are present
     df = df[df['sentiment_label'].isin(label_map.keys())]
+    print(f"Removed {initial_len_labels - len(df)} rows with incorrect/irrelevant labels.")
+    
     df['label'] = df['sentiment_label'].map(label_map)
     
     # Keep necessary columns
