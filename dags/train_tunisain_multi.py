@@ -52,7 +52,7 @@ def combine_data(**kwargs):
         multilang_df = pd.DataFrame()
         
     try:
-        one_df = pd.read_csv("/opt/airflow/data/tunisainone.csv")
+        one_df = pd.read_csv("/opt/airflow/data/tunisainone.csv", on_bad_lines='skip')
     except Exception as e:
         print(f"Failed to load tunisainone: {e}")
         one_df = pd.DataFrame()
@@ -219,7 +219,7 @@ with DAG(
     )
 
     task_combine_data = PythonOperator(
-        task_id="combine__data",
+        task_id="combine_data",
         python_callable=combine_data,
     )
     
