@@ -34,34 +34,55 @@ def load_data(**kwargs):
 # STEP 2: Load pretrained model (store only model name)
 
 def load_model(**kwargs):
-    model_name = "CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment"
+    model_name = "/opt/airflow/models/pretrained_sentiment"
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
 
 # STEP 3: Run predictions
 
+from transformers import pipeline
+
 def run_predictions(**kwargs):
-    texts = kwargs["ti"].xcom_pull(key="texts", task_ids="load_data")
-    model_name = kwargs["ti"].xcom_pull(key="model_name", task_ids="load_model")
+    ti = kwargs["ti"]
 
-    model = pipeline("sentiment-analysis", model=model_name, device=-1)
+    texts = ti.xcom_pull(key="texts", task_ids="load_data")
+    model_name = ti.xcom_pull(key="model_name", task_ids="load_model")
 
-    preds=model(
-        texts,
-        truncation=True,
-        max_length=256,
-        padding=True,
-        batch_size=8
+    # Load pipeline
+    classifier = pipeline(
+        "sentiment-analysis",
+        model=model_name,
+        tokenizer=model_name,
+        device=-1  # CPU, use 0 for GPU
     )
 
-    roberta_map = {
-       "label_0": "negative" ,
-       "label_1": "neutral",  
-       "label_2": "positive"
+    # Run in batches (IMPORTANT for performance)
+    batch_size = 8
+    preds = []
+
+    for i in range(0, len(texts), batch_size):
+        batch = texts[i:i+batch_size]
+        outputs = classifier(batch)
+
+        preds.extend(outputs)
+
+    # Robust label mapping
+    label_map = {
+        "LABEL_0": "negative",
+        "LABEL_1": "neutral",
+        "LABEL_2": "positive",
+
+        # fallback cases (some models already return strings)
+        "negative": "negative",
+        "neutral": "neutral",
+        "positive": "positive"
     }
 
-    predictions = [roberta_map.get(p["label"], p["label"]) for p in preds]
-    kwargs["ti"].xcom_push(key="predictions", value=predictions)
+    predictions = [
+        label_map.get(p["label"], p["label"])
+        for p in preds
+    ]
 
+    ti.xcom_push(key="predictions", value=predictions)
 # STEP 4: Evaluate benchmark
 
 def evaluate(**kwargs):
