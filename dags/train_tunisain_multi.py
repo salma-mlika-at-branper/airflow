@@ -6,6 +6,8 @@ import numpy as np
 import os
 import shutil
 from datasets import Dataset
+import torch
+torch.cuda.empty_cache()
 from transformers import (
     AutoTokenizer, 
     AutoModelForSequenceClassification, 
@@ -133,8 +135,11 @@ def train_model(**kwargs):
     training_args = TrainingArguments(
         output_dir=TEMP_TRAIN_DIR,
         num_train_epochs=3,             
-        per_device_train_batch_size=16,   
-        per_device_eval_batch_size=16,
+        per_device_train_batch_size=4,   
+        per_device_eval_batch_size=8,
+        gradient_accumulation_steps=4,
+        fp16=True,
+        gradient_checkpointing=True,
         learning_rate=5e-5,               
         evaluation_strategy="epoch",      # Evaluate at each epoch
         save_strategy="epoch",
