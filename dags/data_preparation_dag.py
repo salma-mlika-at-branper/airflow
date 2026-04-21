@@ -10,11 +10,13 @@ from airflow.operators.python import PythonOperator
 DATA_DIR = "/opt/airflow/data"
 MULTI_DATA_PATH = os.path.join(DATA_DIR, "multilingual_dataset.csv")
 TUNISIAN_DATA_PATH = os.path.join(DATA_DIR, "tunisainone.csv")
+DERJA_DATA_PATH = os.path.join(DATA_DIR, "derja_arbi.csv")
 MERGED_OUTPUT_PATH = os.path.join(DATA_DIR, "merged_data.csv")
 
 # Temporary files for passing data between tasks
 TEMP_MULTI = os.path.join(DATA_DIR, "temp_multi.parquet")
 TEMP_TUNISIAN = os.path.join(DATA_DIR, "temp_tunisain.parquet")
+TEMP_DERJA = os.path.join(DATA_DIR, "temp_derja.parquet")
 TEMP_COMBINED = os.path.join(DATA_DIR, "temp_combined.parquet")
 TEMP_CLEANED = os.path.join(DATA_DIR, "temp_cleaned.parquet")
 
@@ -49,7 +51,19 @@ def load_data(**kwargs):
     else:
         logging.warning(f"File not found: {TUNISIAN_DATA_PATH}. Proceeding with empty dataframe.")
         pd.DataFrame(columns=['text', 'label']).to_parquet(TEMP_TUNISIAN)
-
+    # Load derja dataset
+    if os.path.exists(DERJA_DATA_PATH):
+        try:
+            df_derja = pd.read_csv(DERJA_DATA_PATH, on_bad_lines='skip')
+            logging.info(f"Successfully loaded {DERJA_DATA_PATH}. Shape: {df_derja.shape}")
+            df_derja.to_parquet(TEMP_DERJA)
+        except Exception as e:
+            logging.error(f"Error loading {DERJA_DATA_PATH}: {e}")
+            pd.DataFrame(columns=['text', 'label']).to_parquet(TEMP_DERJA)
+    else:
+        logging.warning(f"File not found: {DERJA_DATA_PATH}. Proceeding with empty dataframe.")
+        pd.DataFrame(columns=['text', 'label']).to_parquet(TEMP_DERJA)
+    
 
 def combine_data(**kwargs):
     """
@@ -59,6 +73,7 @@ def combine_data(**kwargs):
     
     df_multi = pd.read_parquet(TEMP_MULTI)
     df_tun = pd.read_parquet(TEMP_TUNISIAN)
+    df_derja = pd.read_parquet(TEMP_DERJA)
     
     def standardize_columns(df, dataset_name):
         if df.empty:
@@ -95,9 +110,9 @@ def combine_data(**kwargs):
 
     df_multi_std = standardize_columns(df_multi, 'Multilingual Dataset')
     df_tun_std = standardize_columns(df_tun, 'Tunisian Dataset')
-    
+    df_derja_std = standardize_columns(df_derja, 'Derja Dataset')
     # Merge both datasets
-    combined_df = pd.concat([df_multi_std, df_tun_std], ignore_index=True)
+    combined_df = pd.concat([df_multi_std, df_tun_std, df_derja_std], ignore_index=True)
     logging.info(f"Combined data shape: {combined_df.shape}")
     
     # Save to intermediate parquet
@@ -157,7 +172,7 @@ def save_dataset(**kwargs):
     logging.info(f"Final Output shape: {df.shape}")
     
     # Optional cleanup of intermediate files to save disk space
-    temp_files = [TEMP_MULTI, TEMP_TUNISIAN, TEMP_COMBINED, TEMP_CLEANED]
+    temp_files = [TEMP_MULTI, TEMP_TUNISIAN, TEMP_DERJA,TEMP_COMBINED, TEMP_CLEANED]
     for temp_file in temp_files:
         if os.path.exists(temp_file):
             os.remove(temp_file)
