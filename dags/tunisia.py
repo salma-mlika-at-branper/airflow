@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 def load_data(**kwargs):
     df = pd.read_csv(
-        "/opt/airflow/data/arabet.csv",
+        "/opt/airflow/data/mixed_arabic_latin_t.csv",
         sep="|",
         engine="python",
         encoding="utf-8"
@@ -34,7 +34,7 @@ def load_data(**kwargs):
 # STEP 2: Load pretrained model (store only model name)
 
 def load_model(**kwargs):
-    model_name = "CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment"
+    model_name = "/opt/airflow/models/pretrained_model"
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
 
 # STEP 3: Run predictions
