@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 def load_data(**kwargs):
     df = pd.read_csv(
         "/opt/airflow/data/mixed_arabic_latin_t.csv",
-        sep="|",
+        sep=",",
         engine="python",
         encoding="utf-8"
     )
