@@ -140,6 +140,7 @@ def train_model(**kwargs):
         gradient_accumulation_steps=4,
         fp16=True,
         gradient_checkpointing=True,
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         learning_rate=5e-5,               
         evaluation_strategy="epoch",      # Evaluate at each epoch
         save_strategy="epoch",
