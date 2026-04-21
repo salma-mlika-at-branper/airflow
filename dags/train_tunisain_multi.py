@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 import os
-import torch
+import shutil
 from datasets import Dataset
 from transformers import (
     AutoTokenizer, 
@@ -15,202 +15,177 @@ from transformers import (
 )
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
+import logging
 
 default_args = {
     'owner': 'airflow',
     'start_date': datetime(2024, 1, 1),
 }
 
+# --- File Paths ---
+DATA_PATH = "/opt/airflow/data/merged_data.csv"
+TRAIN_DATA_PATH = "/opt/airflow/data/train.parquet"
+TEST_DATA_PATH = "/opt/airflow/data/test.parquet"
+MODEL_NAME = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
+BASE_MODEL_DIR = "/opt/airflow/models/base_model"
+TEMP_TRAIN_DIR = "/opt/airflow/models/temp_training"
+FINAL_MODEL_DIR = "/opt/airflow/models/pretrained_model/"
+
 def load_data(**kwargs):
     """
-    Validates and paths to the individual datasets.
+    1. Load Dataset & 3. Data Preprocessing
     """
-    print("Loading data...")
-    data_paths = [
-        "/opt/airflow/data/multilang.csv",
-        "/opt/airflow/data/tunisainone.csv",
+    logging.info(f"Loading data from {DATA_PATH}")
+    df = pd.read_csv(DATA_PATH)
+    
+    # Ensure columns exist
+    if 'text' not in df.columns or 'label' not in df.columns:
+        raise ValueError("Dataset must contain 'text' and 'label' columns.")
         
-    ]
-    for path in data_paths:
-        if not os.path.exists(path):
-            print(f"Warning: Data file not found at {path}")
+    df = df[['text', 'label']]
     
-    # We pass these paths to the next task implicitly or just return them
-    return data_paths
-
-def combine_data(**kwargs):
-    """
-    Combines the datasets into multilingual_dataset.csv
-    """
-    print("Combining data...")
+    # 3. Data Preprocessing - Map labels
+    label_mapping = {
+        'negative': 0,
+        'neutral': 1,
+        'positive': 2
+    }
     
-    # Load each dataset
-    try:
-        multilang_df = pd.read_csv("/opt/airflow/data/multilingual_dataset.csv")
-    except Exception as e:
-        print(f"Failed to load multilang: {e}")
-        multilang_df = pd.DataFrame()
-        
-    try:
-        one_df = pd.read_csv("/opt/airflow/data/tunisainone.csv", on_bad_lines='skip')
-    except Exception as e:
-        print(f"Failed to load tunisainone: {e}")
-        one_df = pd.DataFrame()
-        
+    df['label'] = df['label'].astype(str).str.lower().str.strip()
+    df = df[df['label'].isin(label_mapping.keys())]
+    df['label'] = df['label'].map(label_mapping)
     
-        
-    # Combine them
-    combined = pd.concat([multilang_df, one_df], ignore_index=True)
+    # Split dataset into train/test (80/20)
+    train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
     
-    if combined.empty:
-        raise ValueError("Combined dataset is empty. Cannot proceed.")
-        
-    # Data Cleaning and Formatting
-    combined = combined.dropna(subset=['text', 'label'])
-    combined['label'] = combined['label'].astype(str).str.strip().str.lower()
-    combined['text'] = combined['text'].astype(str)
+    logging.info(f"Train set size: {len(train_df)}")
+    logging.info(f"Test set size: {len(test_df)}")
     
-    # Remove extremely short texts
-    combined = combined[combined['text'].str.len() >= 5]
-    
-    # Drop duplicates
-    combined = combined.drop_duplicates(subset=['text'])
-    
-    out_path = "/opt/airflow/data/multilingual_dataset.csv"
-    os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    
-    combined.to_csv(out_path, index=False)
-    print(f"Saved combined dataset to {out_path} with {len(combined)} records.")
-    return out_path
+    # Save intermediate files for train_model to pick up
+    train_df.to_parquet(TRAIN_DATA_PATH, index=False)
+    test_df.to_parquet(TEST_DATA_PATH, index=False)
+    logging.info("Saved train and test datasets.")
 
 def load_model(**kwargs):
     """
-    Downloads and prepares the model locally so the training task can use it.
+    2. Load Model
     """
-    print("Loading model...")
-    model_name = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
-    model_path = "/opt/airflow/models/pretrained_sentiment"
+    logging.info(f"Downloading/Loading base model from {MODEL_NAME}")
+    os.makedirs(BASE_MODEL_DIR, exist_ok=True)
     
-    os.makedirs(model_path, exist_ok=True)
+    # Load tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    tokenizer.save_pretrained(BASE_MODEL_DIR)
     
-    print(f"Downloading tokenizer for {model_name}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    tokenizer.save_pretrained(model_path)
-    
-    print(f"Downloading model {model_name}...")
+    # Load model with num_labels=3
     model = AutoModelForSequenceClassification.from_pretrained(
-        model_name, 
-        num_labels=3, 
+        MODEL_NAME, 
+        num_labels=3,
         ignore_mismatched_sizes=True
     )
-    model.save_pretrained(model_path)
-    
-    return model_path
+    model.save_pretrained(BASE_MODEL_DIR)
+    logging.info(f"Model and tokenizer saved to {BASE_MODEL_DIR}")
 
 def compute_metrics(eval_pred):
+    """
+    6. Metrics
+    """
     logits, labels = eval_pred
     predictions = np.argmax(logits, axis=-1)
+    
     accuracy = accuracy_score(labels, predictions)
     f1 = f1_score(labels, predictions, average='weighted')
-    return {"accuracy": accuracy, "f1_weighted": f1}
+    
+    return {
+        'accuracy': accuracy,
+        'f1_weighted': f1
+    }
 
 def train_model(**kwargs):
     """
-    Fine-tunes the model on the combined dataset.
+    4. Tokenization & 5. Training
     """
-    print("Training model...")
-    data_path = "/opt/airflow/data/multilingual_dataset.csv"
-    model_path = "/opt/airflow/models/pretrained_sentiment"
-    out_dir = "/opt/airflow/models/sup_train_tunisain"
+    os.makedirs(TEMP_TRAIN_DIR, exist_ok=True)
     
-    os.makedirs(out_dir, exist_ok=True)
-    
-    df = pd.read_csv(data_path)
-    
-    label_map = {
-        "positive": 0,
-        "negative": 1,
-        "neutral": 2
-    }
-    
-    # Filter valid labels
-    initial_len = len(df)
-    df = df[df['label'].isin(label_map.keys())]
-    print(f"Removed {initial_len - len(df)} records with invalid labels.")
-    
-    df['label'] = df['label'].map(label_map)
-    df = df[['text', 'label']]
-    
-    train_df, val_df = train_test_split(df, test_size=0.2, random_state=42)
-    print(f"Training set: {len(train_df)}, Validation set: {len(val_df)}")
+    train_df = pd.read_parquet(TRAIN_DATA_PATH)
+    test_df = pd.read_parquet(TEST_DATA_PATH)
     
     train_dataset = Dataset.from_pandas(train_df)
-    val_dataset = Dataset.from_pandas(val_df)
+    test_dataset = Dataset.from_pandas(test_df)
     
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    # Load tokenizer and model from local cache
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_DIR)
     
     def tokenize_function(examples):
-        return tokenizer(examples['text'], truncation=True, max_length=128)
+        # 4. Max Length 128, Truncation applied
+        return tokenizer(examples['text'], padding=False, truncation=True, max_length=128)
         
-    print("Tokenizing datasets...")
+    logging.info("Tokenizing datasets...")
     train_dataset = train_dataset.map(tokenize_function, batched=True)
-    val_dataset = val_dataset.map(tokenize_function, batched=True)
+    test_dataset = test_dataset.map(tokenize_function, batched=True)
     
+    # 4. Padding is dynamically applied during batching
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
     
-    id2label = {v: k for k, v in label_map.items()}
+    model = AutoModelForSequenceClassification.from_pretrained(BASE_MODEL_DIR, num_labels=3)
     
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_path, 
-        num_labels=3,
-        id2label=id2label,
-        label2id=label_map,
-        ignore_mismatched_sizes=True
-    )
-    
+    # 5. TrainingArguments config
     training_args = TrainingArguments(
-        output_dir=out_dir,
-        num_train_epochs=3.0,             
+        output_dir=TEMP_TRAIN_DIR,
+        num_train_epochs=3,             
         per_device_train_batch_size=16,   
         per_device_eval_batch_size=16,
-        evaluation_strategy="epoch",
+        learning_rate=5e-5,               
+        evaluation_strategy="epoch",      # Evaluate at each epoch
         save_strategy="epoch",
-        learning_rate=5e-6,               
-        load_best_model_at_end=True,      
-        metric_for_best_model="f1_weighted",
-        warmup_ratio=0.1,
-        weight_decay=0.01,
+        load_best_model_at_end=True,
+        metric_for_best_model="f1_weighted"
     )
     
     trainer = Trainer(
         model=model,
         args=training_args,
         train_dataset=train_dataset,
-        eval_dataset=val_dataset,
+        eval_dataset=test_dataset,
         compute_metrics=compute_metrics,
         data_collator=data_collator,     
     )
     
-    print("Starting Training...")
+    logging.info("Starting Training...")
     trainer.train()
     
-    print("Evaluating Model...")
+    logging.info("Evaluating Model...")
     eval_metrics = trainer.evaluate()
-    for key, value in eval_metrics.items():
-        print(f"{key}: {value:.4f}" if isinstance(value, float) else f"{key}: {value}")
-        
-    trainer.save_model(out_dir)
-    tokenizer.save_pretrained(out_dir)
-    print(f"Model saved to {out_dir}")
     
-    return eval_metrics
+    # 6. Print metrics in logs
+    logging.info("Final Evaluation Metrics:")
+    for key, value in eval_metrics.items():
+        logging.info(f"  {key}: {value}")
+        
+    # Save the trained model temporarily 
+    trainer.save_model(TEMP_TRAIN_DIR)
+    tokenizer.save_pretrained(TEMP_TRAIN_DIR)
 
+def save_model(**kwargs):
+    """
+    7. Save Model
+    """
+    logging.info(f"Saving final trained model to {FINAL_MODEL_DIR}")
+    
+    # Create or overwrite the final directory
+    if os.path.exists(FINAL_MODEL_DIR):
+        shutil.rmtree(FINAL_MODEL_DIR)
+        
+    shutil.copytree(TEMP_TRAIN_DIR, FINAL_MODEL_DIR)
+    logging.info("Model saved successfully.")
+
+# --- DAG Definition ---
 with DAG(
-    dag_id="sup_train_tunisain_dag",
+    dag_id="train_multilingual_sentiment_model",
     default_args=default_args,
     schedule_interval=None,
     catchup=False,
-    tags=['nlp', 'sentiment', 'tunisian', 'multilingual']
+    tags=['nlp', 'sentiment', 'trainer', 'transformers']
 ) as dag:
     
     task_load_data = PythonOperator(
@@ -218,11 +193,6 @@ with DAG(
         python_callable=load_data,
     )
 
-    task_combine_data = PythonOperator(
-        task_id="combine_data",
-        python_callable=combine_data,
-    )
-    
     task_load_model = PythonOperator(
         task_id="load_model",
         python_callable=load_model,
@@ -233,6 +203,10 @@ with DAG(
         python_callable=train_model,
     )
 
-    # Dependencies
-    task_load_data >> task_combine_data >> task_train_model
-    task_load_model >> task_train_model
+    task_save_model = PythonOperator(
+        task_id="save_model",
+        python_callable=save_model,
+    )
+
+    # DAG Structure Dependency
+    task_load_data >> task_load_model >> task_train_model >> task_save_model
