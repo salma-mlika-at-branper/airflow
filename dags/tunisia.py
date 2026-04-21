@@ -34,7 +34,7 @@ def load_data(**kwargs):
 # STEP 2: Load pretrained model (store only model name)
 
 def load_model(**kwargs):
-    model_name = "CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment"
+    model_name ="/opt/airflow/models/twitter_sentiment_finetuned"
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
 
 # STEP 3: Run predictions
@@ -67,7 +67,7 @@ def run_predictions(**kwargs):
 def evaluate(**kwargs):
     y_true = kwargs["ti"].xcom_pull(key="labels", task_ids="load_data")
     y_pred = kwargs["ti"].xcom_pull(key="predictions", task_ids="run_predictions")
-
+    print("test after fine_tuned on english french arabic")
     acc = accuracy_score(y_true, y_pred)
     print(f"Benchmark Accuracy: {acc}")
 
