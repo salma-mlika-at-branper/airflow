@@ -34,7 +34,7 @@ def load_data(**kwargs):
 # STEP 2: Load pretrained model (store only model name)
 
 def load_model(**kwargs):
-    model_name = "/opt/airflow/models/pretrained_model"
+    model_name = "CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment"
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
 
 # STEP 3: Run predictions
