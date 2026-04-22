@@ -50,6 +50,7 @@ services:
       - "8000:8000"
     volumes:
     - ./models/pretrained_model:/app/model:ro
+    - ./sentiment-ui:/app
     
     environment:
       - MODEL_PATH=/app/model
