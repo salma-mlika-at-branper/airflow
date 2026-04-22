@@ -50,8 +50,7 @@ services:
       - "8000:8000"
     volumes:
     - ./models/pretrained_model:/app/model:ro
-    - ./sentiment_app/model_loader.py:/app/model_loader.py  # live reload
-    - ./sentiment_app/main.py:/app/main.py
+    
     environment:
       - MODEL_PATH=/app/model
     deploy:
