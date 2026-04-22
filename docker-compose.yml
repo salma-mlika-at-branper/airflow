@@ -49,7 +49,6 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      volumes:
       - ./models/pretrained_model:/app/model:ro
     environment:
       - MODEL_PATH=/app/model
