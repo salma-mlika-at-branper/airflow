@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg-color: #2c2c2c;
+            --primary-color: #007bff;
+            --text-color: #f0f0f0;
+            --border-color: #444;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .toggle-pills {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-pills input[type="radio"] {
+            display: none;
+        }
+
+        .toggle-pills label {
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        .toggle-pills input[type="radio"]:checked + label {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .toggle-pills label:first-of-type {
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .toggle-pills label:last-of-type {
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1.1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+
+        .submit-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #fff;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #results {
+            display: none;
+        }
+
+        .sentiment-badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.9em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+            margin-right: 1rem;
+        }
+
+        .sentiment-badge.positive { background-color: var(--success-color); }
+        .sentiment-badge.negative { background-color: var(--danger-color); }
+
+        .progress-bar-container {
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        #opinion-card {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        #error-banner {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--danger-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sentiment Analysis</h1>
+
+        <div class="card">
+            <textarea id="text-input" dir="auto" placeholder="اكتب نصًا بالعربية أو Arabizi أو Français..."></textarea>
+        </div>
+
+        <div class="toggle-pills">
+            <input type="radio" id="mode-test" name="mode" value="predict" checked>
+            <label for="mode-test">Test</label>
+            <input type="radio" id="mode-generate" name="mode" value="generate">
+            <label for="mode-generate">Generate Opinion</label>
+        </div>
+
+        <button id="submit-btn" class="submit-btn">
+            <span class="btn-text">Submit</span>
+        </button>
+
+        <div id="results" class="card" style="margin-top: 1.5rem;">
+            <div>
+                <span id="sentiment-label" class="sentiment-badge"></span>
+                <span id="confidence-score"></span>
+            </div>
+            <hr style="border-color: var(--border-color); margin: 1rem 0;">
+            <div id="scores-container"></div>
+            <div id="opinion-card" class="card">
+                <p id="opinion-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="error-banner"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textInput = document.getElementById('text-input');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const resultsSection = document.getElementById('results');
+            const sentimentLabel = document.getElementById('sentiment-label');
+            const confidenceScore = document.getElementById('confidence-score');
+            const scoresContainer = document.getElementById('scores-container');
+            const opinionCard = document.getElementById('opinion-card');
+            const opinionText = document.getElementById('opinion-text');
+            const errorBanner = document.getElementById('error-banner');
+
+            submitBtn.addEventListener('click', async () => {
+                const text = textInput.value.trim();
+                if (!text) return;
+
+                const mode = document.querySelector('input[name="mode"]:checked').value;
+                const endpoint = `/${mode}`;
+
+                setLoading(true);
+
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text: text })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    displayResults(data, mode);
+
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    showError('Failed to get response from the server.');
+                } finally {
+                    setLoading(false);
+                }
+            });
+
+            function setLoading(isLoading) {
+                if (isLoading) {
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    const spinner = document.createElement('div');
+                    spinner.className = 'spinner';
+                    submitBtn.appendChild(spinner);
+                } else {
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline';
+                    const spinner = submitBtn.querySelector('.spinner');
+                    if (spinner) {
+                        submitBtn.removeChild(spinner);
+                    }
+                }
+            }
+
+            function displayResults(data, mode) {
+                resultsSection.style.display = 'block';
+
+                // Assuming data has a 'sentiment' object with 'label' and 'confidence'
+                if (data.sentiment) {
+                    sentimentLabel.textContent = data.sentiment.label;
+                    sentimentLabel.className = 'sentiment-badge'; // reset classes
+                    if (data.sentiment.label.toLowerCase() === 'positive') {
+                        sentimentLabel.classList.add('positive');
+                    } else {
+                        sentimentLabel.classList.add('negative');
+                    }
+                    confidenceScore.textContent = `Confidence: ${(data.sentiment.confidence * 100).toFixed(2)}%`;
+                }
+
+                // Assuming data has 'scores' array
+                if (data.scores && Array.isArray(data.scores)) {
+                    scoresContainer.innerHTML = '';
+                    data.scores.forEach(score => {
+                        const scorePercentage = (score.score * 100).toFixed(2);
+                        const progressElement = document.createElement('div');
+                        progressElement.className = 'progress-bar-container';
+                        progressElement.innerHTML = `
+                            <div class="progress-bar-label">
+                                <span>${score.label}</span>
+                                <span>${scorePercentage}%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" style="width: ${scorePercentage}%;"></div>
+                            </div>
+                        `;
+                        scoresContainer.appendChild(progressElement);
+                    });
+                }
+
+                if (mode === 'generate' && data.opinion) {
+                    opinionText.textContent = data.opinion;
+                    opinionCard.style.display = 'block';
+                } else {
+                    opinionCard.style.display = 'none';
+                }
+            }
+
+            function showError(message) {
+                errorBanner.textContent = message;
+                errorBanner.style.display = 'block';
+                setTimeout(() => {
+                    errorBanner.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+
+</body>
+</html>
