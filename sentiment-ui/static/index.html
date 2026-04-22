@@ -3,349 +3,594 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Analysis</title>
+    <title>Sentiment Analysis — Tunisian</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans+Arabic:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --card-bg-color: #2c2c2c;
-            --primary-color: #007bff;
-            --text-color: #f0f0f0;
-            --border-color: #444;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --surface2: #1f1f1f;
+            --border: #2a2a2a;
+            --accent: #00e5a0;
+            --accent-dim: rgba(0,229,160,0.12);
+            --text: #e8e8e8;
+            --muted: #666;
+            --pos: #00e5a0;
+            --neg: #ff4f6a;
+            --neu: #7b8cff;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'IBM Plex Sans Arabic', sans-serif;
         }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: var(--font-family);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
+            padding: 2rem 1rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .container {
+        /* Grid noise background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
             width: 100%;
-            max-width: 600px;
+            max-width: 640px;
         }
 
-        .card {
-            background-color: var(--card-bg-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
+        header {
+            margin-bottom: 2.5rem;
+            padding-top: 1rem;
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .logo-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.7); }
         }
 
         h1 {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-family: var(--font-mono);
+            letter-spacing: 0.05em;
+        }
+
+        /* Mode toggle */
+        .mode-toggle {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3px;
+            margin-bottom: 1.25rem;
+            gap: 3px;
+        }
+
+        .mode-toggle input[type="radio"] { display: none; }
+
+        .mode-toggle label {
+            flex: 1;
             text-align: center;
-            margin-bottom: 2rem;
+            padding: 0.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .mode-toggle input[type="radio"]:checked + label {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid rgba(0,229,160,0.3);
+        }
+
+        /* Input area */
+        .input-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .input-card:focus-within {
+            border-color: rgba(0,229,160,0.4);
         }
 
         textarea {
             width: 100%;
-            min-height: 120px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 0.75rem;
+            min-height: 130px;
+            background: transparent;
+            color: var(--text);
+            border: none;
+            outline: none;
+            padding: 1rem;
             font-size: 1rem;
+            font-family: var(--font-body);
             resize: vertical;
-            box-sizing: border-box;
+            line-height: 1.6;
         }
 
-        .toggle-pills {
+        textarea::placeholder { color: var(--muted); }
+
+        .input-footer {
             display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid var(--border);
         }
 
-        .toggle-pills input[type="radio"] {
-            display: none;
+        #char-count {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
         }
 
-        .toggle-pills label {
-            padding: 0.5rem 1.5rem;
-            cursor: pointer;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            transition: background-color 0.2s;
-        }
-
-        .toggle-pills input[type="radio"]:checked + label {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-
-        .toggle-pills label:first-of-type {
-            border-top-left-radius: 20px;
-            border-bottom-left-radius: 20px;
-        }
-
-        .toggle-pills label:last-of-type {
-            border-top-right-radius: 20px;
-            border-bottom-right-radius: 20px;
-        }
-
+        /* Submit button */
         .submit-btn {
             width: 100%;
-            padding: 0.75rem;
-            font-size: 1.1rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
+            padding: 0.875rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid rgba(0,229,160,0.35);
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.2s;
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
         }
 
         .submit-btn:hover:not(:disabled) {
-            background-color: #0056b3;
+            background: rgba(0,229,160,0.2);
+            box-shadow: 0 0 20px rgba(0,229,160,0.15);
         }
 
         .submit-btn:disabled {
-            background-color: #555;
+            opacity: 0.4;
             cursor: not-allowed;
         }
 
         .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0,229,160,0.3);
+            border-top-color: var(--accent);
             border-radius: 50%;
-            border-top: 3px solid #fff;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
+            animation: spin 0.7s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
 
+        /* Results */
         #results {
             display: none;
+            animation: fadeUp 0.35s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
         }
 
         .sentiment-badge {
-            display: inline-block;
-            padding: 0.35em 0.65em;
-            font-size: 0.9em;
-            font-weight: 700;
-            line-height: 1;
-            color: #fff;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 0.25rem;
-            margin-right: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
         }
 
-        .sentiment-badge.positive { background-color: var(--success-color); }
-        .sentiment-badge.negative { background-color: var(--danger-color); }
+        .sentiment-badge.positive { background: rgba(0,229,160,0.15); color: var(--pos); border: 1px solid rgba(0,229,160,0.3); }
+        .sentiment-badge.negative { background: rgba(255,79,106,0.15); color: var(--neg); border: 1px solid rgba(255,79,106,0.3); }
+        .sentiment-badge.neutral  { background: rgba(123,140,255,0.15); color: var(--neu); border: 1px solid rgba(123,140,255,0.3); }
 
-        .progress-bar-container {
-            margin-bottom: 0.5rem;
+        .confidence {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--muted);
         }
 
-        .progress-bar-label {
+        .confidence span {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Score bars */
+        .scores-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .score-row {
+            margin-bottom: 0.85rem;
+        }
+
+        .score-row:last-child { margin-bottom: 0; }
+
+        .score-meta {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 0.25rem;
-            font-size: 0.9rem;
+            margin-bottom: 0.35rem;
         }
 
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: var(--bg-color);
-            border-radius: 5px;
+        .score-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+        }
+
+        .score-value {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .score-track {
+            height: 6px;
+            background: var(--surface2);
+            border-radius: 3px;
             overflow: hidden;
         }
 
-        .progress-bar-fill {
+        .score-fill {
             height: 100%;
-            background-color: var(--primary-color);
-            border-radius: 5px;
-            transition: width 0.5s ease-in-out;
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .score-fill.positive { background: var(--pos); }
+        .score-fill.negative { background: var(--neg); }
+        .score-fill.neutral  { background: var(--neu); }
+
+        /* Opinion card */
         #opinion-card {
             display: none;
-            margin-top: 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
         }
 
+        .opinion-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            opacity: 0.7;
+        }
+
+        #opinion-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        /* Error banner */
         #error-banner {
             display: none;
             position: fixed;
-            top: 1rem;
+            top: 1.25rem;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--danger-color);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 4px;
-            z-index: 1000;
+            background: rgba(255,79,106,0.15);
+            color: var(--neg);
+            border: 1px solid rgba(255,79,106,0.35);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        /* Config row */
+        .config-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 0 0.15rem;
+        }
+
+        .config-row label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .config-row input[type="text"] {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-align: right;
         }
     </style>
 </head>
 <body>
+<div class="wrap">
 
-    <div class="container">
-        <h1>Sentiment Analysis</h1>
-
-        <div class="card">
-            <textarea id="text-input" dir="auto" placeholder="اكتب نصًا بالعربية أو Arabizi أو Français..."></textarea>
+    <header>
+        <div class="logo-row">
+            <div class="logo-dot"></div>
+            <h1>Sentiment Analysis</h1>
         </div>
+        <p class="subtitle">Tunisian Dialect · Arabizi · Arabic · Français</p>
+    </header>
 
-        <div class="toggle-pills">
-            <input type="radio" id="mode-test" name="mode" value="predict" checked>
-            <label for="mode-test">Test</label>
-            <input type="radio" id="mode-generate" name="mode" value="generate">
-            <label for="mode-generate">Generate Opinion</label>
-        </div>
+    <div class="mode-toggle">
+        <input type="radio" id="mode-test" name="mode" value="predict" checked>
+        <label for="mode-test">Test</label>
+        <input type="radio" id="mode-generate" name="mode" value="generate">
+        <label for="mode-generate">Generate Opinion</label>
+    </div>
 
-        <button id="submit-btn" class="submit-btn">
-            <span class="btn-text">Submit</span>
-        </button>
-
-        <div id="results" class="card" style="margin-top: 1.5rem;">
-            <div>
-                <span id="sentiment-label" class="sentiment-badge"></span>
-                <span id="confidence-score"></span>
+    <div class="input-card">
+        <textarea id="text-input" dir="auto" placeholder="اكتب نصًا... ou écris en Arabizi..."></textarea>
+        <div class="input-footer">
+            <div class="config-row">
+                <label for="api-url">API:</label>
+                <input type="text" id="api-url" value="http://localhost:8000" placeholder="http://your-vm-ip:8000">
             </div>
-            <hr style="border-color: var(--border-color); margin: 1rem 0;">
-            <div id="scores-container"></div>
-            <div id="opinion-card" class="card">
-                <p id="opinion-text"></p>
-            </div>
+            <span id="char-count">0 chars</span>
         </div>
     </div>
 
-    <div id="error-banner"></div>
+    <button id="submit-btn" class="submit-btn">
+        <span class="btn-text">Analyse</span>
+    </button>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const textInput = document.getElementById('text-input');
-            const submitBtn = document.getElementById('submit-btn');
-            const btnText = submitBtn.querySelector('.btn-text');
-            const resultsSection = document.getElementById('results');
-            const sentimentLabel = document.getElementById('sentiment-label');
-            const confidenceScore = document.getElementById('confidence-score');
-            const scoresContainer = document.getElementById('scores-container');
-            const opinionCard = document.getElementById('opinion-card');
-            const opinionText = document.getElementById('opinion-text');
-            const errorBanner = document.getElementById('error-banner');
+    <div id="results">
+        <div class="result-header">
+            <span id="sentiment-label" class="sentiment-badge"></span>
+            <span class="confidence">Confidence: <span id="confidence-score"></span></span>
+        </div>
 
-            submitBtn.addEventListener('click', async () => {
-                const text = textInput.value.trim();
-                if (!text) return;
+        <div class="scores-section" id="scores-container"></div>
 
-                const mode = document.querySelector('input[name="mode"]:checked').value;
-                const endpoint = `/${mode}`;
+        <div id="opinion-card">
+            <div class="opinion-tag">// generated opinion</div>
+            <p id="opinion-text"></p>
+        </div>
+    </div>
 
-                setLoading(true);
+</div>
 
-                try {
-                    const response = await fetch(endpoint, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ text: text })
-                    });
+<div id="error-banner"></div>
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const textInput     = document.getElementById('text-input');
+    const submitBtn     = document.getElementById('submit-btn');
+    const btnText       = submitBtn.querySelector('.btn-text');
+    const results       = document.getElementById('results');
+    const sentimentLabel = document.getElementById('sentiment-label');
+    const confidenceEl  = document.getElementById('confidence-score');
+    const scoresContainer = document.getElementById('scores-container');
+    const opinionCard   = document.getElementById('opinion-card');
+    const opinionText   = document.getElementById('opinion-text');
+    const errorBanner   = document.getElementById('error-banner');
+    const charCount     = document.getElementById('char-count');
+    const apiUrlInput   = document.getElementById('api-url');
 
-                    const data = await response.json();
-                    displayResults(data, mode);
+    // Char counter
+    textInput.addEventListener('input', () => {
+        charCount.textContent = `${textInput.value.length} chars`;
+    });
 
-                } catch (error) {
-                    console.error('Fetch error:', error);
-                    showError('Failed to get response from the server.');
-                } finally {
-                    setLoading(false);
-                }
+    submitBtn.addEventListener('click', async () => {
+        const text = textInput.value.trim();
+        if (!text) return;
+
+        const mode     = document.querySelector('input[name="mode"]:checked').value;
+        const baseUrl  = (apiUrlInput.value || 'http://localhost:8000').replace(/\/$/, '');
+        const endpoint = `${baseUrl}/${mode}`;
+
+        setLoading(true);
+        results.style.display = 'none';
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text })
             });
 
-            function setLoading(isLoading) {
-                if (isLoading) {
-                    submitBtn.disabled = true;
-                    btnText.style.display = 'none';
-                    const spinner = document.createElement('div');
-                    spinner.className = 'spinner';
-                    submitBtn.appendChild(spinner);
-                } else {
-                    submitBtn.disabled = false;
-                    btnText.style.display = 'inline';
-                    const spinner = submitBtn.querySelector('.spinner');
-                    if (spinner) {
-                        submitBtn.removeChild(spinner);
-                    }
-                }
+            if (!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.detail || `HTTP ${response.status}`);
             }
 
-            function displayResults(data, mode) {
-                resultsSection.style.display = 'block';
+            const data = await response.json();
+            displayResults(data, mode);
 
-                // Assuming data has a 'sentiment' object with 'label' and 'confidence'
-                if (data.sentiment) {
-                    sentimentLabel.textContent = data.sentiment.label;
-                    sentimentLabel.className = 'sentiment-badge'; // reset classes
-                    if (data.sentiment.label.toLowerCase() === 'positive') {
-                        sentimentLabel.classList.add('positive');
-                    } else {
-                        sentimentLabel.classList.add('negative');
-                    }
-                    confidenceScore.textContent = `Confidence: ${(data.sentiment.confidence * 100).toFixed(2)}%`;
-                }
+        } catch (err) {
+            console.error(err);
+            showError(`Error: ${err.message}`);
+        } finally {
+            setLoading(false);
+        }
+    });
 
-                // Assuming data has 'scores' array
-                if (data.scores && Array.isArray(data.scores)) {
-                    scoresContainer.innerHTML = '';
-                    data.scores.forEach(score => {
-                        const scorePercentage = (score.score * 100).toFixed(2);
-                        const progressElement = document.createElement('div');
-                        progressElement.className = 'progress-bar-container';
-                        progressElement.innerHTML = `
-                            <div class="progress-bar-label">
-                                <span>${score.label}</span>
-                                <span>${scorePercentage}%</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-bar-fill" style="width: ${scorePercentage}%;"></div>
-                            </div>
-                        `;
-                        scoresContainer.appendChild(progressElement);
-                    });
-                }
+    // ─── Display ──────────────────────────────────────────────────────────────
+    function displayResults(data, mode) {
+        results.style.display = 'block';
 
-                if (mode === 'generate' && data.opinion) {
-                    opinionText.textContent = data.opinion;
-                    opinionCard.style.display = 'block';
-                } else {
-                    opinionCard.style.display = 'none';
-                }
+        // ── Sentiment label + confidence ──────────────────────────────────────
+        // API returns flat: { label, confidence, scores: { negative, neutral, positive } }
+        // OR nested:        { sentiment: { label, confidence }, scores: [...] }
+        // We handle both shapes.
+
+        let label, confidence, scores;
+
+        if (data.label !== undefined) {
+            // Flat shape (your current API)
+            label      = data.label;
+            confidence = data.confidence;   // already a percentage (e.g. 99.15)
+            scores     = data.scores;       // object { negative, neutral, positive }
+        } else if (data.sentiment) {
+            // Nested shape
+            label      = data.sentiment.label;
+            confidence = data.sentiment.confidence * 100;
+            scores     = data.scores;
+        }
+
+        // Badge
+        const lc = (label || '').toLowerCase();
+        sentimentLabel.textContent = label || '—';
+        sentimentLabel.className   = `sentiment-badge ${lc}`;
+
+        // Confidence
+        confidenceEl.textContent = `${parseFloat(confidence).toFixed(2)}%`;
+
+        // ── Score bars ────────────────────────────────────────────────────────
+        scoresContainer.innerHTML = '';
+
+        if (scores) {
+            let scoreEntries = [];
+
+            if (Array.isArray(scores)) {
+                // Array shape [{ label, score }]
+                scoreEntries = scores.map(s => ({
+                    label: s.label,
+                    value: s.score > 1 ? s.score : s.score * 100   // normalise
+                }));
+            } else if (typeof scores === 'object') {
+                // Object shape { negative: 0.17, neutral: 0.67, positive: 99.15 }
+                scoreEntries = Object.entries(scores).map(([k, v]) => ({
+                    label: k,
+                    value: parseFloat(v)
+                }));
             }
 
-            function showError(message) {
-                errorBanner.textContent = message;
-                errorBanner.style.display = 'block';
-                setTimeout(() => {
-                    errorBanner.style.display = 'none';
-                }, 5000);
-            }
-        });
-    </script>
+            scoreEntries.forEach(({ label: sl, value }) => {
+                const pct = parseFloat(value).toFixed(2);
+                const colorClass = sl.toLowerCase();
+                scoresContainer.insertAdjacentHTML('beforeend', `
+                    <div class="score-row">
+                        <div class="score-meta">
+                            <span class="score-label">${sl}</span>
+                            <span class="score-value" style="color: var(--${colorClass === 'positive' ? 'pos' : colorClass === 'negative' ? 'neg' : 'neu'})">${pct}%</span>
+                        </div>
+                        <div class="score-track">
+                            <div class="score-fill ${colorClass}" style="width: ${Math.min(pct,100)}%"></div>
+                        </div>
+                    </div>
+                `);
+            });
+        }
 
+        // ── Opinion ───────────────────────────────────────────────────────────
+        if (mode === 'generate' && data.opinion) {
+            opinionText.textContent = data.opinion;
+            opinionCard.style.display = 'block';
+        } else {
+            opinionCard.style.display = 'none';
+        }
+    }
+
+    // ─── Helpers ───────────────────────────────────────────────────────────────
+    function setLoading(on) {
+        submitBtn.disabled = on;
+        btnText.textContent = on ? '' : 'Analyse';
+        const existing = submitBtn.querySelector('.spinner');
+        if (on && !existing) {
+            const sp = document.createElement('div');
+            sp.className = 'spinner';
+            submitBtn.insertBefore(sp, btnText);
+        } else if (!on && existing) {
+            existing.remove();
+        }
+    }
+
+    function showError(msg) {
+        errorBanner.textContent = msg;
+        errorBanner.style.display = 'block';
+        setTimeout(() => { errorBanner.style.display = 'none'; }, 5000);
+    }
+});
+</script>
 </body>
 </html>
