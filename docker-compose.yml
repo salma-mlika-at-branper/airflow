@@ -44,23 +44,22 @@ services:
   airflow-scheduler:
     <<: *airflow-common
     command: scheduler
-
+  sentiment-ui:
+    build: ./sentiment-ui
+    ports:
+      - "8000:8000"
+    volumes:
+      - /opt/airflow/models/pretrained_model:/app/model:ro
+    environment:
+      - MODEL_PATH=/app/model
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
 volumes:
   postgres_db:
 
-sentiment-ui:
-  build: ./sentiment-ui
-  ports:
-    - "8000:8000"
-  volumes:
-    - /opt/airflow/models/pretrained_model:/app/model:ro
-  environment:
-    - MODEL_PATH=/app/model
-  deploy:
-    resources:
-      reservations:
-        devices:
-          - driver: nvidia
-            count: 1
-            capabilities: [gpu]
-  restart: unless-stopped
