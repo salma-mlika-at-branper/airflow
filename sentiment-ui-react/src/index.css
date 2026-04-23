@@ -1,0 +1,54 @@
+:root {
+  --bg:        #080b0f;
+  --surface:   #0e1318;
+  --surface2:  #141a22;
+  --border:    #1e2a36;
+  --border2:   #253344;
+  --accent:    #4af0b0;
+  --accent2:   #1affb2;
+  --accent-dim: rgba(74, 240, 176, 0.08);
+  --accent-glow: rgba(74, 240, 176, 0.18);
+  --red:       #ff4f6a;
+  --blue:      #5b8fff;
+  --yellow:    #f0c94a;
+  --text:      #c8d8e8;
+  --text-dim:  #5a7080;
+  --text-mid:  #8aa0b0;
+  --font-mono: 'Space Mono', monospace;
+  --font-body: 'Spectral', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-mono);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.04) 2px,
+    rgba(0,0,0,0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+::selection { background: var(--accent-glow); color: var(--accent2); }
