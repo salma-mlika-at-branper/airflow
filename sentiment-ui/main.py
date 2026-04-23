@@ -4,16 +4,18 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from model_loader import predict, generate_opinion, chat
+# This load will happen synchronously on module load
+from model_loader import predict, generate_opinion
 logger.info("Models loaded and ready")
 
-app = FastAPI(title="Sentinel — Tunisian Sentiment API")
+# Initialize app
+app = FastAPI(title="FastAPI Sentiment Analysis App")
 
+# Add CORS middleware to allow all origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,55 +24,40 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount the static directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-
-# ── Request models ────────────────────────────────────────────────────────────
-
+# Pydantic model for request validation
 class SentimentRequest(BaseModel):
     text: str
 
-class ChatMessage(BaseModel):
-    role: str      # "system" | "user" | "assistant"
-    content: str
-
-class ChatRequest(BaseModel):
-    history: List[ChatMessage]
-
-
-# ── Routes ────────────────────────────────────────────────────────────────────
-
 @app.get("/")
 async def serve_index():
+    """Serves the main HTML page."""
     return FileResponse("static/index.html")
 
 @app.post("/predict")
 async def predict_endpoint(request: SentimentRequest):
-    if not request.text.strip():
+    """Predicts sentiment for the given text."""
+    if not request.text or not request.text.strip():
         raise HTTPException(status_code=400, detail="Input text cannot be empty.")
+        
     try:
-        return predict(request.text)
+        result = predict(request.text)
+        return result
     except Exception as e:
-        logger.error(f"Inference failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Inference failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Inference failed: {str(e)}")
 
 @app.post("/generate")
 async def generate_endpoint(request: SentimentRequest):
-    if not request.text.strip():
+    """Predicts sentiment and generates a short analytical opinion using T5."""
+    if not request.text or not request.text.strip():
         raise HTTPException(status_code=400, detail="Input text cannot be empty.")
+        
     try:
-        return generate_opinion(request.text)
+        result = generate_opinion(request.text)
+        return result
     except Exception as e:
-        logger.error(f"Generation failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/chat")
-async def chat_endpoint(request: ChatRequest):
-    if not request.history:
-        raise HTTPException(status_code=400, detail="Conversation history cannot be empty.")
-    try:
-        history = [{"role": m.role, "content": m.content} for m in request.history]
-        return chat(history)
-    except Exception as e:
-        logger.error(f"Chat failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"Generation failed: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Generation failed: {str(e)}")
