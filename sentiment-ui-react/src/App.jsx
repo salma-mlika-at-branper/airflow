@@ -89,6 +89,7 @@ function TypingIndicator() {
 }
 
 function Message({ msg }) {
+  if (!msg) return null
   const isUser = msg.role === 'user'
   const isSystem = msg.role === 'system'
 
@@ -140,7 +141,8 @@ export default function App() {
     let i = 0
     const tick = setInterval(() => {
       if (i >= boot.length) { clearInterval(tick); return }
-      setMessages(prev => [...prev, boot[i]])
+      const msg = boot[i]
+      if (msg) setMessages(prev => [...prev, msg])
       i++
     }, 300)
     return () => clearInterval(tick)
