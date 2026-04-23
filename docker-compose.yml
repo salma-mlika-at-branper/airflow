@@ -62,6 +62,13 @@ services:
               count: 1
               capabilities: [gpu]
     restart: unless-stopped
+  sentiment-frontend:
+    build: ./sentiment-ui-react
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sentiment-ui
+    restart: unless-stopped
 volumes:
   postgres_db:
 
