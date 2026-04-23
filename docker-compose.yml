@@ -51,7 +51,8 @@ services:
     volumes:
     - ./models/pretrained_model:/app/model:ro
     - ./sentiment-ui:/app
-  
+    - ./sentiment-ui/model_loader.py:/app/model_loader.py   # live reload
+    - ./sentiment-ui/main.py:/app/main.py 
     environment:
       - MODEL_PATH=/app/model
     deploy:
