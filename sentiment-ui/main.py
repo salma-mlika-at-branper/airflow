@@ -24,15 +24,21 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+
+# ── Request models ────────────────────────────────────────────────────────────
+
 class SentimentRequest(BaseModel):
     text: str
 
 class ChatMessage(BaseModel):
-    role: str
+    role: str      # "system" | "user" | "assistant"
     content: str
 
 class ChatRequest(BaseModel):
     history: List[ChatMessage]
+
+
+# ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.get("/")
 async def serve_index():
