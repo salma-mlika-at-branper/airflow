@@ -2,7 +2,7 @@ import logging
 import requests
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import os
+
 logger = logging.getLogger(__name__)
 
 device = "cuda"
@@ -19,29 +19,26 @@ sentiment_model.eval()
 id2label = sentiment_model.config.id2label
 
 # ==========================================
-# 2. OpenAI config
+# 2. Ollama config
 # ==========================================
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
-OPENAI_URL     = "https://api.openai.com/v1/chat/completions"
-OPENAI_MODEL   = "gpt-4o"
+OLLAMA_HOSTS = [
+    "http://host.docker.internal:11434",
+    "http://172.17.0.1:11434",
+]
+OLLAMA_MODEL = "mistral:latest"
 
-def _openai_chat(messages: list, temperature=0.6, max_tokens=300) -> str:
-    res = requests.post(
-        OPENAI_URL,
-        headers={
-            "Authorization": f"Bearer {OPENAI_API_KEY}",
-            "Content-Type": "application/json",
-        },
-        json={
-            "model": OPENAI_MODEL,
-            "messages": messages,
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-        },
-        timeout=60,
-    )
-    res.raise_for_status()
-    return res.json()["choices"][0]["message"]["content"].strip()
+
+def _ollama_post(path: str, payload: dict) -> dict:
+    last_err = None
+    for host in OLLAMA_HOSTS:
+        try:
+            res = requests.post(f"{host}{path}", json=payload, timeout=120)
+            res.raise_for_status()
+            return res.json()
+        except Exception as e:
+            last_err = e
+            logger.warning(f"Ollama host {host} failed: {e}")
+    raise RuntimeError(f"All Ollama hosts failed. Last error: {last_err}")
 
 
 # ==========================================
@@ -74,32 +71,35 @@ def generate_opinion(text: str) -> dict:
     label      = result["label"]
     confidence = result["confidence"]
 
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are a sentiment analysis expert specializing in Tunisian dialect, "
-                "Arabizi, Arabic, and French code-switching. Be analytical and specific."
-            )
-        },
-        {
-            "role": "user",
-            "content": (
-                f"This text was classified as {label} sentiment with {confidence}% confidence.\n"
-                f"Text: \"{text}\"\n\n"
-                f"Write a concise 2-3 sentence analytical opinion explaining:\n"
-                f"- Which specific words or phrases drive the {label} sentiment\n"
-                f"- Any dialect, slang, or code-switching that influenced the score\n"
-                f"- Whether {confidence}% confidence seems appropriate\n\n"
-                f"Be direct and specific."
-            )
-        }
-    ]
+    prompt = (
+        f"You are a sentiment analysis assistant specializing in Tunisian dialect (Arabizi, Arabic, French mix).\n\n"
+        f"A text was classified as **{label}** sentiment with {confidence}% confidence.\n\n"
+        f"Text: \"{text}\"\n\n"
+        f"Write a concise 2-3 sentence analytical opinion:\n"
+        f"- Which specific words/phrases drive the {label} sentiment\n"
+        f"- Any dialect, slang, or code-switching that influenced the score\n"
+        f"- Whether {confidence}% confidence seems appropriate\n\n"
+        f"Be direct. Do not restate the task."
+    )
 
-    result["opinion"] = _openai_chat(messages, temperature=0.4, max_tokens=180)
+    data = _ollama_post("/api/generate", {
+        "model": OLLAMA_MODEL,
+        "prompt": prompt,
+        "stream": False,
+        "options": {"temperature": 0.4, "num_predict": 180},
+    })
+
+    result["opinion"] = data.get("response", "").strip()
     return result
 
 
 def chat(history: list) -> dict:
-    reply = _openai_chat(history, temperature=0.6, max_tokens=300)
+    data = _ollama_post("/api/chat", {
+        "model": OLLAMA_MODEL,
+        "messages": history,
+        "stream": False,
+        "options": {"temperature": 0.6, "num_predict": 300},
+    })
+
+    reply = data.get("message", {}).get("content", "").strip()
     return {"reply": reply}
