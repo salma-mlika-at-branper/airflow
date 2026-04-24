@@ -2,7 +2,7 @@ import logging
 import requests
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-
+import os
 logger = logging.getLogger(__name__)
 
 device = "cuda"
@@ -21,7 +21,7 @@ id2label = sentiment_model.config.id2label
 # ==========================================
 # 2. OpenAI config
 # ==========================================
-OPENAI_API_KEY = "my key"
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 OPENAI_URL     = "https://api.openai.com/v1/chat/completions"
 OPENAI_MODEL   = "gpt-4o"
 
