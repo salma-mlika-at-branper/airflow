@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # STEP 1: Load real data
 # ----------------------------
 def load_data(**kwargs):
-    df = pd.read_csv("/opt/airflow/data/anglais.csv")
+    df = pd.read_csv("/opt/airflow/data/fr.csv")
     df.columns = ["textID", "text", "sentiment"]
     print(df.head())
 
