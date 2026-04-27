@@ -68,7 +68,7 @@ def run_predictions(**kwargs):
 # ----------------------------
 # STEP 4: Evaluate
 # ----------------------------
-def evaluate(**kwargs):
+def evaluate(*fr_finetuned_eval*kwargs):
     y_true = kwargs["ti"].xcom_pull(key="labels", task_ids="load_data")
     y_pred = kwargs["ti"].xcom_pull(key="predictions", task_ids="run_predictions")
 
@@ -87,7 +87,7 @@ def evaluate(**kwargs):
 # DAG definition
 # ----------------------------
 with DAG(
-    dag_id="fr_finetuned_eval",
+    dag_id="",
     start_date=datetime(2024, 1, 1),
     schedule_interval=None,
     catchup=False,
