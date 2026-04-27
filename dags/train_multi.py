@@ -208,7 +208,7 @@ with DAG(
     training_kwargs = {
         "data_path": "/opt/airflow/data/multilingual_dataset.csv", 
         "model_name": "cardiffnlp/twitter-xlm-roberta-base-sentiment",
-        "output_dir": "/opt/airflow/models/twitter_sentiment_finetuned",
+        "output_dir": "/opt/airflow/models/sentiment_model",
         "num_train_epochs": 3.0,
         "per_device_train_batch_size": 16,
         "per_device_eval_batch_size": 16,
