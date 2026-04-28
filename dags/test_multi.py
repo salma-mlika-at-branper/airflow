@@ -36,7 +36,7 @@ def load_data(**kwargs):
 # ----------------------------
 def load_model(**kwargs):
     # Point to the fine-tuned model
-    model_path = "/opt/airflow/models/sentiment_model"
+    model_path = "/opt/airflow/models/sentiment_model_v1"
     kwargs["ti"].xcom_push(key="model_path", value=model_path)
 
 
