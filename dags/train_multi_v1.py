@@ -65,7 +65,7 @@ def load_clean_data(data_path, label_map):
     df = df[['text', 'label']]
     
     print("Splitting data into train and validation sets (80/20)...")
-    train_df, val_df = train_test_split(df, test_size=0.2, random_state=42)
+    train_df, val_df = train_test_split(df, test_size=0.2, random_state=42, stratify=df["label"])
     
     train_dataset = Dataset.from_pandas(train_df)
     val_dataset = Dataset.from_pandas(val_df)
@@ -86,8 +86,7 @@ def load_model_instance(model_name, label_map):
         model_name, 
         num_labels=3,
         id2label=id2label,
-        label2id=label_map,
-        ignore_mismatched_sizes=True
+        label2id=label_map
     )
     
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
@@ -157,7 +156,7 @@ def main_pipeline(**kwargs):
     
     os.makedirs(output_dir, exist_ok=True)
     
-    label_map = {"positive": 0, "negative": 1, "neutral": 2}
+    label_map = {"negative": 0, "neutral": 1, "positive": 2}
 
     # 2. Data Source Load & Clean
     train_dataset, val_dataset = load_clean_data(data_path, label_map)
@@ -172,6 +171,16 @@ def main_pipeline(**kwargs):
     print("Tokenizing datasets...")
     train_dataset = train_dataset.map(tokenize_function, batched=True)
     val_dataset = val_dataset.map(tokenize_function, batched=True)
+    
+    # Remove unused columns after tokenization
+    train_dataset = train_dataset.remove_columns(
+        [col for col in train_dataset.column_names 
+         if col not in ["input_ids", "attention_mask", "label"]]
+    )
+    val_dataset = val_dataset.remove_columns(
+        [col for col in val_dataset.column_names 
+         if col not in ["input_ids", "attention_mask", "label"]]
+    )
     
     # 5. Training Stage
     trainer = execute_training(model, train_dataset, val_dataset, data_collator, output_dir, kwargs)
@@ -205,7 +214,7 @@ with DAG(
         "num_train_epochs": 3.0,
         "per_device_train_batch_size": 16,
         "per_device_eval_batch_size": 16,
-        "learning_rate": 5e-6,
+        "learning_rate": 2e-5,
         "evaluation_strategy": "epoch",
         "save_strategy": "epoch",
         "warmup_ratio": 0.1,
