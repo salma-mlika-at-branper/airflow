@@ -153,7 +153,7 @@ with DAG(
     # Update 'model_dir' if your trained model is under a different path
     # e.g., "/opt/airflow/models/sentiment_model_v1"
     inference_kwargs = {
-        "model_dir": "/opt/airflow/pretrained_model", 
+        "model_dir": "/opt/airflow/models/pretrained_model", 
         "input_csv": "/opt/airflow/data/tunisia_plus.csv",
         "output_csv": "/opt/airflow/data/tunisia_plus_pseudo.csv",
         "batch_size": 64,
