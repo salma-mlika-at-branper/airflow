@@ -37,11 +37,10 @@ def perform_pseudo_labeling(**kwargs):
     confidence_threshold = kwargs.get("confidence_threshold", 0.85)
 
     print(f"Loading data from {input_csv}...")
-    df = pd.read_csv(input_csv)
-    
-    if "text" not in df.columns:
-        raise ValueError("The input CSV must contain a 'text' column.")
-    
+    # Read linearly without splitting on commas, as the file lacks headers and contains interior commas
+    with open(input_csv, "r", encoding="utf-8") as f:
+        lines = [line.strip() for line in f if line.strip()]
+    df = pd.DataFrame({"text": lines})
     # Device setup
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
