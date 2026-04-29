@@ -10,7 +10,7 @@ import pandas as pd
 import torch
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from tqdm.auto import tqdm
+
 
 class TextDataset(Dataset):
     def __init__(self, texts):
@@ -70,7 +70,7 @@ def perform_pseudo_labeling(**kwargs):
     
     print("Running inference...")
     with torch.no_grad():
-        for batch_texts in tqdm(dataloader, desc="Inference"):
+        for batch_texts in dataloader:
             # Tokenize batch
             inputs = tokenizer(
                 batch_texts,
