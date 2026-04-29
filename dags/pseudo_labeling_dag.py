@@ -30,7 +30,7 @@ def perform_pseudo_labeling(**kwargs):
     PythonOperator callable that performs pseudo-labeling inference 
     using parameters passed via op_kwargs.
     """
-    model_dir = kwargs.get("model_dir", "/opt/airflow/pretrained_model")
+    model_dir = kwargs.get("model_dir", "/opt/airflow/models/pretrained_model")
     input_csv = kwargs.get("input_csv", "/opt/airflow/data/tunisia_plus.csv")
     output_csv = kwargs.get("output_csv", "/opt/airflow/data/tunisia_plus_pseudo.csv")
     batch_size = kwargs.get("batch_size", 64)
