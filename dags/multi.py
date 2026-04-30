@@ -11,6 +11,13 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 def load_data(**kwargs):
     df = pd.read_csv("/opt/airflow/data/multilang.csv")
     print(df.head())
+    col_target = "sentiment" if "sentiment" in df.columns else "label"
+    if col_target not in df.columns:
+        df.columns = ["text", "label"]
+        col_target = "label"
+    df[col_target] = df[col_target].astype(str).str.strip().str.lower()
+    valid_labels = {"positive", "negative", "neutral"}
+    df = df[df[col_target].isin(valid_labels)]
     # push texts and original sentiment labels directly
     kwargs["ti"].xcom_push(key="texts", value=df["text"].tolist())
     kwargs["ti"].xcom_push(key="labels", value=df["label"].tolist())
