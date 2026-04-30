@@ -26,7 +26,7 @@ def load_data(**kwargs):
 # STEP 2: Load pretrained model (store only model name)
 # ----------------------------
 def load_model(**kwargs):
-    model_name ="lxyuan/distilbert-base-multilingual-cased-sentiments-student"
+    model_name ="cardiffnlp/twitter-xlm-roberta-base-sentiment"
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
 
 # ----------------------------
