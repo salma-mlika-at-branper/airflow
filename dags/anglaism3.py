@@ -11,20 +11,25 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 # STEP 1: Load real data
 # ----------------------------
 def load_data(**kwargs):
-    df = pd.read_csv("/opt/airflow/data/anglais.csv")
-    print(df.head())
-    df.columns = ["textID", "text", "sentiment"]
+    df = pd.read_csv("/opt/airflow/data/arabe.csv")
+    
+    # 1. Name columns based on your CSV structure (label first, then text)
+    df.columns = ["label", "text"]
 
-    # Map string labels to sentiment strings
-    label_map = {
-        "negative": "negative",
-        "positive": "positive",
-        "neutral": "neutral"
-    }
-    df["sentiment"] = df["sentiment"].map(label_map)
-    # push texts and original sentiment labels directly
+    # 2. Clean the strings (This replaces the need for a label_map)
+    df["label"] = df["label"].astype(str).str.strip().str.lower()
+    df["text"] = df["text"].astype(str).str.strip()
+
+    # 3. Keep only valid rows (Safety filter)
+    valid_labels = {"positive", "negative", "neutral"}
+    df = df[df["label"].isin(valid_labels)]
+
+    print(f"Dataset Loaded. Total rows: {len(df)}")
+    print(df["label"].value_counts())
+
+    # 4. Push to XCom using the correct cleaned column
     kwargs["ti"].xcom_push(key="texts", value=df["text"].tolist())
-    kwargs["ti"].xcom_push(key="labels", value=df["sentiment"].tolist())
+    kwargs["ti"].xcom_push(key="labels", value=df["label"].tolist())
 
 # ----------------------------
 # STEP 2: Load pretrained model (store only model name)
