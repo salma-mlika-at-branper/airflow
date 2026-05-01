@@ -24,6 +24,7 @@ default_args = {
 
 # --- File Paths ---
 PSEUDO_DATA_PATH = "/opt/airflow/data/tunisia_plus_pseudo.csv"
+MERGED_DATA_PATH = "/opt/airflow/data/merged_data.csv"
 TRAIN_DATA_PATH = "/opt/airflow/data/train_pseudo.parquet"
 TEST_DATA_PATH = "/opt/airflow/data/test_pseudo.parquet"
 
@@ -55,12 +56,28 @@ def preprocess_pseudo(df):
 
 def load_data(**kwargs):
     """
-    1. Load Pseudo-labeled Dataset
+    1. Load Pseudo-labeled Dataset mixed with random samples from Merged Data
     """
     logging.info(f"Loading Pseudo-labeled data from {PSEUDO_DATA_PATH}")
     df_pseudo = pd.read_csv(PSEUDO_DATA_PATH)
     
-    df = preprocess_pseudo(df_pseudo)
+   df_pseudo = preprocess_pseudo(df_pseudo)
+    
+    logging.info(f"Loading Original Merged data from {MERGED_DATA_PATH}")
+    if os.path.exists(MERGED_DATA_PATH):
+        df_merged = pd.read_csv(MERGED_DATA_PATH)
+        df_merged = preprocess_pseudo(df_merged) # reuse the same cleaning/mapping
+        
+        # Sample 8000 rows to prevent catastrophic forgetting
+        n_samples = min(8000, len(df_merged))
+        logging.info(f"Sampling {n_samples} from the merged original dataset.")
+        df_merged_subset = df_merged.sample(n=n_samples, random_state=42)
+        
+        df = pd.concat([df_pseudo, df_merged_subset], ignore_index=True)
+    else:
+        logging.warning("Merged dataset not found! Training on pseudo-labels only.")
+        df = df_pseudo
+    
     
     # Shuffle the dataset
     df = df.sample(frac=1, random_state=42).reset_index(drop=True)
