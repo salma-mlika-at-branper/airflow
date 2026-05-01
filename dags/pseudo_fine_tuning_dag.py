@@ -61,7 +61,7 @@ def load_data(**kwargs):
     logging.info(f"Loading Pseudo-labeled data from {PSEUDO_DATA_PATH}")
     df_pseudo = pd.read_csv(PSEUDO_DATA_PATH)
     
-   df_pseudo = preprocess_pseudo(df_pseudo)
+    df_pseudo = preprocess_pseudo(df_pseudo)
     
     logging.info(f"Loading Original Merged data from {MERGED_DATA_PATH}")
     if os.path.exists(MERGED_DATA_PATH):
