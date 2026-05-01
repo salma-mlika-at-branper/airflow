@@ -34,13 +34,37 @@ def perform_pseudo_labeling(**kwargs):
     input_csv = kwargs.get("input_csv", "/opt/airflow/data/tunisia_plus.csv")
     output_csv = kwargs.get("output_csv", "/opt/airflow/data/tunisia_plus_pseudo.csv")
     batch_size = kwargs.get("batch_size", 64)
-    confidence_threshold = kwargs.get("confidence_threshold", 0.85)
+    confidence_threshold = kwargs.get("confidence_threshold", 0.90)
+
 
     print(f"Loading data from {input_csv}...")
     # Read linearly without splitting on commas, as the file lacks headers and contains interior commas
     with open(input_csv, "r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
     df = pd.DataFrame({"text": lines})
+
+    original_input_count = len(df)
+    already_labeled_texts = set()
+    
+    if os.path.exists(output_csv):
+        print(f"Found existing output file {output_csv}, loading to filter out already labeled samples...")
+        existing_df = pd.read_csv(output_csv)
+        if 'text' in existing_df.columns:
+            already_labeled_texts = set(existing_df['text'].astype(str).str.strip())
+            
+    # Filter out already labeled samples
+    df['text_clean'] = df['text'].astype(str).str.strip()
+    df = df[~df['text_clean'].isin(already_labeled_texts)]
+    df = df.drop(columns=['text_clean'])
+    
+    new_samples_count = len(df)
+    skipped_count = original_input_count - new_samples_count
+    
+    print(f"Found {skipped_count} samples already labeled. Processing {new_samples_count} new samples.")
+    
+    if new_samples_count == 0:
+        print("No new samples to process. Exiting.")
+        return
     # Device setup
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
@@ -106,9 +130,10 @@ def perform_pseudo_labeling(**kwargs):
     kept_count = len(filtered_df)
     
     print("\n--- Pseudo-Labeling Summary ---")
-    print(f"Total original samples: {original_count}")
-    print(f"Samples kept (confidence >= {confidence_threshold}): {kept_count}")
-    print(f"Samples discarded: {original_count - kept_count}")
+    print(f"Already labeled samples skipped: {skipped_count}")
+    print(f"Total new samples processed: {original_count}")
+    print(f"New samples kept (confidence >= {confidence_threshold}): {kept_count}")
+    print(f"New samples discarded: {original_count - kept_count}")
     
     if kept_count > 0:
         print("\nDistribution of predicted labels in confident subset:")
@@ -128,10 +153,9 @@ def perform_pseudo_labeling(**kwargs):
     if output_dir_path:
         os.makedirs(output_dir_path, exist_ok=True)
         
-    print(f"\nSaving pseudo-labeled dataset to '{output_csv}'...")
-    output_df.to_csv(output_csv, index=False)
+    print(f"\nAppending new pseudo-labeled dataset to '{output_csv}'...")
+    output_df.to_csv(output_csv, mode='a', header=not os.path.exists(output_csv), index=False)
     print("Done!")
-
 # ----------------------------
 # DAG definition
 # ----------------------------
@@ -157,7 +181,7 @@ with DAG(
         "input_csv": "/opt/airflow/data/tunisia_plus.csv",
         "output_csv": "/opt/airflow/data/tunisia_plus_pseudo.csv",
         "batch_size": 64,
-        "confidence_threshold": 0.85
+        "confidence_threshold": 0.90
     }
 
     pseudo_label_task = PythonOperator(
