@@ -8,7 +8,7 @@ from airflow.operators.python import PythonOperator
 
 # Define pipeline paths
 DATA_DIR = "/opt/airflow/data"
-MULTI_DATA_PATH = os.path.join(DATA_DIR, "multilingual_dataset.csv")
+MULTI_DATA_PATH = os.path.join(DATA_DIR, "mix3.csv")
 TUNISIAN_DATA_PATH = os.path.join(DATA_DIR, "tunisainone.csv")
 DERJA_DATA_PATH = os.path.join(DATA_DIR, "derja_arbi.csv")
 MERGED_OUTPUT_PATH = os.path.join(DATA_DIR, "merged_data.csv")
