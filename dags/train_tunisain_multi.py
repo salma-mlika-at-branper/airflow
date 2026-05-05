@@ -31,7 +31,7 @@ TEST_DATA_PATH = "/opt/airflow/data/test.parquet"
 MODEL_NAME = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
 BASE_MODEL_DIR = "/opt/airflow/models/base_model"
 TEMP_TRAIN_DIR = "/opt/airflow/models/temp_training"
-FINAL_MODEL_DIR = "/opt/airflow/models/pretrained_model_reald/"
+FINAL_MODEL_DIR = "/opt/airflow/models/pretrained_model_real/"
 
 def load_data(**kwargs):
     """
