@@ -31,7 +31,7 @@ TEST_DATA_PATH = "/opt/airflow/data/test.parquet"
 MODEL_NAME = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
 BASE_MODEL_DIR = "/opt/airflow/models/base_model"
 TEMP_TRAIN_DIR = "/opt/airflow/models/temp_training"
-FINAL_MODEL_DIR = "/opt/airflow/models/pretrained_model/"
+FINAL_MODEL_DIR = "/opt/airflow/models/pretrained_model_translated/"
 
 def load_data(**kwargs):
     """
@@ -135,7 +135,7 @@ def train_model(**kwargs):
     training_args = TrainingArguments(
         output_dir=TEMP_TRAIN_DIR,
         num_train_epochs=3,             
-        per_device_train_batch_size=4,   
+        per_device_train_batch_size=8,   
         per_device_eval_batch_size=8,
         gradient_accumulation_steps=4,
         fp16=True,
