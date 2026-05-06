@@ -34,7 +34,7 @@ def load_data(**kwargs):
 # STEP 2: Load pretrained model (store only model name)
 
 def load_model(**kwargs):
-    model_name ="/opt/airflow/models/pretrained_model_real"
+    model_name ="/opt/airflow/models/pretrained_model"
 
     kwargs["ti"].xcom_push(key="model_name", value=model_name)
 
