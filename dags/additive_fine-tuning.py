@@ -30,7 +30,7 @@ TEST_DATA_PATH = "/opt/airflow/data/test_additive.parquet"
 MODEL_NAME = "cardiffnlp/twitter-xlm-roberta-base-sentiment"
 BASE_MODEL_DIR = "/opt/airflow/models/base_model_additive"
 TEMP_TRAIN_DIR = "/opt/airflow/models/temp_training_additive"
-FINAL_MODEL_DIR = "/opt/airflow/models/additive_finetuned_model/"
+FINAL_MODEL_DIR = "/opt/airflow/models/additive_finetuned_model_real/"
 
 def load_data(**kwargs):
     logging.info(f"Loading data from {DATA_PATH}")
