@@ -58,13 +58,3 @@ async def generate_endpoint(request: SentimentRequest):
         logger.error(f"Generation failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/chat")
-async def chat_endpoint(request: ChatRequest):
-    if not request.history:
-        raise HTTPException(status_code=400, detail="Conversation history cannot be empty.")
-    try:
-        history = [{"role": m.role, "content": m.content} for m in request.history]
-        return chat(history)
-    except Exception as e:
-        logger.error(f"Chat failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))

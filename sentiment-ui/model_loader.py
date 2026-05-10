@@ -93,13 +93,3 @@ def generate_opinion(text: str) -> dict:
     return result
 
 
-def chat(history: list) -> dict:
-    data = _ollama_post("/api/chat", {
-        "model": OLLAMA_MODEL,
-        "messages": history,
-        "stream": False,
-        "options": {"temperature": 0.6, "num_predict": 300},
-    })
-
-    reply = data.get("message", {}).get("content", "").strip()
-    return {"reply": reply}
