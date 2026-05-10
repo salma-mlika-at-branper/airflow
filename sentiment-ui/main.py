@@ -1,7 +1,6 @@
 import logging
 from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
@@ -22,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 class SentimentRequest(BaseModel):
     text: str
@@ -34,9 +33,7 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     history: List[ChatMessage]
 
-@app.get("/")
-async def serve_index():
-    return FileResponse("static/index.html")
+
 
 @app.post("/predict")
 async def predict_endpoint(request: SentimentRequest):
