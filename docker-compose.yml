@@ -46,8 +46,7 @@ services:
     command: scheduler
   sentiment-ui:
     build: ./sentiment-ui
-    ports:
-      - "8000:8000"
+   
     volumes:
     - ./models/pseudo_finetuned_model:/app/model:ro
     - ./sentiment-ui:/app
