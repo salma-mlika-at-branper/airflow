@@ -49,7 +49,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-    - ./models/pretrained_model:/app/model:ro
+    - ./models/pseudo_finetuned_model:/app/model:ro
     - ./sentiment-ui:/app
     - ./sentiment-ui/model_loader.py:/app/model_loader.py   # live reload
     - ./sentiment-ui/main.py:/app/main.py 
