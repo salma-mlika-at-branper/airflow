@@ -25,7 +25,7 @@ OLLAMA_HOSTS = [
     "http://host.docker.internal:11434",
     "http://172.17.0.1:11434",
 ]
-OLLAMA_MODEL = "mistral:latest"
+OLLAMA_MODEL = "gpt-oss:latest"
 
 
 def _ollama_post(path: str, payload: dict) -> dict:
