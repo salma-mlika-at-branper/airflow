@@ -9,7 +9,7 @@ from typing import List
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-from model_loader import predict, generate_opinion, chat
+from model_loader import predict, generate_opinion
 logger.info("Models loaded and ready")
 
 app = FastAPI(title="Sentinel — Tunisian Sentiment API")
