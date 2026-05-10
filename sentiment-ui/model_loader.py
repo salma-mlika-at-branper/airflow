@@ -25,14 +25,14 @@ OLLAMA_HOSTS = [
     "http://host.docker.internal:11434",
     "http://172.17.0.1:11434",
 ]
-OLLAMA_MODEL = "gemma4:latest"
+OLLAMA_MODEL = "mistral:latest"
 
 
 def _ollama_post(path: str, payload: dict) -> dict:
     last_err = None
     for host in OLLAMA_HOSTS:
         try:
-            res = requests.post(f"{host}{path}", json=payload, timeout=300)
+            res = requests.post(f"{host}{path}", json=payload, timeout=120)
             res.raise_for_status()
             return res.json()
         except Exception as e:
