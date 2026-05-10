@@ -25,7 +25,7 @@ OLLAMA_HOSTS = [
     "http://host.docker.internal:11434",
     "http://172.17.0.1:11434",
 ]
-OLLAMA_MODEL = "aya:8b"
+OLLAMA_MODEL = "qwen3.6:35b"
 
 
 def _ollama_post(path: str, payload: dict) -> dict:
