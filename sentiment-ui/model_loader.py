@@ -25,7 +25,7 @@ OLLAMA_HOSTS = [
     "http://host.docker.internal:11434",
     "http://172.17.0.1:11434",
 ]
-OLLAMA_MODEL = "mistral:latest"
+OLLAMA_MODEL = "aya:8b":latest"
 
 
 def _ollama_post(path: str, payload: dict) -> dict:
@@ -71,37 +71,25 @@ def generate_opinion(text: str) -> dict:
     label      = result["label"]
     confidence = result["confidence"]
 
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "Inti assistant Tounsi. Tfhem derja, arabizi, français, w english mzejin. "
-                "Jaweb b nafs el logha mta3 el input — ki el user yekteb b derja, jaweb b derja. "
-                "Ki yekteb b français, jaweb b français. Ki yekteb b english, jaweb b english. "
-                "Ma t9addeche lil arabic alfussha. Tkellm naturally ki Tounsi 3adi."
-            )
-        },
-        {
-            "role": "user",
-            "content": (
-                f"El text hedha: \"{text}\"\n"
-                f"El model 9al aliha {label} b confidence ta3 {confidence}%.\n\n"
-                f"3tini interpretation 9sira (2-3 jmal):\n"
-                f"- Chnoua el klemt elli khallew el sentiment {label}\n"
-                f"- El confidence ta3 {confidence}% logique wela le9?\n"
-                f"Jaweb b nafs el logha mta3 el text."
-            )
-        }
-    ]
+    prompt = (
+        f"You are an AI assistant specialized in the Tunisian dialect. You must understand and communicate fluently in 'Derja' (Tunisian Arabic and latin), including the frequent mixing of French and English words (Code-switching). Do not correct the user to formal Arabic. Reply naturally as a local Tunisian would.\n\n"
+        f"A text was classified as **{label}** sentiment with {confidence}% confidence.\n\n"
+        f"Text: \"{text}\"\n\n"
+        f"Write a concise 2-3 sentence analytical opinion:\n"
+        f"- Which specific words/phrases drive the {label} sentiment\n"
+        f"- Any dialect, slang, or code-switching that influenced the score\n"
+        f"- Whether {confidence}% confidence seems appropriate\n\n"
+        f"Be direct. Do not restate the task."
+    )
 
-    data = _ollama_post("/api/chat", {
+    data = _ollama_post("/api/generate", {
         "model": OLLAMA_MODEL,
-        "messages": messages,
+        "prompt": prompt,
         "stream": False,
         "options": {"temperature": 0.4, "num_predict": 180},
     })
 
-    result["opinion"] = data.get("message", {}).get("content", "").strip()
+    result["opinion"] = data.get("response", "").strip()
     return result
 
 
