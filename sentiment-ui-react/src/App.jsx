@@ -126,7 +126,7 @@ export default function App() {
   const [messages, setMessages]   = useState([])
   const [input, setInput]         = useState('')
   const [loading, setLoading]     = useState(false)
-  const [mode, setMode]           = useState('chat')
+  const [mode, setMode]           = useState('test')
   const [history, setHistory]     = useState([])
   const bottomRef                 = useRef(null)
   const inputRef                  = useRef(null)
@@ -166,7 +166,7 @@ export default function App() {
     addMessage('user', text)
 
     try {
-      if (mode === 'analyse') {
+      if (mode === 'test') {
         const res = await fetch('/predict', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -176,49 +176,16 @@ export default function App() {
         const data = await res.json()
         addMessage('assistant', null, { sentimentData: data })
 
-        const systemMsg = {
-          role: 'system',
-          content: `You are SENTINEL, a sentiment analysis assistant specializing in Tunisian dialect (Arabizi, Arabic, French mix). Be analytical, concise, and specific about linguistic cues.`
-        }
-        const contextMsg = {
-          role: 'user',
-          content: `I just analysed this text: "${text}"\nThe model classified it as ${data.label} with ${data.confidence}% confidence. Scores: ${JSON.stringify(data.scores)}. Give me a brief analytical opinion on why this text carries ${data.label} sentiment, focusing on specific words or phrases.`
-        }
-        const newHistory = history.length === 0
-          ? [systemMsg, contextMsg]
-          : [...history, contextMsg]
-
-        const chatRes = await fetch('/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ history: newHistory })
-        })
-        if (!chatRes.ok) throw new Error(`HTTP ${chatRes.status}`)
-        const chatData = await chatRes.json()
-        const reply = chatData.reply || ''
-        addMessage('assistant', reply)
-        setHistory([...newHistory, { role: 'assistant', content: reply }])
-
       } else {
-        const systemMsg = {
-          role: 'system',
-          content: `You are SENTINEL, a sentiment analysis assistant specializing in Tunisian dialect (Arabizi, Arabic, French mix). Be analytical but conversational. Keep responses concise.`
-        }
-        const userMsg = { role: 'user', content: text }
-        const newHistory = history.length === 0
-          ? [systemMsg, userMsg]
-          : [...history, userMsg]
-
-        const res = await fetch('/chat', {
+        const res = await fetch('/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ history: newHistory })
+          body: JSON.stringify({ text })
         })
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
-        const reply = data.reply || ''
-        addMessage('assistant', reply)
-        setHistory([...newHistory, { role: 'assistant', content: reply }])
+        addMessage('assistant', null, { sentimentData: data })
+        if (data.opinion) addMessage('assistant', data.opinion)
       }
 
     } catch (err) {
@@ -227,7 +194,7 @@ export default function App() {
       setLoading(false)
       setTimeout(() => inputRef.current?.focus(), 50)
     }
-  }, [input, loading, mode, history])
+  }, [input, loading, mode])
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -252,9 +219,9 @@ export default function App() {
         </div>
         <div className="header-right">
           <div className="mode-toggle">
-            <button className={`mode-btn ${mode === 'chat' ? 'active' : ''}`} onClick={() => setMode('chat')}>CHAT</button>
-            <button className={`mode-btn ${mode === 'analyse' ? 'active' : ''}`} onClick={() => setMode('analyse')}>ANALYSE</button>
-          </div>
+             <button className={`mode-btn ${mode === 'test' ? 'active' : ''}`} onClick={() => setMode('test')}>TEST</button>
+             <button className={`mode-btn ${mode === 'interpret' ? 'active' : ''}`} onClick={() => setMode('interpret')}>GENERATE INTERPRETATION</button>
+            </div>
           <button className="clear-btn" onClick={clearChat}>CLR</button>
         </div>
       </header>
@@ -269,9 +236,9 @@ export default function App() {
 
       <div className="input-area">
         <div className="input-mode-hint">
-          {mode === 'analyse'
-            ? '// ANALYSE mode — paste text to classify + discuss'
-            : '// CHAT mode — ask anything about sentiment & dialect'}
+          {mode === 'test'
+            ? '// TEST mode — paste text to classify'
+            : '// INTERPRET mode — paste text for interpretation'}
         </div>
         <div className="input-row">
           <span className="prompt-caret">&gt;</span>

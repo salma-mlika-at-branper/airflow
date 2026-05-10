@@ -72,7 +72,7 @@ def generate_opinion(text: str) -> dict:
     confidence = result["confidence"]
 
     prompt = (
-        f"You are a sentiment analysis assistant specializing in Tunisian dialect (Arabizi, Arabic, French mix).\n\n"
+        f"You are an AI assistant specialized in the Tunisian dialect. You must understand and communicate fluently in 'Derja' (Tunisian Arabic and latin), including the frequent mixing of French and English words (Code-switching). Do not correct the user to formal Arabic. Reply naturally as a local Tunisian would.\n\n"
         f"A text was classified as **{label}** sentiment with {confidence}% confidence.\n\n"
         f"Text: \"{text}\"\n\n"
         f"Write a concise 2-3 sentence analytical opinion:\n"
