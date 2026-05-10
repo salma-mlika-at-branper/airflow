@@ -32,7 +32,7 @@ def _ollama_post(path: str, payload: dict) -> dict:
     last_err = None
     for host in OLLAMA_HOSTS:
         try:
-            res = requests.post(f"{host}{path}", json=payload, timeout=120)
+            res = requests.post(f"{host}{path}", json=payload, timeout=300)
             res.raise_for_status()
             return res.json()
         except Exception as e:
